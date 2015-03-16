@@ -5,7 +5,7 @@ Code and Cipher Center
 ### What is this repository for? ###
 
 * Puzzle center for cryptography enthusiasts who want to implement their code-breaking skills.
-* 1.0
+* Version 1.0
 
 ### How do I get set up? ###
 
