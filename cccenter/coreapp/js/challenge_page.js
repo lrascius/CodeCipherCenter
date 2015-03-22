@@ -12,17 +12,32 @@ function getCipherText() {
     document.getElementsByTagName('head')[0].appendChild(jqscript);*/
     
     // get a ciphertext
-    $.get(
-        "", // source page
-        {}, // no parameters as of yet
-        function(data) { // what to do when the data is recieved
+    $.get({
+        url: "", // source page
+        type: "GET",
+        data: {}, // no paramaters as of yet
+        dataType: 'application/json', // return data type
+        success: function(data) { // what to do when the data is recieved
             // put the ciphertext on the page
             $('#ciphertextDisplay').text(data)
         }
-    )
+    });
 }
 
 function checkPlainText() {
     // send the plaintext for verification
+    pt = $('#plaintext').text()
     
+    // submit the plaintext
+    $.get({
+        url: "", // source page
+        type: "GET",
+        data: JSON.stringify(pt), // no paramaters as of yet
+        dataType: 'application/json', // data type
+        success: function(data) { // what to do when the data is recieved
+            // put the ciphertext on the 
+            alert(data) // for now
+            //TODO post result to page
+        }
+    });
 }
