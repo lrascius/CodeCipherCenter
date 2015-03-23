@@ -3,6 +3,8 @@
  * This page is linked to the challenge html pages to get ciphertexts, check plaintexts,
  * and run the comments and forum sections.
  */
+ 
+var home_url = "cccenter473.appspot.com";
 
 function getCipherText() {
     // add jQuery to the page (in case it's not already there)
@@ -13,7 +15,7 @@ function getCipherText() {
     
     // get a ciphertext
     $.ajax({
-        url: "", // source page
+        url: home_url + "/solve", // source page
         type: "GET",
         data: {}, // no paramaters as of yet
         dataType: 'application/json', // return data type
@@ -26,11 +28,11 @@ function getCipherText() {
 
 function checkPlainText() {
     // send the plaintext for verification
-    var pt = $('#plaintext').text()
+    var pt = $('#plaintextDisplay').text()
     
     // submit the plaintext
     $.ajax({
-        url: "", // source page
+        url: home_url + "/solve/check", // source page
         type: "GET",
         data: JSON.stringify(pt), // no paramaters as of yet
         dataType: 'application/json', // data type
@@ -38,6 +40,7 @@ function checkPlainText() {
             // put the ciphertext on the 
             alert(data) // for now
             //TODO post result to page
+            
         }
     });
 }
