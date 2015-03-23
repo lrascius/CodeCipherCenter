@@ -12,7 +12,7 @@ function getCipherText() {
     document.getElementsByTagName('head')[0].appendChild(jqscript);*/
     
     // get a ciphertext
-    $.get({
+    $.ajax({
         url: "", // source page
         type: "GET",
         data: {}, // no paramaters as of yet
@@ -26,10 +26,10 @@ function getCipherText() {
 
 function checkPlainText() {
     // send the plaintext for verification
-    pt = $('#plaintext').text()
+    var pt = $('#plaintext').text()
     
     // submit the plaintext
-    $.get({
+    $.ajax({
         url: "", // source page
         type: "GET",
         data: JSON.stringify(pt), // no paramaters as of yet

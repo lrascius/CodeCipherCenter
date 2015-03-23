@@ -12,8 +12,9 @@ function getCipherText() {
     document.getElementsByTagName('head')[0].appendChild(jqscript);*/
     
     // get a ciphertext
-    $.get({
+    $.ajax({
         url: "", // source page
+        type: "GET",
         data: {}, // no paramaters as of yet
         dataType: 'application/json', // return data type
         success: function(data) { // what to do when the data is recieved
@@ -28,8 +29,9 @@ function checkPlainText() {
     pt = $('#plaintext').text()
     
     // submit the plaintext
-    $.get({
+    $.ajax({
         url: "", // source page
+        type: "GET",
         data: JSON.stringify(pt), // no paramaters as of yet
         dataType: 'application/json', // data type
         success: function(data) { // what to do when the data is recieved
