@@ -9,3 +9,5 @@ cccenter/flask
 cccenter/gutenberg
 cccenter/werkzeug
 cccenter/itsdangerous.py
+.git
+.gitignore
