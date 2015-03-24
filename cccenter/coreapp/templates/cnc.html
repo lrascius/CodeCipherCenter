@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<script type='application/javascript' src= 'https://code.jquery.com/jquery-2.1.3.js'></script>
+		<title>Code and Cipher</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+	    {% include 'challenge_page.js' %}
+		<div align="center">
+			<h1>Code and Cipher</h1>
+			<input type="button" value="Go" onclick="getCiphertext()">
+			<p id="ciphertextDisplay"></p>
+			<br>
+			<input type="text" name="PlainText" id="plaintextDisplay" value=""/>
+			<input type="button" value="Verify" onclick="checkPlaintext()">
+		</div>
+	</body>
+</html>
+
