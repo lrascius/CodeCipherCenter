@@ -1,41 +1,20 @@
-<<<<<<< local
-<script type='text/javascript' src= '/js/jquery-2.1.3.min.js'></script>
-<script type='text/javascript' src= '/js/challenge_page.js'></script>
-<DOCTYPE! html>
-<html lang="en-US">
-<head>
-<title>Code and Cipher</title>
-<meta charset="utf-8">
-</head>
-<body>
-<div align="center">
-<h1>Code and Cipher</h1>
-<input name"" type="button" value="Go">
-<input type="text" name="Cipher" id="ciphertextDisplay" value=""/>
-<br>
-<input type="text" name="PlainText" id="plaintextDisplay" value=""/>
-<input name"" type="button" value="Verify">
-</div>
-</body>
-</html>
-=======
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
-		<script type='text/javascript' src= '/js/jquery-2.1.3.min.js'></script>
-		<script type='text/javascript' src= '/js/challenge_page.js'></script>
+		<script type='application/javascript' src= 'https://code.jquery.com/jquery-2.1.3.js'></script>
 		<title>Code and Cipher</title>
 		<meta charset="utf-8">
 	</head>
 	<body>
+	    {% include 'challenge_page.js' %}
 		<div align="center">
 			<h1>Code and Cipher</h1>
-			<input name"" type="button" value="Go">
-			<input type="text" name="Cipher" id="ciphertextDisplay" value=""/>
+			<input type="button" value="Go" onclick="getCiphertext()">
+			<p id="ciphertextDisplay"></p>
 			<br>
 			<input type="text" name="PlainText" id="plaintextDisplay" value=""/>
-			<input name"" type="button" value="Verify">
+			<input type="button" value="Verify" onclick="checkPlaintext()">
 		</div>
 	</body>
 </html>
->>>>>>> other
+

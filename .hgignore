@@ -4,3 +4,8 @@ syntax: glob
 **.pyc
 **~
 *.DS_Store
+**.log
+cccenter/flask
+cccenter/gutenberg
+cccenter/werkzeug
+cccenter/itsdangerous.py
