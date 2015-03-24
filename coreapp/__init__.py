@@ -4,4 +4,4 @@ import flask
 from flask import Flask
 app = Flask('coreapp')
 
-import index
+import views
