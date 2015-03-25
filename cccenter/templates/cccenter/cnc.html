@@ -6,13 +6,13 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-	    {% include 'challenge_page.js' %}
+	    {% include 'cccenter/challenge_page.js' %}
 		<div align="center">
 			<h1>Code and Cipher</h1>
 			<input type="button" value="Go" onclick="getCiphertext()">
-			<p id="ciphertextDisplay"></p>
+			<textarea id="ciphertextDisplay" readonly rows='10' cols='50'></textarea>
 			<br>
-			<input type="text" name="PlainText" id="plaintextDisplay" value=""/>
+			<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
 			<input type="button" value="Verify" onclick="checkPlaintext()">
 		</div>
 	</body>
