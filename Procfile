@@ -1,1 +1,1 @@
-web: gunicorn coreapp:app
+web: gunicorn csc473.wsgi
