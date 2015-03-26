@@ -1,8 +1,8 @@
 import json
 from django.shortcuts import render
 from django.http import HttpResponse
-import python.general as general
-import python.cipher as cf
+import cccenter.python.general as general
+import cccenter.python.cipher as cf
 from random import randint
 
 def index(request):
