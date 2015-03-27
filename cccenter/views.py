@@ -1,3 +1,5 @@
+#!cccenter/views.py
+'''Holds the views for the cccenter app.'''
 import json
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -6,12 +8,14 @@ import cccenter.python.cipher as cf
 from random import randint
 
 def index(request):
+    '''Returns the homepage.'''
     #return HttpResponse("Hello, World!") # should really return the homepage
     return render(request, 'cccenter/cnc.html')
-    
+
 def getCipher(request):
+    '''Returns a ciphertext as JSON.'''
     cipher = {}
     text = general.generate_paragraph()
     cipher['text'] = text
-    cipher['cipher'] = cf.ceasar_shift_encode(text, randint(2,9))
-    return HttpResponse(json.dumps(cipher['cipher']), content_type = "application/json")
+    cipher['cipher'] = cf.ceasar_shift_encode(text, randint(2, 9))
+    return HttpResponse(json.dumps(cipher['cipher']), content_type="application/json")
