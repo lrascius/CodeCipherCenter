@@ -10,7 +10,7 @@ from random import randint
 def index(request):
     '''Returns the homepage.'''
     #return HttpResponse("Hello, World!") # should really return the homepage
-    return render(request, 'cccenter/cnc.html')
+    return render(request, 'cccenter/challenge_page.html')
 
 def getCipher(request):
     '''Returns a ciphertext as JSON.'''
