@@ -2,6 +2,7 @@
 '''Holds the views for the cccenter app.'''
 import json
 from django.shortcuts import render
+from django.template import Context
 from django.http import HttpResponse
 import cccenter.python.general as general
 import cccenter.python.cipher as cf
@@ -10,7 +11,7 @@ from random import randint
 def index(request):
     '''Returns the homepage.'''
     #return HttpResponse("Hello, World!") # should really return the homepage
-    return render(request, 'cccenter/challenge_page.html')
+    return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
 def getCipher(request):
     '''Returns a ciphertext as JSON.'''
