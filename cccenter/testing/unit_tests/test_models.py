@@ -60,3 +60,19 @@ class TestComment(unittest.TestCase):
     @patch(models.Comment)
     def test_datetimeType(self, mock_comment, mock_models):
         self.assertEqual(type(mock_comment.datetime), type(mock_models.DateTimeField))
+        
+class TestUserProfile(unittest.TestCase):
+    @patch(models)
+    @patch(models.UserProfile)
+    def test_userType(self, mock_userprofile, mock_models):
+        self.assertEqual(type(mock_userprofile.user), type(mock_models.OneToOneField))
+        
+    @patch(models)
+    @patch(models.UserProfile)
+    def test_challengesType(self, mock_userprofile, mock_models):
+        self.assertEqual(type(mock_userprofile.challenges), type(mock_models.ManyToManyField))
+        
+    @patch(models)
+    @patch(models.UserProfile)
+    def test_datetimeCreatedType(self, mock_userprofile, mock_models):
+        self.assertEqual(type(mock_userprofile.datetime_created), type(mock_models.DateTimeField))
