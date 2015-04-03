@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
-	    {% block js_includes %}
-	    {% endblock %}
-		<script type='application/javascript' src= 'https://code.jquery.com/jquery-2.1.3.js'></script>
-		<!-- Latest compiled and minified CSS -->
+	    <!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-		
-		<title>Code and Cipher Center</title>
+	    {% block css_includes %}
+	    {% endblock %}
+		<title>{{ title }}</title>
 		<meta charset="utf-8">
 	</head>
 	<body style="padding-top: 60px;">
@@ -21,5 +15,10 @@
 	    {% block body %}
 	    {% endblock %}
 	    {% include 'cccenter/footer.html' %}
+	    <script type='application/javascript' src= 'https://code.jquery.com/jquery-2.1.3.js'></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		{% block js_includes %}
+	    {% endblock %}
 	</body>
 </html>

@@ -2,46 +2,55 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Cipher',
+            name='Challenge',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('ciphertext', models.TextField()),
-                ('plaintext', models.TextField()),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('ciphertext', models.TextField(default='')),
+                ('plaintext', models.TextField(default='')),
+                ('ciphertype', models.CharField(max_length=200)),
+                ('cipherkey', models.TextField(default='')),
             ],
             options={
             },
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='Login',
+            name='Comment',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('name', models.CharField(max_length=20)),
-                ('password', models.CharField(max_length=50)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('username', models.CharField(max_length=50)),
+                ('text', models.TextField(default='')),
             ],
             options={
             },
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='SignUp',
+            name='UserProfile',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('name', models.CharField(max_length=20)),
-                ('password', models.CharField(max_length=50)),
-                ('email', models.EmailField(max_length=75)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('challenges', models.ManyToManyField(to='cccenter.Challenge')),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='challenge',
+            name='forum',
+            field=models.ForeignKey(to='cccenter.Comment'),
+            preserve_default=True,
         ),
     ]
