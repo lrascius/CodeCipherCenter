@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response 
 from django.http import HttpResponseRedirect 
 from django.contrib import auth 
+from django.template import RequestContext
 from django.core.context_processors import csrf 
 import cccenter.python.general as general
 import cccenter.python.cipher as cf
@@ -14,7 +15,6 @@ from random import randint
 
 def index(request):
     '''Returns the homepage.'''
-l
     return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
 def register(request):
@@ -42,13 +42,10 @@ def auth_view(request):
         auth.login(request, user)
         return HttpResponseRedirect('/accounts/loggedin')
     else:
-        return HttpResponseRedirect('/accounts/invalid')
+        return render_to_response('cccenter/login.html', RequestContext(request, {"alert":"Invalid username or password!"}))
 
 def loggedin(request):
-    return render(request, 'cccenter/loggedin.html') 
-
-def invalid_login(request):
-    return render_to_response('cccenter/invalid_login.html')
+    return render(request, 'cccenter/challenge_page.html') 
 
 def logout(request):
     auth.logout(request)
