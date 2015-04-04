@@ -4,13 +4,17 @@ import json
 from django.shortcuts import render
 from django.template import Context
 from django.http import HttpResponse
+from django.shortcuts import render_to_response 
+from django.http import HttpResponseRedirect 
+from django.contrib import auth 
+from django.core.context_processors import csrf 
 import cccenter.python.general as general
 import cccenter.python.cipher as cf
 from random import randint
 
 def index(request):
     '''Returns the homepage.'''
-    #return HttpResponse("Hello, World!") # should really return the homepage
+l
     return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
 def register(request):
@@ -50,4 +54,3 @@ def logout(request):
     auth.logout(request)
     return render_to_response('cccenter/challenge_page.html')
 
-    
