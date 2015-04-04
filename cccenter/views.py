@@ -24,3 +24,18 @@ def getCipher(request):
     cipher['text'] = text
     cipher['cipher'] = cf.ceasar_shift_encode(text, randint(2, 9))
     return HttpResponse(json.dumps(cipher['cipher']), content_type="application/json")
+
+def login(request):
+    pass
+
+def auth_view(request):
+    pass
+
+def loggedin(request):
+    pass
+
+def invalid_login(request):
+    pass
+
+def logout(request):
+    pass
