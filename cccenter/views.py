@@ -41,10 +41,13 @@ def auth_view(request):
         return HttpResponseRedirect('/accounts/invalid')
 
 def loggedin(request):
-    pass
+    return render(request, 'cccenter/loggedin.html') 
 
 def invalid_login(request):
-    pass
+    return render_to_response('cccenter/invalid_login.html')
 
 def logout(request):
-    pass
+    auth.logout(request)
+    return render_to_response('cccenter/challenge_page.html')
+
+    
