@@ -26,10 +26,19 @@ def getCipher(request):
     return HttpResponse(json.dumps(cipher['cipher']), content_type="application/json")
 
 def login(request):
-    pass
+    c = {}
+    c.update(csrf(request))
+    return render_to_response('cccenter/login.html', c)
 
 def auth_view(request):
-    pass
+    username = request.POST.get('username', '') 
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password) 
+    if user is not None:
+        auth.login(request, user)
+        return HttpResponseRedirect('/accounts/loggedin')
+    else:
+        return HttpResponseRedirect('/accounts/invalid')
 
 def loggedin(request):
     pass
