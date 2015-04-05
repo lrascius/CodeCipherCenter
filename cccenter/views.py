@@ -12,6 +12,7 @@ from django.core.context_processors import csrf
 import cccenter.python.general as general
 import cccenter.python.cipher as cf
 from random import randint
+from cccenter.python.forms import RegistrationForm
 
 def index(request):
     '''Returns the homepage.'''
@@ -56,7 +57,7 @@ def register(request):
 
     if request.method == 'POST':
 
-        user_form = MyRegistrationForm(data=request.POST)
+        user_form = RegistrationForm(data=request.POST)
 
         if user_form.is_valid():
             user = user_form.save()
@@ -66,7 +67,7 @@ def register(request):
         else:
             print user_form.errors
     else:
-        user_form = MyRegistrationForm()
+        user_form = RegistrationForm()
 
     return render(request,
             'cccenter/register.html',
