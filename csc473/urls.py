@@ -16,4 +16,7 @@ urlpatterns = patterns('',
 	url(r'^accounts/auth/$', 'cccenter.views.auth_view'),
 	url(r'^accounts/logout/$', 'cccenter.views.logout'),
 	url(r'^accounts/loggedin/$', 'cccenter.views.loggedin'),
+
+    # User registration urls 
+    url(r'^accounts/register/$', 'cccenter.views.register'),
 )
