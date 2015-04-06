@@ -24,3 +24,6 @@ class Challenge(models.Model):
     cipherkey = models.TextField(default="")
     forum = models.ForeignKey(Comment)
     users = models.ManyToManyField(UserProfile)
+    datetime_created = models.DateTimeField()
+    datetime_solved = models.DateTimeField()
+    solved_by = models.CharField(max_length=50)
