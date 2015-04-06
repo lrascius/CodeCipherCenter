@@ -3,8 +3,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from unittest.mock import patch
 import models
+import os
 
 class TestChallenge(unittest.TestCase):
+    @classmethod
+    def setup():
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'csc473.settings'
+    
     @patch(models)
     @patch(models.Challenge)
     def test_ciphertextType(self, mock_challenge, mock_models):
@@ -45,7 +50,16 @@ class TestChallenge(unittest.TestCase):
     def test_solvedByType(self, mock_challenge, mock_models):
         self.assertEqual(type(mock_challenge.solved_by), type(mock_models.OneToOneField))
         
+    @patch(models)
+    @patch(models.Challenge)
+    def test_challengesType(self, mock_challenge, mock_models):
+        self.assertEqual(type(mock_challenge.users), type(mock_models.ManyToManyField))
+        
 class TestComment(unittest.TestCase):
+    @classmethod
+    def setup():
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'csc473.settings'
+        
     @patch(models)
     @patch(models.Comment)
     def test_usernameType(self, mock_comment, mock_models):
@@ -62,15 +76,14 @@ class TestComment(unittest.TestCase):
         self.assertEqual(type(mock_comment.datetime), type(mock_models.DateTimeField))
         
 class TestUserProfile(unittest.TestCase):
+    @classmethod
+    def setup():
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'csc473.settings'
+        
     @patch(models)
     @patch(models.UserProfile)
     def test_userType(self, mock_userprofile, mock_models):
         self.assertEqual(type(mock_userprofile.user), type(mock_models.OneToOneField))
-        
-    @patch(models)
-    @patch(models.UserProfile)
-    def test_challengesType(self, mock_userprofile, mock_models):
-        self.assertEqual(type(mock_userprofile.challenges), type(mock_models.ManyToManyField))
         
     @patch(models)
     @patch(models.UserProfile)

@@ -8,6 +8,11 @@ class Comment(models.Model):
     '''A model for comments in the forums.'''
     username = models.CharField(max_length=50)
     text = models.TextField(default="")
+    datetime = models.DateTime()
+
+class UserProfile(models.Model):
+    '''A model for storing users.'''
+    user = models.OneToOneField(User)
 
 class Challenge(models.Model):
     '''A model for ciphertext display and plaintext submission.  Contains
@@ -17,8 +22,4 @@ class Challenge(models.Model):
     ciphertype = models.CharField(max_length=200)
     cipherkey = models.TextField(default="")
     forum = models.ForeignKey(Comment)
-
-class UserProfile(models.Model):
-    '''A model for storing users.'''
-    user = models.OneToOneField(User)
-    challenges = models.ManyToManyField(Challenge)
+    users = models.ManyToManyField(UserProfile)
