@@ -8,11 +8,12 @@ class Comment(models.Model):
     '''A model for comments in the forums.'''
     username = models.CharField(max_length=50)
     text = models.TextField(default="")
-    datetime = models.DateTime()
+    datetime = models.DateTimeField()
 
 class UserProfile(models.Model):
     '''A model for storing users.'''
     user = models.OneToOneField(User)
+    datetime_created = models.DateTimeField()
 
 class Challenge(models.Model):
     '''A model for ciphertext display and plaintext submission.  Contains

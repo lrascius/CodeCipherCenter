@@ -6,9 +6,9 @@ import models
 import os
 
 class TestChallenge(unittest.TestCase):
-    @classmethod
-    def setup():
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'csc473.settings'
+    #@classmethod
+    #def setup():
+    #    os.environ['DJANGO_SETTINGS_MODULE'] = 'csc473.settings'
     
     @patch(models)
     @patch(models.Challenge)
