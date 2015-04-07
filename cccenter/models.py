@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Comment(models.Model):
     '''A model for comments in the forums.'''
-    username = models.CharField(max_length=50)
+    user = models.OneToOneField(User)
     text = models.TextField(default="")
     datetime = models.DateTimeField()
 

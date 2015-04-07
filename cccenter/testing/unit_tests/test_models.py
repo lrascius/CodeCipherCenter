@@ -1,91 +1,85 @@
+import django
+django.setup()
 import unittest
-from django.db import models
+import django.db.models as models_d
 from django.contrib.auth.models import User
 from unittest.mock import patch
-import models
+import cccenter.models as models
 import os
+from django.utils import timezone
+from datetime import datetime
 
 class TestChallenge(unittest.TestCase):
-    #@classmethod
-    #def setup():
-    #    os.environ['DJANGO_SETTINGS_MODULE'] = 'csc473.settings'
-    
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_ciphertextType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.ciphertext), type(mock_models.TextField))
+        self.assertEqual(isinstance(mock_challenge.ciphertex, mock_models.TextField), True)
         
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_plaintextType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.plaintext), type(mock_models.TextField))
+        self.assertEqual(isinstance(mock_challenge.plaintext, mock_models.TextField), True)
 
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_ciphertypeType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.ciphertype), type(mock_models.CharField))
+        self.assertEqual(isinstance(mock_challenge.ciphertype, mock_models.CharField), True)
         
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_cipherkeyType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.cipherkey), type(mock_models.TextField))
+        self.assertEqual(isinstance(mock_challenge.cipherkey, mock_models.TextField), True)
         
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_forumType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.forum), type(mock_models.ForeignKey))
+        self.assertEqual(isinstance(mock_challenge.forum, mock_models.ForeignKey), True)
         
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_datetimeCreatedType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.datetime_created), type(mock_models.DateTimeField))
+        self.assertEqual(isinstance(mock_challenge.datetime_created, mock_models.DateTimeField), True)
         
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_datetimeSolvedType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.datetime_solved), type(mock_models.DateTimeField))
+        self.assertEqual(isinstance(mock_challenge.datetime_solved, mock_models.DateTimeField), True)
         
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_solvedByType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.solved_by), type(mock_models.OneToOneField))
+        self.assertEqual(isinstance(mock_challenge.solved_by, mock_models.OneToOneField), True)
         
-    @patch(models)
-    @patch(models.Challenge)
+    @patch('django.db.models')
+    @patch('cccenter.models.Challenge')
     def test_challengesType(self, mock_challenge, mock_models):
-        self.assertEqual(type(mock_challenge.users), type(mock_models.ManyToManyField))
+        self.assertEqual(isinstance(mock_challenge.users, mock_models.ManyToManyField), True)
         
 class TestComment(unittest.TestCase):
-    @classmethod
-    def setup():
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'csc473.settings'
+    def test_userType(self):
+        a = models.Comment()
+        u = User()
+        a.user = u
+        self.assertEqual(type(a.user), User)
         
-    @patch(models)
-    @patch(models.Comment)
-    def test_usernameType(self, mock_comment, mock_models):
-        self.assertEqual(type(mock_comment.username), type(mock_models.TextField))
-        
-    @patch(models)
-    @patch(models.Comment)
-    def test_textType(self, mock_comment, mock_models):
-        self.assertEqual(type(mock_comment.text), type(mock_models.TextField))
-        
-    @patch(models)
-    @patch(models.Comment)
-    def test_datetimeType(self, mock_comment, mock_models):
-        self.assertEqual(type(mock_comment.datetime), type(mock_models.DateTimeField))
+    def test_textType(self):
+        a = models.Comment()
+        a.text = ""
+        self.assertEqual(type(a.text), str)
+    
+    def test_datetimeType(self):
+        a = models.Comment()
+        a.datetime = timezone.now()
+        self.assertEqual(type(a.datetime), datetime)
         
 class TestUserProfile(unittest.TestCase):
-    @classmethod
-    def setup():
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'csc473.settings'
+    def test_userType(self):
+        a = models.UserProfile()
+        u = User()
+        a.user = u
+        self.assertEqual(type(a.user), User)
         
-    @patch(models)
-    @patch(models.UserProfile)
-    def test_userType(self, mock_userprofile, mock_models):
-        self.assertEqual(type(mock_userprofile.user), type(mock_models.OneToOneField))
-        
-    @patch(models)
-    @patch(models.UserProfile)
-    def test_datetimeCreatedType(self, mock_userprofile, mock_models):
-        self.assertEqual(type(mock_userprofile.datetime_created), type(mock_models.DateTimeField))
+    def test_datetimeCreatedType(self):
+        a = models.UserProfile()
+        a.datetime_created = timezone.now()
+        self.assertEqual(type(a.datetime_created), datetime)

@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_nose',
     'cccenter',
 )
 
@@ -53,6 +54,13 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'csc473.urls'
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = [
+             '--with-coverage',
+             '--cover-package=cccenter.python, cccenter.models, cccenter.views',
+             '--cover-inclusive',
+            ]
 
 WSGI_APPLICATION = 'csc473.wsgi.application'
 

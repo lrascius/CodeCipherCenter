@@ -9,7 +9,7 @@ def ceasar_shift_encode(text, shift):
     encoded_text = ""
     text = "".join(text.lower().split())
     for char in text:
-        if(char in alphabet):
+        if char in alphabet:
             char = alphabet[(alphabet.index(char) + shift) % len(alphabet)]
             encoded_text += char
     return encoded_text.upper()
