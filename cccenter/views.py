@@ -18,9 +18,9 @@ def index(request):
     '''Returns the homepage.'''
     return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
-def register(request):
-    '''Returns the register page.'''
-    return render(request, 'cccenter/register.html')
+# def register(request):
+#     '''Returns the register page.'''
+#     return render(request, 'cccenter/register.html')
 
 def getCipher(request):
     '''Returns a ciphertext as JSON.'''
@@ -65,7 +65,7 @@ def register(request):
             user.save()
             registered = True
         else:
-            print user_form.errors
+            print (user_form.errors)
     else:
         user_form = RegistrationForm()
 
