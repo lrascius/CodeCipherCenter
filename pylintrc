@@ -1,0 +1,3 @@
+[MASTER]
+ignore=migrations, __pycache__, admin.py
+disable=unused-import, bad-builtin, invalid-name
