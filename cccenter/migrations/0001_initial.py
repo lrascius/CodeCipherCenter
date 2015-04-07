@@ -15,42 +15,41 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Challenge',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('ciphertext', models.TextField(default='')),
                 ('plaintext', models.TextField(default='')),
                 ('ciphertype', models.CharField(max_length=200)),
                 ('cipherkey', models.TextField(default='')),
+                ('datetime_created', models.DateTimeField()),
+                ('datetime_solved', models.DateTimeField()),
+                ('solved_by', models.CharField(max_length=50)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Comment',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('username', models.CharField(max_length=50)),
                 ('text', models.TextField(default='')),
+                ('datetime', models.DateTimeField()),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
-                ('challenges', models.ManyToManyField(to='cccenter.Challenge')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('datetime_created', models.DateTimeField()),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.AddField(
             model_name='challenge',
             name='forum',
             field=models.ForeignKey(to='cccenter.Comment'),
-            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='challenge',
+            name='users',
+            field=models.ManyToManyField(to='cccenter.UserProfile'),
         ),
     ]
