@@ -1,0 +1,19 @@
+{% extends 'cccenter/base.html' %}
+{% load staticfiles %}
+{% block js_includes %}
+<script src="{% static 'cccenter/challenge_page.js' %}"></script>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<h1 style="width:100%; text-align:center">Challenge</h1>
+	<div align="center">
+		<textarea id="ciphertextDisplay" readonly rows='10' cols='50'></textarea>
+		<br>
+		<input class="btn btn-default" type="button" value="Get Ciphertext" onclick="getCiphertext()">
+		<br>
+		<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
+		<br>
+		<input class="btn btn-default" type="button" value="Check Solution" onclick="checkPlaintext()">
+	</div>
+</div>
+{% endblock %}
