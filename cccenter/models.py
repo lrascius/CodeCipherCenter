@@ -26,4 +26,4 @@ class Challenge(models.Model):
     users = models.ManyToManyField(UserProfile)
     datetime_created = models.DateTimeField()
     datetime_solved = models.DateTimeField()
-    solved_by = models.CharField(max_length=50)
+    solved_by = models.OneToOneField(User)

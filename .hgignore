@@ -11,5 +11,3 @@ cccenter/werkzeug
 cccenter/itsdangerous.py
 .git
 .gitignore
-**db.sqlite3
-cccenter/migrations/*
