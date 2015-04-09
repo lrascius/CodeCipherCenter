@@ -7,7 +7,7 @@
 function getCiphertext() {
     // get a ciphertext
     $.ajax({
-        url: "getcipher/", // source page relative to the current page (cccenter/)
+        url: "cccenter/getcipher/", // source page relative to the current page (cccenter/)
         type: "GET",
         data: {}, // no paramaters as of yet
         dataType: 'json', // return data type
@@ -26,7 +26,7 @@ function checkPlaintext() {
     
     // submit the plaintext
     $.ajax({
-        url: home_url + "checkplaintext", // source page relative to the current page (cccenter/)
+        url: "cccenter/checkplaintext", // source page relative to the current page (cccenter/)
         type: "POST",
         data: JSON.stringify(pt), // no paramaters as of yet
         contentType: 'application/json', // data type sent to server

@@ -19,4 +19,7 @@ urlpatterns = patterns('',
 
     # User registration urls 
     url(r'^accounts/register/$', 'cccenter.views.register'),
+    
+    # Challenge urls
+    url(r'^getcipher/$', views.getCipher, name="cccenter.views.getCipher")
 )

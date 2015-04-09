@@ -4,11 +4,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Comment(models.Model):
-    '''A model for comments in the forums.'''
-    user = models.OneToOneField(User)
-    text = models.TextField(default="")
-    datetime = models.DateTimeField()
 
 class UserProfile(models.Model):
     '''A model for storing users.'''
@@ -22,9 +17,15 @@ class Challenge(models.Model):
     plaintext = models.TextField(default="")
     ciphertype = models.CharField(max_length=200)
     cipherkey = models.TextField(default="")
-    forum = models.ForeignKey(Comment, blank=True, null=True)
     users = models.ManyToManyField(User, related_name="joined", blank=True, null=True)
     datetime_created = models.DateTimeField()
     datetime_solved = models.DateTimeField(blank=True, null=True)
     solved_by = models.OneToOneField(User, blank=True, null=True)
     challenge_type = models.CharField(max_length=50, choices=(('single', 'single'), ('collaborative', 'collaborative'), ('competitive', 'competitive')))
+    
+class Comment(models.Model):
+    '''A model for comments in the forums.'''
+    user = models.OneToOneField(User)
+    text = models.TextField(default="")
+    datetime = models.DateTimeField()
+    forum = models.ForeignKey(Challenge)

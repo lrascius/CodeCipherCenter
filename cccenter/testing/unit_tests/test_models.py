@@ -1,104 +1,134 @@
-import unittest
-import django.db.models as models_d
-from django.contrib.auth.models import User
+from django.db import models as models_d
+from django.contrib.auth.models import User, AnonymousUser
 from unittest.mock import patch
-import cccenter.models as models
-import os
-from django.utils import timezone
+from cccenter.models import *
+from django.utils import timezone, unittest
 from datetime import datetime
 
 class TestChallenge(unittest.TestCase):
-    def setup(self):
-        challenge = models.Challenge()
-        challenge.ciphertext = "abc"
-        challenge.plaintext = "def"
-        challenge.ciphertype = "Caesar Shift Cipher"
-        challenge.cipherkey = "3"
-        challenge.datetime_created = datetime.now()
-        challenge.datetime_solved = datetime.now()
-        challenge.solved_by = User.objects.get(pk=1)
-        challenge.users = [User.objects.get(pk=1)]
-        challenge.forum = [models.Comment.objects.get(pk=1)]
-        challenge.save()
-        self.challenge_id = challenge.id
-        raise Exception(challenge.id)
-        
-    def test_ciphertextType(self):
-        challenge = models.Challenge()
-        challenge.ciphertext = "abc"
-        challenge.plaintext = "def"
-        challenge.ciphertype = "Caesar Shift Cipher"
-        challenge.cipherkey = "3"
-        challenge.datetime_created = datetime.now()
-        challenge.datetime_solved = datetime.now()
+    def setUp(self):
+        #challenge = models.Challenge()
+        #challenge.ciphertext = "abc"
+        #challenge.plaintext = "def"
+        #challenge.ciphertype = "Caesar Shift Cipher"
+        #challenge.cipherkey = "3"
+        #challenge.datetime_created = datetime.now()
+        #challenge.datetime_solved = datetime.now()
         #challenge.solved_by = User.objects.get(pk=1)
         #challenge.users = [User.objects.get(pk=1)]
         #challenge.forum = [models.Comment.objects.get(pk=1)]
-        challenge.save()
+        #challenge.save()
+        #self.challenge_id = challenge.id
+        #raise Exception(challenge.id)
+        #self.members = [attr for attr in dir(models.Challenge) if not callable(attr) and not attr.startswith("__")]
+        self.user = User.objects.create(username="m1", password="k")
+        self.pserprofile = UserProfile(user=self.user, datetime_created=timezone.now())
+        self.challenge = Challenge.objects.create(ciphertext="def", plaintext="abc", ciphertype="Caesar Shift Cipher", cipherkey="3",
+                                                 datetime_created=timezone.now(), datetime_solved=timezone.now(), solved_by=User())
+        self.comment = Comment.objects.create(user=self.user, text='hi', datetime=timezone.now(), forum=self.challenge)
+        
+    #def tearDown(self):
+        
+        
+    def test_ciphertextType(self):
+        #challenge = models.Challenge()
+        #challenge.ciphertext = "abc"
+        #challenge.plaintext = "def"
+        #challenge.ciphertype = "Caesar Shift Cipher"
+        #challenge.cipherkey = "3"
+        #challenge.datetime_created = datetime.now()
+        #challenge.datetime_solved = datetime.now()
+        #challenge.solved_by = User.objects.get(pk=1)
+        #challenge.users = [User.objects.get(pk=1)]
+        #challenge.forum = [models.Comment.objects.get(pk=1)]
+        #challenge.save()
         #challenge = models.Challenge.objects.get(pk=self.challenge_id)
-        self.assertEqual(challenge.ciphertext, "abc")
-        self.assertEqual(challenge.plaintext, "def")
+        #self.assertEqual(challenge.ciphertext, "abc")
+        #self.assertEqual(challenge.plaintext, "def")
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        #raise Exception(members)
+        self.assertTrue('ciphertext' in members)
+        self.assertEqual(self.challenge.ciphertext, "def")
         
     def test_plaintextType(self):
-        #self.assertEqual(isinstance(mock_challenge.plaintext, mock_models.TextField), True)
-        pass
+        #self.assertEqual(type(self.challenge.plaintext), type(models_d.TextField))
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('plaintext' in members)
 
     def test_ciphertypeType(self):
         #self.assertEqual(isinstance(mock_challenge.ciphertype, mock_models.CharField), True)
-        pass
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('ciphertype' in members)
         
     def test_cipherkeyType(self):
         #self.assertEqual(isinstance(mock_challenge.cipherkey, mock_models.TextField), True)
-        pass
-        
-    def test_forumType(self):
-        #self.assertEqual(isinstance(mock_challenge.forum, mock_models.ForeignKey), True)
-        pass
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('cipherkey' in members)
         
     def test_datetimeCreatedType(self):
         #self.assertEqual(isinstance(mock_challenge.datetime_created, mock_models.DateTimeField), True)
-        pass
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('datetime_created' in members)
         
     def test_datetimeSolvedType(self):
         #self.assertEqual(isinstance(mock_challenge.datetime_solved, mock_models.DateTimeField), True)
-        pass
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('datetime_solved' in members)
         
     def test_solvedByType(self):
         #self.assertEqual(isinstance(mock_challenge.solved_by, mock_models.OneToOneField), True)
-        pass
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('solved_by' in members)
         
     def test_usersType(self):
         #self.assertEqual(isinstance(mock_challenge.users, mock_models.ManyToManyField), True)
-        pass
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('users' in members)
         
     def test_challengeTypeType(self):
-        pass
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('challenge_type' in members)
         
 class TestComment(unittest.TestCase):
     def test_userType(self):
-        a = models.Comment()
+        a = Comment()
         u = User()
         a.user = u
         self.assertEqual(type(a.user), User)
+        members = [attr for attr in dir(Comment(user=User())) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('user' in members)
         
     def test_textType(self):
-        a = models.Comment()
+        a = Comment()
         a.text = ""
         self.assertEqual(type(a.text), str)
+        members = [attr for attr in dir(Comment(text="")) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('text' in members)
     
     def test_datetimeType(self):
-        a = models.Comment()
+        a = Comment()
         a.datetime = timezone.now()
         self.assertEqual(type(a.datetime), datetime)
+        members = [attr for attr in dir(Comment(datetime=None)) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('datetime' in members)
+        
+    def test_forumType(self):
+        #self.assertEqual(isinstance(models.forum, mock_models.ForeignKey), True)
+        members = [attr for attr in dir(Comment(forum=Challenge())) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('forum' in members)
         
 class TestUserProfile(unittest.TestCase):
     def test_userType(self):
-        a = models.UserProfile()
+        a = UserProfile()
         u = User()
         a.user = u
         self.assertEqual(type(a.user), User)
+        members = [attr for attr in dir(UserProfile(user=User())) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('user' in members)
         
     def test_datetimeCreatedType(self):
-        a = models.UserProfile()
+        a = UserProfile()
         a.datetime_created = timezone.now()
         self.assertEqual(type(a.datetime_created), datetime)
+        members = [attr for attr in dir(UserProfile(datetime_created=None)) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('datetime_created' in members)
