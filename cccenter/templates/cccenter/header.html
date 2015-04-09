@@ -5,4 +5,8 @@
         <td><a href="">Login/Sign Up</a></td>
     </tr>
 </table> -->
-{% include 'cccenter/navigation.html' %}
+{% if user.is_authenticated %}
+      {% include 'cccenter/loggedinnav.html' %}
+{% else %}
+      {% include 'cccenter/navigation.html' %}
+{% endif %}

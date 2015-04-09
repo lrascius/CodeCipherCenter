@@ -4,6 +4,7 @@ syntax: glob
 **.pyc
 **~
 *.DS_Store
+*/*.DS_Store
 **.log
 cccenter/flask
 cccenter/gutenberg
@@ -11,5 +12,3 @@ cccenter/werkzeug
 cccenter/itsdangerous.py
 .git
 .gitignore
-**db.sqlite3
-cccenter/migrations/*
