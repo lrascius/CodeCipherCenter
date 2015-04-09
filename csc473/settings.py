@@ -58,7 +58,7 @@ ROOT_URLCONF = 'csc473.urls'
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
              '--with-coverage',
-             '--cover-package=cccenter.python, cccenter.models, cccenter.views',
+             '--cover-package=cccenter.python, cccenter.views',
              '--cover-inclusive',
              '--verbosity=3',
             ]

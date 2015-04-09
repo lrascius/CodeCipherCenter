@@ -34,9 +34,9 @@ class TestViews(TestCase):
         response = self.client.get('/accounts/login/')
 
        	
-       	value = client.login(username='fred', password='secret')
+       	value = self.client.login(username='fred', password='secret')
        	self.assertEqual(value, False)
-       	value = client.logout()
+       	value = self.client.logout()
        	self.assertEqual(value, None)
 
     def test_auth_view(self):
