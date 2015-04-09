@@ -27,3 +27,4 @@ class Challenge(models.Model):
     datetime_created = models.DateTimeField()
     datetime_solved = models.DateTimeField(blank=True, null=True)
     solved_by = models.OneToOneField(User, blank=True, null=True)
+    challenge_type = models.CharField(max_length=50, choices=(('single', 'single'), ('collaborative', 'collaborative'), ('competitive', 'competitive')))

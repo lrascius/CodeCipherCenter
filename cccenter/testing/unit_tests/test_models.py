@@ -67,8 +67,11 @@ class TestChallenge(unittest.TestCase):
         #self.assertEqual(isinstance(mock_challenge.solved_by, mock_models.OneToOneField), True)
         pass
         
-    def test_challengesType(self):
+    def test_usersType(self):
         #self.assertEqual(isinstance(mock_challenge.users, mock_models.ManyToManyField), True)
+        pass
+        
+    def test_challengeTypeType(self):
         pass
         
 class TestComment(unittest.TestCase):
