@@ -60,6 +60,7 @@ NOSE_ARGS = [
              '--with-coverage',
              '--cover-package=cccenter.python, cccenter.models, cccenter.views',
              '--cover-inclusive',
+             '--verbosity=3',
             ]
 
 WSGI_APPLICATION = 'csc473.wsgi.application'
