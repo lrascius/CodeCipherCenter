@@ -1,5 +1,3 @@
-
-import unittest
 from unittest.mock import patch
 from cccenter.views import *
 from django.test import TestCase
