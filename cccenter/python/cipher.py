@@ -1,4 +1,4 @@
-#1cccenter/python/cipher.py
+#!cccenter/python/cipher.py
 '''Generates ciphertext objects.'''
 
 def ceasar_shift_encode(text, shift):
@@ -14,4 +14,6 @@ def ceasar_shift_encode(text, shift):
             encoded_text += char
     return encoded_text.upper()
 
-
+def create_challenge(plaintext, ciphertext, ciphertype, key,
+                     challenge_type, users = None, dt_created = None, dt_solved = None, solved_by = None):
+    pass
