@@ -2,9 +2,16 @@ from unittest.mock import patch
 from cccenter.views import *
 from django.test import TestCase
 from django.test.client import Client
-from django.utils import simplejson
+import json
 
 class TestViews(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="m", password="t")
+        self.client.login(username="m", password="t")
+        
+    def tearDown(self):
+        self.user.delete()
+
     def test_index(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
@@ -32,7 +39,8 @@ class TestViews(TestCase):
     def test_chalengeCreation(self):
         resp = self.client.post('/cipher/createChallenge/')
         self.assertEqual(resp.status_code, 200)
-        data = simplejson.load(resp.body)
+        
+        data = json.loads(resp.content.decode('utf-8'))
         self.assertTrue(data['ciphertext'])
         self.assertTrue(data['challenge_id'])
 

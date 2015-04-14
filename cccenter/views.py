@@ -13,6 +13,7 @@ import cccenter.python.general as general
 import cccenter.python.cipher as cf
 from random import randint
 from cccenter.python.forms import RegistrationForm
+from django.contrib.auth.models import User, AnonymousUser
 
 def index(request):
     '''Returns the homepage.'''
@@ -29,6 +30,22 @@ def getCipher(request):
     cipher['text'] = text
     cipher['cipher'] = cf.ceasar_shift_encode(text, randint(2, 9))
     return HttpResponse(json.dumps(cipher['cipher']), content_type="application/json")
+    
+#TODO require user login @login_required
+def create_challenge(request):
+    '''Creates a new challenge.'''
+    cipher = {}
+    cipher['plaintext'] = general.generate_paragraph()
+    cipher['key'] = randint(1, 25)
+    cipher['ciphertext'] = cf.ceasar_shift_encode(cipher['plaintext'], cipher['key'])
+    cipher['ciphertype'] = "Caesar Shift Cipher"
+    cipher['challenge_type'] = "single"
+    cipher['users'] = [User.objects.get(pk=request.user.id)]
+    
+    cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'], cipher['key'],
+                        cipher['challenge_type'], cipher['users'])
+                        
+    return HttpResponse(json.dumps(cd), content_type="application/json")
 
 def login(request):
     '''Returns login page.'''

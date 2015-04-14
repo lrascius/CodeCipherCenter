@@ -21,6 +21,8 @@ def ceasar_shift_encode(text, shift):
 def create_challenge(plaintext, ciphertext, ciphertype, key,
                      challenge_type, users = None, dt_created = None, dt_solved = None, solved_by = None):
             
+    #raise Exception(users)
+    
     if dt_created is not None:
         dt_created = dt_created
     else:
@@ -41,4 +43,4 @@ def create_challenge(plaintext, ciphertext, ciphertype, key,
         
     challenge.save()
     
-    return challenge.ciphertext, challenge.id
+    return {'ciphertext':challenge.ciphertext, 'challenge_id':challenge.id}

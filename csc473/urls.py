@@ -21,5 +21,6 @@ urlpatterns = patterns('',
     url(r'^accounts/register/$', 'cccenter.views.register'),
     
     # Challenge urls
-    url(r'^getcipher/$', views.getCipher, name="cccenter.views.getCipher")
+    url(r'^getcipher/$', views.getCipher, name="cccenter.views.getCipher"),
+    url(r'cipher/createChallenge/$', views.create_challenge, name="cccenter.views.create_challenge"),
 )
