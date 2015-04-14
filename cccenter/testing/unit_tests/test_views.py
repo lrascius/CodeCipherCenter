@@ -35,6 +35,10 @@ class TestViews(TestCase):
     def test_getCipher(self):
         resp = self.client.get('/getcipher/')
         self.assertEqual(resp.status_code, 200)
+
+    def test_challengeList(self):
+	resp = self.client.get('/challengeList')
+	self.assertEqual(resp.status_code, 200)
         
     def test_chalengeCreation(self):
         resp = self.client.post('/cipher/createChallenge/')
