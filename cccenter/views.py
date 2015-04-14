@@ -31,7 +31,7 @@ def getCipher(request):
     cipher['text'] = text
     cipher['cipher'] = cf.ceasar_shift_encode(text, randint(2, 9))
     return HttpResponse(json.dumps(cipher['cipher']), content_type="application/json")
-    
+
 @login_required
 def create_challenge(request):
     '''Creates a new challenge.'''
@@ -42,10 +42,10 @@ def create_challenge(request):
     cipher['ciphertype'] = "Caesar Shift Cipher"
     cipher['challenge_type'] = "single"
     cipher['users'] = [User.objects.get(pk=request.user.id)]
-    
-    cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'], cipher['key'],
-                        cipher['challenge_type'], cipher['users'])
-                        
+
+    cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],
+                             cipher['key'], cipher['challenge_type'], cipher['users'])
+
     return HttpResponse(json.dumps(cd), content_type="application/json")
 
 def login(request):
