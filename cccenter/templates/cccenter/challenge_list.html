@@ -1,0 +1,15 @@
+{% extends 'cccenter/base.html' %}
+{% load staticfiles %}
+{% block js_includes %}
+<script src="{% static 'cccenter/challenge_list.js %}"></script>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<h1 style="width:100%; text-align:center">Challenge List</h1>
+	<div align="center">
+		<ul>
+			<li id="challengeName"></li>
+		</ul>
+	</div>
+</div>			
+{% endblock %}
