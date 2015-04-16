@@ -1,0 +1,39 @@
+{% extends 'cccenter/base.html' %}
+{% load staticfiles %}
+{% block body %}
+<!DOCTYPE html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Login</title>
+		
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	</head>
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+		<div class="container">
+			{{ alert }}
+			<h1>Login</h1>
+			<form action="/accounts/auth/" method="post"> {% csrf_token %}
+				<div class="form-group">
+					<label for="username">Username</label>
+						<input type="text" name="username" class="form-control" id="usernameField" placeholder="Enter username">
+				</div>
+
+				<div class="form-group">
+					<label for="password">Password</label>
+						<input type="password" name="password" class="form-control" id="passwordField" placeholder="Enter password">
+				</div>
+
+				<div class="checkbox">
+					<label> <input type="checkbox"/> Remember Me </label>
+				</div>
+	
+				<button type="submit" class="btn btn-success">Sign in</button>
+			</form>
+		</div>
+	</body>
+</html>
+{% endblock %}
