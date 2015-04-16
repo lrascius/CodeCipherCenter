@@ -1,7 +1,7 @@
 #!cccenter/python/cipher.py
 '''Generates ciphertext objects.'''
 
-from cccenter.models import *
+import cccenter.models as models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
@@ -27,7 +27,7 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
     else:
         dt_created = timezone.now()
 
-    challenge = Challenge.objects.create(plaintext=plaintext, ciphertext=ciphertext,
+    challenge = models.Challenge.objects.create(plaintext=plaintext, ciphertext=ciphertext,
                                          ciphertype=ciphertype, cipherkey=key,
                                          challenge_type=challenge_type, datetime_created=dt_created)
 

@@ -36,8 +36,8 @@ class TestViews(TestCase):
         resp = self.client.get('/getcipher/')
         self.assertEqual(resp.status_code, 200)
         
-    def test_chalengeCreation(self):
-        resp = self.client.post('/cipher/createChallenge/')
+    def test_challengeCreation(self):
+        resp = self.client.post('/cipher/createchallenge/')
         self.assertEqual(resp.status_code, 200)
         
         data = json.loads(resp.content.decode('utf-8'))
