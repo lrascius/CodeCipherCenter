@@ -27,4 +27,3 @@ Code and Cipher Center
 * Marc Kurtz (repo owner)
 * Lukas Rascius
 * Andrew Williams
-* Benjamin Jonke

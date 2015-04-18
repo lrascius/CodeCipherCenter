@@ -37,7 +37,7 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_challengeList(self):
-	resp = self.client.get('/challengeList')
+	resp = self.client.get('/challengeList/')
 	self.assertEqual(resp.status_code, 200)
         
     def test_chalengeCreation(self):
