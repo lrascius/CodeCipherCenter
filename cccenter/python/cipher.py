@@ -52,3 +52,33 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
     challenge.save()
 
     return {'ciphertext':challenge.ciphertext, 'challenge_id':challenge.id}
+    
+def test_solution(challenge_id, user_id, guessed_plaintext):
+    if type(challenge_id) is not int:
+        raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
+    
+    if type(user_id) is not int:
+        raise TypeError("user_id is " + str(type(challenge_id)) + ", not int")
+    
+    challenge = models.Challenge.objects.get(pk=challenge_id)
+    
+    if challenge is None:
+        raise ValueError("challenge_id is not valid")
+        
+    user = User.objects.get(pk=user_id)
+    
+    if user is None:
+        raise ValueError("user_id is not valid")
+        
+    if challenge.plaintext == guessed_plaintext:
+        # if challenge has not already been solved
+        if challenge.solved == False:
+            challenge.solved = True
+            challenge.solved_by = user
+            challenge.datetime_solved = timezone.now()
+        
+        return True
+        
+    else:
+        return False
+
