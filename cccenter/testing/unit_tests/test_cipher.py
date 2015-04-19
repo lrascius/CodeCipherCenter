@@ -272,6 +272,19 @@ class TestCipherFunctions(TestCase):
             
         with self.assertRaises(TypeError):
             success = test_solution(challenge_id=1, user_id=2.0, guessed_plaintext='abc')
+            
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_testsolutionFail4(self, mock_challenge, mock_models, mock_user, mock_timezone):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.get.return_value = mock_challenge
+        mock_user.objects.get.return_value= "user"
+        mock_challenge.plaintext = 'abc'
+        
+        with self.assertRaises(TypeError):
+            success = test_solution(challenge_id=-1, user_id=2, guessed_plaintext='abc')
 
 if __name__ == '__main__':
     unittest.main()
