@@ -20,7 +20,7 @@ function getCiphertext() {
     });
 }
 
-function checkPlaintext() {
+function checkPlaintext(challenge_id) {
     // send the plaintext for verification
     var pt = $('#plaintextDisplay').text();
     
@@ -28,7 +28,7 @@ function checkPlaintext() {
     $.ajax({
         url: "cccenter/checkplaintext", // source page relative to the current page (cccenter/)
         type: "POST",
-        data: JSON.stringify(pt), // no paramaters as of yet
+        data: JSON.stringify({'challenge_id':challenge_id, 'guessed_plaintext':pt}),
         contentType: 'application/json', // data type sent to server
         dataType: 'application/json', // data type expected from server
         async: true,
