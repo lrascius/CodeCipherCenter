@@ -26,7 +26,7 @@ function checkPlaintext(challenge_id) {
     
     // submit the plaintext
     $.ajax({
-        url: "cccenter/checkplaintext", // source page relative to the current page (cccenter/)
+        url: "cipher/checkplaintext/", // source page relative to the current page (cccenter/)
         type: "POST",
         data: JSON.stringify({'challenge_id':challenge_id, 'guessed_plaintext':pt}),
         contentType: 'application/json', // data type sent to server
@@ -37,6 +37,19 @@ function checkPlaintext(challenge_id) {
             alert(data); // for now
             //TODO post result to page
             
+        }
+    });
+}
+
+function joinChallenge(challenge_id) {
+    $.ajax({
+        url: "cipher/joinchallenge/",
+        type: "POST",
+        data: JSON.stringify({'challenge_id'}:challenge_id}),
+        contentType: 'application/json',
+        async: false,
+        success: function(data) {
+            window.location.reload(true);
         }
     });
 }
