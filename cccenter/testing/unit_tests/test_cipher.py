@@ -155,6 +155,53 @@ class TestCipherFunctions(TestCase):
         #self.assertEqual(a.users, None)
         
         #a.delete()
+        
+        mock_challenge.users.add.called = False # set to false after previous tests
+        
+        with self.assertRaises(ValueError):
+            c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype, solved=True)
+        
+        self.assertTrue(mock_timezone.now.called)
+        self.assertTrue(mock_models.Challenge.objects.create.called)
+        mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
+                                                                ciphertype=self.ciphertype, cipherkey=self.key,
+                                                                challenge_type=self.challengetype, datetime_created="now")
+        self.assertFalse(mock_challenge.users.add.called)
+        self.assertTrue(mock_challenge.save.called)
+        
+        #a = Challenge.objects.get(pk=c_data['challenge_id'])
+        #self.assertEqual(a.ciphertext, self.ciphertext)
+        #self.assertEqual(a.plaintext, self.plaintext)
+        #self.assertEqual(a.ciphertype, self.ciphertype)
+        #self.assertEqual(a.cipherkey, self.key)
+        #self.assertEqual(a.challenge_type, self.challengetype)
+        #self.assertEqual(a.users, None)
+        
+        #a.delete()
+        
+        mock_challenge.users.add.called = False # set to false after previous tests
+        
+        with self.assertRaises(ValueError):
+            c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
+                                  solved=True, dt_solved=self.tn)
+        
+        self.assertTrue(mock_timezone.now.called)
+        self.assertTrue(mock_models.Challenge.objects.create.called)
+        mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
+                                                                ciphertype=self.ciphertype, cipherkey=self.key,
+                                                                challenge_type=self.challengetype, datetime_created="now")
+        self.assertFalse(mock_challenge.users.add.called)
+        self.assertTrue(mock_challenge.save.called)
+        
+        #a = Challenge.objects.get(pk=c_data['challenge_id'])
+        #self.assertEqual(a.ciphertext, self.ciphertext)
+        #self.assertEqual(a.plaintext, self.plaintext)
+        #self.assertEqual(a.ciphertype, self.ciphertype)
+        #self.assertEqual(a.cipherkey, self.key)
+        #self.assertEqual(a.challenge_type, self.challengetype)
+        #self.assertEqual(a.users, None)
+        
+        #a.delete()
 
 if __name__ == '__main__':
     unittest.main()
