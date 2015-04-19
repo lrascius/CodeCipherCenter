@@ -11,7 +11,6 @@ def challenge_list():
     for names in i:
         chList.append(names)
 
-@login_required
 def join_challenge(challenge_id, user_id):
     if type(challenge_id) is not int:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
