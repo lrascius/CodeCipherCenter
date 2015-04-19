@@ -24,6 +24,7 @@ class Challenge(models.Model):
     challenge_type = models.CharField(max_length=50, choices=(('single', 'single'),
                                                               ('collaborative', 'collaborative'),
                                                               ('competitive', 'competitive')))
+    solved = models.BooleanField(default=False)
 
 class Comment(models.Model):
     '''A model for comments in the forums.'''
