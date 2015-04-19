@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from cccenter.views import *
+import cccenter.views as views
 from django.test import TestCase
 from django.test.client import Client
 import json
@@ -12,9 +12,14 @@ class TestViews(TestCase):
     def tearDown(self):
         self.user.delete()
 
-    def test_index(self):
-        response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
+    @patch.mock('cccenter.views.django.shortcuts.render')
+    @patch.mock('cccenter.views.request')
+    def test_index(self, mock_request, mock_render):
+        #response = self.client.get('/')
+        views.index(mock_request)
+        
+        #self.assertEqual(response.status_code, 200)
+        mock_render.assert_called_with(mock_request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
     def test_register(self):
         ''' Test registration form (get and post requests)'''
