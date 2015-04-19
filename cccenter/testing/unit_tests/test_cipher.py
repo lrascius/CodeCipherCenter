@@ -212,7 +212,7 @@ class TestCipherFunctions(TestCase):
     def test_checksolutionPass1(self, mock_challenge, mock_models, mock_user, mock_timezone):
         mock_timezone.now.return_value = "now"
         mock_models.Challenge.objects.get.return_value = mock_challenge
-        mock_user.objects.get.return_value= "user"
+        mock_user.objects.get.return_value = "user"
         mock_challenge.plaintext = 'abc'
         
         success = check_solution(challenge_id=1, user_id=2, guessed_plaintext='abc')
