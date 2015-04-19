@@ -215,7 +215,7 @@ class TestCipherFunctions(TestCase):
         mock_user.objects.get.return_value= "user"
         mock_challenge.plaintext = 'abc'
         
-        success = test_solution(challenge_id=1, user_id=2, guessed_plaintext='abc')
+        success = check_solution(challenge_id=1, user_id=2, guessed_plaintext='abc')
         
         mock_models.Challenge.objects.get.assert_called_with(pk=1)
         mock_user.objects.get.assert_called_with(pk=2)
@@ -235,7 +235,7 @@ class TestCipherFunctions(TestCase):
         mock_user.objects.get.return_value= "user"
         mock_challenge.plaintext = 'abc'
         
-        success = test_solution(challenge_id=1, user_id=2, guessed_plaintext='def')
+        success = check_solution(challenge_id=1, user_id=2, guessed_plaintext='def')
         
         mock_models.Challenge.objects.get.assert_called_with(pk=1)
         mock_user.objects.get.assert_called_with(pk=2)
@@ -252,10 +252,10 @@ class TestCipherFunctions(TestCase):
         mock_challenge.plaintext = 'abc'
         
         with self.assertRaises(TypeError):
-            success = test_solution(challenge_id='1', user_id=2, guessed_plaintext='abc')
+            success = check_solution(challenge_id='1', user_id=2, guessed_plaintext='abc')
             
         with self.assertRaises(TypeError):
-            success = test_solution(challenge_id=1.0, user_id=2, guessed_plaintext='abc')
+            success = check_solution(challenge_id=1.0, user_id=2, guessed_plaintext='abc')
             
     @mock.patch('cccenter.python.cipher.timezone')
     @mock.patch('cccenter.python.cipher.User')
@@ -268,10 +268,10 @@ class TestCipherFunctions(TestCase):
         mock_challenge.plaintext = 'abc'
         
         with self.assertRaises(TypeError):
-            success = test_solution(challenge_id=1, user_id='2', guessed_plaintext='abc')
+            success = check_solution(challenge_id=1, user_id='2', guessed_plaintext='abc')
             
         with self.assertRaises(TypeError):
-            success = test_solution(challenge_id=1, user_id=2.0, guessed_plaintext='abc')
+            success = check_solution(challenge_id=1, user_id=2.0, guessed_plaintext='abc')
             
     @mock.patch('cccenter.python.cipher.timezone')
     @mock.patch('cccenter.python.cipher.User')
@@ -284,7 +284,7 @@ class TestCipherFunctions(TestCase):
         mock_challenge.plaintext = 'abc'
         
         with self.assertRaises(ValueError):
-            success = test_solution(challenge_id=-1, user_id=2, guessed_plaintext='abc')
+            success = check_solution(challenge_id=-1, user_id=2, guessed_plaintext='abc')
             
     @mock.patch('cccenter.python.cipher.timezone')
     @mock.patch('cccenter.python.cipher.User')
@@ -297,7 +297,7 @@ class TestCipherFunctions(TestCase):
         mock_challenge.plaintext = 'abc'
         
         with self.assertRaises(ValueError):
-            success = test_solution(challenge_id=1, user_id=-2, guessed_plaintext='abc')
+            success = check_solution(challenge_id=1, user_id=-2, guessed_plaintext='abc')
 
 if __name__ == '__main__':
     unittest.main()

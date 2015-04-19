@@ -53,7 +53,7 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
 
     return {'ciphertext':challenge.ciphertext, 'challenge_id':challenge.id}
     
-def test_solution(challenge_id, user_id, guessed_plaintext):
+def check_solution(challenge_id, user_id, guessed_plaintext):
     if type(challenge_id) is not int:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
     
