@@ -209,7 +209,7 @@ class TestCipherFunctions(TestCase):
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
     @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_testsolutionPass1(self, mock_challenge, mock_models, mock_user, mock_timezone):
+    def test_checksolutionPass1(self, mock_challenge, mock_models, mock_user, mock_timezone):
         mock_timezone.now.return_value = "now"
         mock_models.Challenge.objects.get.return_value = mock_challenge
         mock_user.objects.get.return_value= "user"
@@ -229,7 +229,28 @@ class TestCipherFunctions(TestCase):
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
     @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_testsolutionFail1(self, mock_challenge, mock_models, mock_user, mock_timezone):
+    def test_checksolutionPass2(self, mock_challenge, mock_models, mock_user, mock_timezone):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.get.return_value = mock_challenge
+        mock_user.objects.get.return_value= "user"
+        mock_challenge.plaintext = 'abc'
+        mock_challenge.solved = True
+        
+        success = check_solution(challenge_id=1, user_id=2, guessed_plaintext='abc')
+        
+        mock_models.Challenge.objects.get.assert_called_with(pk=1)
+        mock_user.objects.get.assert_called_with(pk=2)
+        self.assertTrue(success)
+        self.assertNotEqual(mock_challenge.solved_by, "user")
+        self.assertNotEqual(mock_challenge.datetime_solved, "now")
+        self.assertTrue(mock_challenge.solved)
+        self.assertFalse(mock_challenge.save.called)
+        
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_checksolutionFail1(self, mock_challenge, mock_models, mock_user, mock_timezone):
         mock_timezone.now.return_value = "now"
         mock_models.Challenge.objects.get.return_value = mock_challenge
         mock_user.objects.get.return_value= "user"
@@ -245,7 +266,7 @@ class TestCipherFunctions(TestCase):
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
     @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_testsolutionFail2(self, mock_challenge, mock_models, mock_user, mock_timezone):
+    def test_checksolutionFail2(self, mock_challenge, mock_models, mock_user, mock_timezone):
         mock_timezone.now.return_value = "now"
         mock_models.Challenge.objects.get.return_value = mock_challenge
         mock_user.objects.get.return_value= "user"
@@ -261,7 +282,7 @@ class TestCipherFunctions(TestCase):
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
     @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_testsolutionFail3(self, mock_challenge, mock_models, mock_user, mock_timezone):
+    def test_checksolutionFail3(self, mock_challenge, mock_models, mock_user, mock_timezone):
         mock_timezone.now.return_value = "now"
         mock_models.Challenge.objects.get.return_value = mock_challenge
         mock_user.objects.get.return_value= "user"
@@ -277,10 +298,10 @@ class TestCipherFunctions(TestCase):
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
     @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_testsolutionFail4(self, mock_challenge, mock_models, mock_user, mock_timezone):
+    def test_checksolutionFail4(self, mock_challenge, mock_models, mock_user, mock_timezone):
         mock_timezone.now.return_value = "now"
-        mock_models.Challenge.objects.get.return_value = None
-        mock_user.objects.get.return_value= "user"
+        mock_models.Challenge.objects.get.return_value = mock_challenge
+        mock_user.objects.get.return_value= None
         mock_challenge.plaintext = 'abc'
         
         with self.assertRaises(ValueError):
@@ -290,7 +311,7 @@ class TestCipherFunctions(TestCase):
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
     @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_testsolutionFail5(self, mock_challenge, mock_models, mock_user, mock_timezone):
+    def test_checksolutionFail5(self, mock_challenge, mock_models, mock_user, mock_timezone):
         mock_timezone.now.return_value = "now"
         mock_models.Challenge.objects.get.return_value = None
         mock_user.objects.get.return_value= "user"
