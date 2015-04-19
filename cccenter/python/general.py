@@ -21,5 +21,5 @@ def generate_paragraph():
     #Select 2 random sentences
     paragraph = random.choice(sentences) + random.choice(sentences)
 
-    paragraph = re.sub(r'\s+', '', paragraph)
+    paragraph = re.sub(r'\s+', '', paragraph).lower()
     return paragraph
