@@ -35,9 +35,10 @@ class TestCipherFunctions(TestCase):
     @mock.patch('cccenter.python.cipher.timezone')
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
-    def test_createchallenge(self, mock_models, mock_user, mock_timezone):
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_createchallenge(self, mock_challenge, mock_models, mock_user, mock_timezone):
         mock_timezone.now.return_value = "now"
-        #mock_models.Challenge.objects.create.return_value = "challenge"
+        mock_models.Challenge.objects.create.return_value = mock_challenge
         #mock_models.Challenge.users.add.return_value = ""
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
@@ -48,8 +49,8 @@ class TestCipherFunctions(TestCase):
         mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
                                                                 ciphertype=self.ciphertype, cipherkey=self.key,
                                                                 challenge_type=self.challengetype, datetime_created=self.tn)
-        self.assertTrue(mock_models.Challenge.users.add.called)
-        self.assertTrue(mock_models.Challenge.save.called)
+        self.assertTrue(mock_challenge.users.add.called)
+        self.assertTrue(mock_challenge.save.called)
         
         #a = Challenge.objects.get(pk=c_data['challenge_id'])
         #self.assertEqual(a.ciphertext, self.ciphertext)
@@ -66,6 +67,15 @@ class TestCipherFunctions(TestCase):
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
                                             self.users, self.tn, self.tn)
+                                            
+        self.assertFalse(mock_timezone.now.called)
+        self.assertTrue(mock_models.Challenge.objects.create.called)
+        mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
+                                                                ciphertype=self.ciphertype, cipherkey=self.key,
+                                                                challenge_type=self.challengetype, datetime_created=self.tn)
+        self.assertTrue(mock_challenge.users.add.called)
+        self.assertTrue(mock_challenge.save.called)
+        
         #a = Challenge.objects.get(pk=c_data['challenge_id'])
         #self.assertEqual(a.ciphertext, self.ciphertext)
         #self.assertEqual(a.plaintext, self.plaintext)
@@ -81,6 +91,15 @@ class TestCipherFunctions(TestCase):
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
                                             self.users, self.tn)
+                                            
+        self.assertFalse(mock_timezone.now.called)
+        self.assertTrue(mock_models.Challenge.objects.create.called)
+        mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
+                                                                ciphertype=self.ciphertype, cipherkey=self.key,
+                                                                challenge_type=self.challengetype, datetime_created=self.tn)
+        self.assertTrue(mock_challenge.users.add.called)
+        self.assertTrue(mock_challenge.save.called)
+        
         #a = Challenge.objects.get(pk=c_data['challenge_id'])
         #self.assertEqual(a.ciphertext, self.ciphertext)
         #self.assertEqual(a.plaintext, self.plaintext)
@@ -95,6 +114,15 @@ class TestCipherFunctions(TestCase):
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
                                             self.users)
+                                            
+        self.assertTrue(mock_timezone.now.called)
+        self.assertTrue(mock_models.Challenge.objects.create.called)
+        mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
+                                                                ciphertype=self.ciphertype, cipherkey=self.key,
+                                                                challenge_type=self.challengetype, datetime_created="now")
+        self.assertTrue(mock_challenge.users.add.called)
+        self.assertTrue(mock_challenge.save.called)
+        
         #a = Challenge.objects.get(pk=c_data['challenge_id'])
         #self.assertEqual(a.ciphertext, self.ciphertext)
         #self.assertEqual(a.plaintext, self.plaintext)
@@ -106,7 +134,18 @@ class TestCipherFunctions(TestCase):
         
         #a.delete()
         
+        mock_challenge.users.add.called = False # set to false after previous tests
+        
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype)
+        
+        self.assertTrue(mock_timezone.now.called)
+        self.assertTrue(mock_models.Challenge.objects.create.called)
+        mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
+                                                                ciphertype=self.ciphertype, cipherkey=self.key,
+                                                                challenge_type=self.challengetype, datetime_created="now")
+        self.assertFalse(mock_challenge.users.add.called)
+        self.assertTrue(mock_challenge.save.called)
+        
         #a = Challenge.objects.get(pk=c_data['challenge_id'])
         #self.assertEqual(a.ciphertext, self.ciphertext)
         #self.assertEqual(a.plaintext, self.plaintext)
