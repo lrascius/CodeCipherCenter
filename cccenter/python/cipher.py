@@ -19,7 +19,7 @@ def ceasar_shift_encode(text, shift):
     return encoded_text.upper()
 
 def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
-                     users=None, dt_created=None, dt_solved=None, solved_by=None):
+                     users=None, dt_created=None, solved=False, dt_solved=None, solved_by=None):
     '''Creates a challenge object and puts it in the database.'''
 
     if dt_created is not None:
@@ -34,12 +34,20 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
     if users is not None:
         for user in users:
             challenge.users.add(user)
+            
+    if solved is not None:
+        if solved is True:
+            challenge.solved = True
 
-    if dt_solved is not None:
-        challenge.datetime_solved = dt_solved
+            if dt_solved is not None:
+                challenge.datetime_solved = dt_solved
+            else:
+                raise ValueError("Null value passed for datetime solved when solved is True")
 
-    if solved_by is not None:
-        challenge.solved_by = solved_by
+            if solved_by is not None:
+                challenge.solved_by = solved_by
+            else:
+                raise ValueError("Null value passed for solved_by solved when solved is True")
 
     challenge.save()
 

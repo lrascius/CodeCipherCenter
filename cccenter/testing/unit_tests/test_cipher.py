@@ -42,7 +42,7 @@ class TestCipherFunctions(TestCase):
         #mock_models.Challenge.users.add.return_value = ""
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
-                                            self.users, self.tn, self.tn, self.user1)
+                                            self.users, self.tn, True, self.tn, self.user1)
                                             
         self.assertFalse(mock_timezone.now.called)
         self.assertTrue(mock_models.Challenge.objects.create.called)
