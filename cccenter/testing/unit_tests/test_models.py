@@ -24,7 +24,8 @@ class TestChallenge(unittest.TestCase):
         self.user = User.objects.create(username="m1", password="k")
         self.userprofile = UserProfile(user=self.user, datetime_created=timezone.now())
         self.challenge = Challenge.objects.create(ciphertext="def", plaintext="abc", ciphertype="Caesar Shift Cipher", cipherkey="3",
-                                                 datetime_created=timezone.now(), datetime_solved=timezone.now(), solved_by=User())
+                                                 datetime_created=timezone.now(), datetime_solved=timezone.now(),
+                                                 solved_by=User(), solved=True)
         self.comment = Comment.objects.create(user=self.user, text='hi', datetime=timezone.now(), forum=self.challenge)
         
     def tearDown(self):
@@ -91,6 +92,10 @@ class TestChallenge(unittest.TestCase):
     def test_challengeTypeType(self):
         members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
         self.assertTrue('challenge_type' in members)
+        
+    def test_challengeTypeType(self):
+        members = [attr for attr in dir(self.challenge) if not callable(attr) and not attr.startswith("__")]
+        self.assertTrue('solved' in members)
         
 class TestComment(unittest.TestCase):
     def setUp(self):
