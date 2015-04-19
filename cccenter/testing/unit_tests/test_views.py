@@ -42,8 +42,8 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_challengeList(self):
-	resp = self.client.get('/challengeList/')
-	self.assertEqual(resp.status_code, 200)
+        resp = self.client.get('/challengeList/')
+        self.assertEqual(resp.status_code, 200)
         
     def test_challengeCreation(self):
         resp = self.client.post('/cipher/createchallenge/')
@@ -52,6 +52,9 @@ class TestViews(TestCase):
         data = json.loads(resp.content.decode('utf-8'))
         self.assertTrue(data['ciphertext'])
         self.assertTrue(data['challenge_id'])
+        
+        resp = self.client.get('/cipher/createchallenge/')
+        self.assertEqual(resp.status_code, 404)
         
     def test_checkPlaintext(self):
         resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':1, 'user_id':2, 'guessed_plaintext':'def'})
@@ -63,11 +66,10 @@ class TestViews(TestCase):
     def test_login(self):
         response = self.client.get('/accounts/login/')
 
-       	
-       	value = self.client.login(username='fred', password='secret')
-       	self.assertEqual(value, False)
-       	value = self.client.logout()
-       	self.assertEqual(value, None)
+        value = self.client.login(username='fred', password='secret')
+        self.assertEqual(value, False)
+        value = self.client.logout()
+        self.assertEqual(value, None)
 
     def test_auth_view(self):
         ''' Test authorization '''
