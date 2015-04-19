@@ -47,6 +47,16 @@ def create_challenge(request):
                              cipher['key'], cipher['challenge_type'], cipher['users'])
 
     return HttpResponse(json.dumps(cd), content_type="application/json")
+    
+@login_required
+def check_plaintext(request):
+    '''Checks if submitted plaintext is the correct answer.  Returns True or False.'''
+    challenge_id = request.POST.get("challenge_id", "")
+    user_id = request.user.id
+    guessed_plaintext = request.POST.get("guessed_plaintext", "")
+    success = cf.check_solution(challenge_id, user_id, guessed_plaintext)
+    
+    return HttpResponse(json.dumps(success), content_type="application/json")
 
 def login(request):
     '''Returns login page.'''
