@@ -49,6 +49,9 @@ class TestViews(TestCase):
         self.assertTrue(data['ciphertext'])
         self.assertTrue(data['challenge_id'])
         
+        resp = self.client.get('/cipher/createchallenge/')
+        self.assertEqual(resp.status_code, 404)
+        
     def test_checkPlaintext(self):
         resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':1, 'user_id':2, 'guessed_plaintext':'def'})
         self.assertEqual(resp.status_code, 200)
