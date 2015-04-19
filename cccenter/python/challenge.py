@@ -6,10 +6,10 @@ from django.utils import timezone
 
 def challenge_list():
     chList = []
-    i = Challenge.objects.all()
+    i = models.Challenge.objects.all()
 
     for names in i:
-        chList.append(names)
+        chList.append(names.id)
 
 def join_challenge(challenge_id, user_id):
     if type(challenge_id) is not int:
