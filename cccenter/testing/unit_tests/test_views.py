@@ -48,6 +48,10 @@ class TestViews(TestCase):
         data = json.loads(resp.content.decode('utf-8'))
         self.assertTrue(data['ciphertext'])
         self.assertTrue(data['challenge_id'])
+        
+    def test_checkPlaintext(self):
+        resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':1, 'user_id':2, 'guessed_plaintext':'def'})
+        self.assertEqual(resp.status_code, 200)
 
     def test_login(self):
         response = self.client.get('/accounts/login/')
