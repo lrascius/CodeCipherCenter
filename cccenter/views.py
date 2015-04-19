@@ -35,18 +35,22 @@ def getCipher(request):
 @login_required
 def create_challenge(request):
     '''Creates a new challenge.'''
-    cipher = {}
-    cipher['plaintext'] = general.generate_paragraph()
-    cipher['key'] = randint(1, 25)
-    cipher['ciphertext'] = cf.ceasar_shift_encode(cipher['plaintext'], cipher['key'])
-    cipher['ciphertype'] = "Caesar Shift Cipher"
-    cipher['challenge_type'] = "single"
-    cipher['users'] = [User.objects.get(pk=request.user.id)]
+    if request.method is 'GET':
+        return Http404()
+        
+    elif request.method is 'POST':
+        cipher = {}
+        cipher['plaintext'] = general.generate_paragraph()
+        cipher['key'] = randint(1, 25)
+        cipher['ciphertext'] = cf.ceasar_shift_encode(cipher['plaintext'], cipher['key'])
+        cipher['ciphertype'] = "Caesar Shift Cipher"
+        cipher['challenge_type'] = "single"
+        cipher['users'] = [User.objects.get(pk=request.user.id)]
 
-    cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],
-                             cipher['key'], cipher['challenge_type'], cipher['users'])
+        cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],
+                                 cipher['key'], cipher['challenge_type'], cipher['users'])
 
-    return HttpResponse(json.dumps(cd), content_type="application/json")
+        return HttpResponse(json.dumps(cd), content_type="application/json")
     
 @login_required
 def check_plaintext(request):
