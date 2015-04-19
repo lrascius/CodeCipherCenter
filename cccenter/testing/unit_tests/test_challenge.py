@@ -17,10 +17,10 @@ class TestChallenge(TestCase):
         mock_user.objects.get.return_value= "user"
         mock_challenge.users.add.return_value = True
         
-        success = join_challenge(challenge_id=1, user_id=2)
+        join_challenge(challenge_id=1, user_id=2)
         
         mock_challenges.users.add.assert_called_with("user")
-        self.assertTrue(success)
+        self.assertTrue(mock_challenge.save.called)
         
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
@@ -30,7 +30,7 @@ class TestChallenge(TestCase):
         mock_user.objects.get.return_value= "user"
         
         with self.assertRaises(ValueError):
-            success = join_challenge(challenge_id=-1, user_id=2)
+            join_challenge(challenge_id=-1, user_id=2)
             
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
@@ -40,7 +40,7 @@ class TestChallenge(TestCase):
         mock_user.objects.get.return_value= "user"
         
         with self.assertRaises(ValueError):
-            success = join_challenge(challenge_id=1, user_id=-2)
+            join_challenge(challenge_id=1, user_id=-2)
             
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
@@ -50,10 +50,10 @@ class TestChallenge(TestCase):
         mock_user.objects.get.return_value= "user"
         
         with self.assertRaises(TypeError):
-            success = join_challenge(challenge_id=1.0, user_id=2)
+            join_challenge(challenge_id=1.0, user_id=2)
             
         with self.assertRaises(TypeError):
-            success = join_challenge(challenge_id='1', user_id=2)
+            join_challenge(challenge_id='1', user_id=2)
             
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
@@ -63,7 +63,7 @@ class TestChallenge(TestCase):
         mock_user.objects.get.return_value= "user"
         
         with self.assertRaises(TypeError):
-            success = join_challenge(challenge_id=1, user_id=2.0)
+            join_challenge(challenge_id=1, user_id=2.0)
             
         with self.assertRaises(TypeError):
-            success = join_challenge(challenge_id=1, user_id='2')
+            join_challenge(challenge_id=1, user_id='2')
