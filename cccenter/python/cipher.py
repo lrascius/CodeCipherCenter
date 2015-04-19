@@ -1,7 +1,7 @@
 #!cccenter/python/cipher.py
 '''Generates ciphertext objects.'''
 
-from cccenter.models import *
+import cccenter.models as models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
@@ -19,7 +19,7 @@ def ceasar_shift_encode(text, shift):
     return encoded_text.upper()
 
 def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
-                     users=None, dt_created=None, dt_solved=None, solved_by=None):
+                     users=None, dt_created=None, solved=False, dt_solved=None, solved_by=None):
     '''Creates a challenge object and puts it in the database.'''
 
     if dt_created is not None:
@@ -27,20 +27,59 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
     else:
         dt_created = timezone.now()
 
-    challenge = Challenge.objects.create(plaintext=plaintext, ciphertext=ciphertext,
+    challenge = models.Challenge.objects.create(plaintext=plaintext, ciphertext=ciphertext,
                                          ciphertype=ciphertype, cipherkey=key,
                                          challenge_type=challenge_type, datetime_created=dt_created)
 
     if users is not None:
         for user in users:
             challenge.users.add(user)
+            
+    if solved is not None:
+        if solved is True:
+            challenge.solved = True
 
-    if dt_solved is not None:
-        challenge.datetime_solved = dt_solved
+            if dt_solved is not None:
+                challenge.datetime_solved = dt_solved
+            else:
+                raise ValueError("Null value passed for datetime solved when solved is True")
 
-    if solved_by is not None:
-        challenge.solved_by = solved_by
+            if solved_by is not None:
+                challenge.solved_by = solved_by
+            else:
+                raise ValueError("Null value passed for solved_by solved when solved is True")
 
     challenge.save()
 
     return {'ciphertext':challenge.ciphertext, 'challenge_id':challenge.id}
+    
+def check_solution(challenge_id, user_id, guessed_plaintext):
+    if type(challenge_id) is not int:
+        raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
+    
+    if type(user_id) is not int:
+        raise TypeError("user_id is " + str(type(challenge_id)) + ", not int")
+    
+    challenge = models.Challenge.objects.get(pk=challenge_id)
+    
+    if challenge is None:
+        raise ValueError("challenge_id is not valid")
+        
+    user = User.objects.get(pk=user_id)
+    
+    if user is None:
+        raise ValueError("user_id is not valid")
+        
+    if challenge.plaintext == guessed_plaintext:
+        # if challenge has not already been solved
+        if challenge.solved == False:
+            challenge.solved = True
+            challenge.solved_by = user
+            challenge.datetime_solved = timezone.now()
+            challenge.save()
+        
+        return True
+        
+    else:
+        return False
+
