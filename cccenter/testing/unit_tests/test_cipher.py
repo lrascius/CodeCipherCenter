@@ -18,10 +18,12 @@ class TestCipherFunctions(TestCase):
         self.user2.save()
         self.users = [self.user1, self.user2]
         self.challengetype = 'single'
+        self.client.login(username='marctest0', password='test0')
         
     def tearDown(self):
         self.user1.delete()
         self.user2.delete()
+        self.client.logout()
         
     def test_ceasar_shift_0(self):
         self.assertTrue(ceasar_shift_encode(self.text, 0) == "SOMERANDOMTEXTWITHSOMEWEIRDCHARACTERS")
@@ -202,6 +204,26 @@ class TestCipherFunctions(TestCase):
         #self.assertEqual(a.users, None)
         
         #a.delete()
+        
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_testsolutionPass1(self, mock_challenge, mock_models, mock_user, mock_timezone):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.get.return_value = mock_challenge
+        mock_user.objects.get.return_value= "user"
+        mock_challenge.plaintext = 'abc'
+        
+        success = test_solution(challenge_id=1, user_id=2, guessed_plaintext='abc')
+        
+        self.assertTrue(success)
+        mock_models.Challenge.objects.get.assert_called_with(pk=1)
+        mock_user.objects.get.assert_called_with(pk=2)
+        self.assertEqual(mock_challenge.solved_by, "user")
+        self.assertEqual(mock_challenge.datetime_solved, "now")
+        self.assertTrue(mock_challenge.solved)
+        self.assertTrue(mock_challenge.save.called)
 
 if __name__ == '__main__':
     unittest.main()
