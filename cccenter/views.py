@@ -146,6 +146,24 @@ def profile(request):
                   'cccenter/profile.html',
                    {'user' : user, 'userprofile' : userprofile})
 
+@login_required
+def settings(request):
+    try:
+        profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        profile = UserProfile(user=request.user)
 
+    if request.method == 'POST':
+        form = SettingsForm(request.POST, request.FILES, instance=profile)
+        form.user = request.user
+
+        if form.is_valid():
+            
+            form.save()
+
+            return HttpResponseRedirect('/profile/')
+
+    return render(request, 
+                  'cccenter/settings.html') 
 
 
