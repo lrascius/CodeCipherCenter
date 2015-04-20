@@ -37,7 +37,7 @@ def getCipher(request):
 def create_challenge(request):
     '''Creates a new challenge.'''
     if request.method == 'GET':
-        return Http404()
+        return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center"})
         
     elif request.method == 'POST':
         cipher = {}
@@ -51,13 +51,15 @@ def create_challenge(request):
         cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],
                                  cipher['key'], cipher['challenge_type'], cipher['users'])
 
-        return HttpResponse(json.dumps(cd), content_type="application/json")
+        #return HttpResponse(json.dumps(cd), content_type="application/json")
+        return HttpResponseRedirect('/cipher/challengepage/', {'challenge_id':cd['challenge_id']})
     
 @login_required
 def check_plaintext(request):
     '''Checks if submitted plaintext is the correct answer.  Returns True or False.'''
     if request.method == 'GET':
         return Http404()
+        
     elif request.method == 'POST':
         challenge_id = int(request.POST.get("challenge_id", ""))
         user_id = request.user.id
