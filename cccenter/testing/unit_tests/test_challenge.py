@@ -67,3 +67,13 @@ class TestChallenge(TestCase):
             
         with self.assertRaises(TypeError):
             join_challenge(challenge_id=1, user_id='2')
+            
+    @mock.patch('cccenter.python.challenge.models')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
+    def test_getCiphertext_Pass1(self, mock_challenge, mock_models):
+        mock_models.Challenge.objects.get.return_value = mock_models
+        mock_models.ciphertext = "DEF"
+        
+        ct = get_ciphertext(challenge_id=1)
+        
+        self.assertEqual(mock_models.ciphertext, ct)
