@@ -15,7 +15,7 @@
 		<br>
 		{% if user.is_authenticated %}
 		    <form method='post' action="checkPlaintext({{challenge_id}})">{% csrf_token %}
-		    <input class="btn btn-success" type="button" value="Check Solution" <!--onclick="checkPlaintext({{challenge_id}})"-->>
+		    <input class="btn btn-success" type="submit" value="Check Solution">
 		    </form>
 	    {% else %}
 	        <input class="btn btn-success" type="button" value="Join" onclick="joinChallenge({{challenge_id}})">
