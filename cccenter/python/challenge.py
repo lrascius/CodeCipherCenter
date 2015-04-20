@@ -30,3 +30,14 @@ def join_challenge(challenge_id, user_id):
         
     challenge.users.add(user)
     challenge.save()
+    
+def get_ciphertext(challenge_id):
+    if type(challenge_id) is not int:
+        raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
+        
+    challenge = models.Challenge.objects.get(pk=challenge_id)
+    
+    if challenge is None:
+        raise ValueError("Invalid challenge_id")
+        
+    return challenge.ciphertext
