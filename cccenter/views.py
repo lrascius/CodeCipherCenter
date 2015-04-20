@@ -134,3 +134,18 @@ def register(request):
                   'cccenter/register.html',
                   {'user_form': user_form, 'registered': registered})
 
+@login_required
+def profile(request):
+    user = User.objects.get(username=request.user)
+    try:
+        userprofile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        userprofile = UserProfile(user=request.user)
+
+    return render(request, 
+                  'cccenter/profile.html',
+                   {'user' : user, 'userprofile' : userprofile})
+
+
+
+
