@@ -52,7 +52,7 @@ def create_challenge(request):
                                  cipher['key'], cipher['challenge_type'], cipher['users'])
 
         #return HttpResponse(json.dumps(cd), content_type="application/json")
-        return HttpResponseRedirect('/cipher/challengepage/', {'challenge_id':cd['challenge_id']})
+        return HttpResponseRedirect('/cipher/challengepage/?challenge_id='+str(cd['challenge_id']))#, {'challenge_id':cd['challenge_id']})
     
 @login_required
 def check_plaintext(request):
