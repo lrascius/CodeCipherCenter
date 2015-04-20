@@ -27,7 +27,8 @@ function getCiphertext() {
 function checkPlaintext(challenge_id) {
     // send the plaintext for verification
     var pt = $('#plaintextDisplay').text();
-    var csrftoken = $.cookie('csrftoken');
+    //var csrftoken = $.cookie('csrftoken');
+    var csrftoken = $("[name='csrfmiddlewaretoken']");
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
