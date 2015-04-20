@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     '''A model for storing users.'''
     user = models.OneToOneField(User)
-    datetime_created = models.DateTimeField()
+    profile_image = models.ImageField(upload_to = 'images/profile', default = 'images/profile/default.png')
 
 class Challenge(models.Model):
     '''A model for ciphertext display and plaintext submission.  Contains
