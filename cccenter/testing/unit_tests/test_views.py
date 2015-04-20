@@ -58,7 +58,7 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 404)
         
     def test_challengePage(self):
-        resp = self.client.get('/cipher/challengepage/', {'challenge_id':1})
+        resp = self.client.get('/cipher/challengepage/', {'challenge_id':'1'})
         self.assertNotEqual(resp, None)
         self.assertEqual(resp.status_code, 200)
         
