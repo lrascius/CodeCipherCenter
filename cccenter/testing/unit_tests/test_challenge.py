@@ -86,3 +86,15 @@ class TestChallenge(TestCase):
         
         with self.assertRaises(ValueError):
             ct = get_ciphertext(challenge_id=-1)
+            
+    @mock.patch('cccenter.python.challenge.models')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
+    def test_getCiphertext_Fail2(self, mock_challenge, mock_models):
+        mock_models.Challenge.objects.get.return_value = None
+        mock_models.ciphertext = "DEF"
+        
+        with self.assertRaises(TypeError):
+            ct = get_ciphertext(challenge_id='1')
+            
+        with self.assertRaises(TypeError):
+            ct = get_ciphertext(challenge_id=1.0)
