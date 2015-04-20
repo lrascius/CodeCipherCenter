@@ -24,7 +24,6 @@ class TestViews(TestCase):
 
     def test_register(self):
         ''' Test registration form (get and post requests)'''
-        raise Exception('hi')
         # test if registration form is returned to get request
         resp = self.client.get('/accounts/register/')
         self.assertEqual(resp.status_code, 200)
