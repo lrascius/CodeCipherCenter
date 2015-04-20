@@ -29,19 +29,19 @@ function checkPlaintext(challenge_id) {
     var pt = $('#plaintextDisplay').text();
     //var csrftoken = $.cookie('csrftoken');
     var csrftoken = $("[name='csrfmiddlewaretoken']");
-    $.ajaxSetup({
+    /*$.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
         }
-    });
+    });*/
     
     // submit the plaintext
     $.ajax({
         url: "/cipher/checkplaintext/", // source page relative to the current page (cccenter/)
         type: "POST",
-        data: JSON.stringify({'challenge_id':challenge_id, 'guessed_plaintext':pt}),
+        data: JSON.stringify({'challenge_id':challenge_id, 'guessed_plaintext':pt}, 'csrfmiddlewaretoken':csrftoken),
         contentType: 'application/json', // data type sent to server
         dataType: 'application/json', // data type expected from server
         async: true,
