@@ -77,3 +77,12 @@ class TestChallenge(TestCase):
         ct = get_ciphertext(challenge_id=1)
         
         self.assertEqual(mock_models.ciphertext, ct)
+        
+    @mock.patch('cccenter.python.challenge.models')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
+    def test_getCiphertext_Fail1(self, mock_challenge, mock_models):
+        mock_models.Challenge.objects.get.return_value = None
+        mock_models.ciphertext = "DEF"
+        
+        with self.assertRaises(ValueError):
+            ct = get_ciphertext(challenge_id=-1)
