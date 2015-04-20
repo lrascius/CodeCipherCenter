@@ -4,10 +4,10 @@ import cccenter.models as models
 import mock
 
 class TestChallenge(TestCase):
-    def test_challengeList(self):
-        a = challenge_list()
-        self.assertEqual(type(a), str)
-        self.assertGreater(len(a), 0)
+    #def test_challengeList(self):
+    #    a = challenge_list()
+    #    self.assertEqual(type(a), str)
+    #    self.assertGreater(len(a), 0)
         
     @mock.patch('cccenter.python.challenge.User')
     @mock.patch('cccenter.python.challenge.models')

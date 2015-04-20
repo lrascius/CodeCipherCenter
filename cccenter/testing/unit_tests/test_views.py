@@ -7,7 +7,7 @@ import json
 class TestViews(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="m", password="t")
-        self.client.login(username="m", password="t")
+        #self.client.login(username="m", password="t")
         
     def tearDown(self):
         self.user.delete()
@@ -57,7 +57,8 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 404)
         
     def test_challengePage(self):
-        resp = self.client.get('/cipher/challengepage/')
+        resp = self.client.get('/cipher/challengepage/', {'challenge_id':1})
+        self.assertNotEqual(resp, None)
         self.assertEqual(resp.status_code, 200)
         
     def test_checkPlaintext(self):

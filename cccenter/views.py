@@ -15,6 +15,7 @@ import cccenter.python.cipher as cf
 from random import randint
 from cccenter.python.forms import RegistrationForm
 from django.contrib.auth.models import User, AnonymousUser
+import cccenter.python.challenge as challenge
 
 def index(request):
     '''Returns the homepage.'''
@@ -35,10 +36,10 @@ def getCipher(request):
 @login_required
 def create_challenge(request):
     '''Creates a new challenge.'''
-    if request.method is 'GET':
+    if request.method == 'GET':
         return Http404()
         
-    elif request.method is 'POST':
+    elif request.method == 'POST':
         cipher = {}
         cipher['plaintext'] = general.generate_paragraph()
         cipher['key'] = randint(1, 25)
@@ -55,7 +56,7 @@ def create_challenge(request):
 @login_required
 def check_plaintext(request):
     '''Checks if submitted plaintext is the correct answer.  Returns True or False.'''
-    challenge_id = request.POST.get("challenge_id", "")
+    challenge_id = int(request.POST.get("challenge_id", ""))
     user_id = request.user.id
     guessed_plaintext = request.POST.get("guessed_plaintext", "")
     success = cf.check_solution(challenge_id, user_id, guessed_plaintext)
@@ -64,12 +65,12 @@ def check_plaintext(request):
     
 def challenge_page(request):
     '''Returns the challenge page associated with the given challenge_id.'''
-    if request.method is 'GET':
+    if request.method == 'POST':
         return Http404()
         
-    elif request.method is 'POST':
-        challenge_id = request.post.get('challenge_id', '')
-        ct = get_ciphertext(challenge_id)
+    elif request.method == 'GET':
+        challenge_id = int(request.GET.get('challenge_id', ''))
+        ct = challenge.get_ciphertext(challenge_id)
         return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center",
                                                                 "challenge_id":challenge_id,
                                                                 "ciphertext":ct})
