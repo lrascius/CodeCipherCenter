@@ -21,7 +21,7 @@ import cccenter.python.challenge as challenge
 
 def index(request):
     '''Returns the homepage.'''
-    return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
+    return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center", "active":"home"})
 
 # def register(request):
 #     '''Returns the register page.'''
@@ -76,13 +76,13 @@ def challenge_page(request):
     elif request.method == 'GET':
         challenge_id = int(request.GET.get('challenge_id', ''))
         ct = challenge.get_ciphertext(challenge_id)
-        c = {"title":"Code and Cipher Center", "challenge_id":challenge_id, "ciphertext":ct}
+        c = {"title":"Code and Cipher Center", "challenge_id":challenge_id, "ciphertext":ct, "active":"challenge"}
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
 
 def login(request):
     '''Returns login page.'''
-    c = {}
+    c = {"active":"login"}
     c.update(csrf(request))
     return render_to_response('cccenter/login.html', c)
 
@@ -106,7 +106,7 @@ def challengeList(request):
 
 def loggedin(request):
     '''Returns challenge page.'''
-    return render(request, 'cccenter/challenge_page.html')
+    return render(request, 'cccenter/challenge_page.html', {"active":"challenge"})
 
 @login_required
 def logout(request):
@@ -135,7 +135,7 @@ def register(request):
 
     return render(request,
                   'cccenter/register.html',
-                  {'user_form': user_form, 'registered': registered})
+                  {'user_form': user_form, 'registered': registered, "active":"register"})
 
 @login_required
 def profile(request):
