@@ -46,6 +46,9 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 200)
         
     def test_challengeCreation(self):
+        response = self.client.get('/cipher/createchallenge/', follow=True)
+        self.assertRedirects(response, '/accounts/login/')
+
         resp = self.client.post('/cipher/createchallenge/')
         self.assertEqual(resp.status_code, 200)
         
@@ -62,6 +65,9 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 200)
         
     def test_checkPlaintext(self):
+        response = self.client.get('/cipher/checkplaintext/', follow=True)
+        self.assertRedirects(response, '/accounts/login/')
+
         resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':'1', 'user_id':2, 'guessed_plaintext':'def'})
         self.assertEqual(resp.status_code, 200)
         
@@ -92,6 +98,8 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_logout(self):
+        response = self.client.get('/accounts/logout', follow=True)
+        self.assertRedirects(response, '/accounts/login/')        
         response = self.client.get('/accounts/logout/')
         self.assertEqual(response.status_code, 200)
 

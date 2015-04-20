@@ -108,6 +108,7 @@ def loggedin(request):
     '''Returns challenge page.'''
     return render(request, 'cccenter/challenge_page.html')
 
+@login_required
 def logout(request):
     '''Logs user out and returns challenge page.'''
     auth.logout(request)

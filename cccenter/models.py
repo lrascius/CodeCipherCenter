@@ -31,7 +31,7 @@ class Challenge(models.Model):
     solved = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return smart_unicode(self.users)
+        return smart_unicode(self.ciphertype)
 
 
 class Comment(models.Model):
