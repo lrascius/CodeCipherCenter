@@ -71,9 +71,9 @@ def challenge_page(request):
     elif request.method == 'GET':
         challenge_id = int(request.GET.get('challenge_id', ''))
         ct = challenge.get_ciphertext(challenge_id)
-        return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center",
-                                                                "challenge_id":challenge_id,
-                                                                "ciphertext":ct})
+        c = {"title":"Code and Cipher Center", "challenge_id":challenge_id, "ciphertext":ct}
+        c.update(csrf(request))
+        return render(request, 'cccenter/challenge_page.html', c)
 
 def login(request):
     '''Returns login page.'''

@@ -14,7 +14,9 @@
 		<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
 		<br>
 		{% if user.is_authenticated %}
-		    <input class="btn btn-success" type="button" value="Check Solution" onclick="checkPlaintext({{challenge_id}})">
+		    <form method='post' action="checkPlaintext({{challenge_id}})">{% csrf_token %}
+		    <input class="btn btn-success" type="button" value="Check Solution" <!--onclick="checkPlaintext({{challenge_id}})"-->>
+		    </form>
 	    {% else %}
 	        <input class="btn btn-success" type="button" value="Join" onclick="joinChallenge({{challenge_id}})">
         {% endif %}

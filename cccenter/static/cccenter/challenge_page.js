@@ -7,7 +7,7 @@
 function getCiphertext() {
     // get a ciphertext
     $.ajax({
-        url: "cccenter/getcipher/", // source page relative to the current page (cccenter/)
+        url: "/cccenter/getcipher/", // source page relative to the current page (cccenter/)
         type: "GET",
         data: {}, // no paramaters as of yet
         dataType: 'json', // return data type
@@ -26,7 +26,7 @@ function checkPlaintext(challenge_id) {
     
     // submit the plaintext
     $.ajax({
-        url: "cipher/checkplaintext/", // source page relative to the current page (cccenter/)
+        url: "/cipher/checkplaintext/", // source page relative to the current page (cccenter/)
         type: "POST",
         data: JSON.stringify({'challenge_id':challenge_id, 'guessed_plaintext':pt}),
         contentType: 'application/json', // data type sent to server
@@ -43,9 +43,9 @@ function checkPlaintext(challenge_id) {
 
 function joinChallenge(challenge_id) {
     $.ajax({
-        url: "cipher/joinchallenge/",
+        url: "/cipher/joinchallenge/",
         type: "POST",
-        data: JSON.stringify({'challenge_id'}:challenge_id}),
+        data: JSON.stringify({'challenge_id':challenge_id}),
         contentType: 'application/json',
         async: false,
         success: function(data) {
