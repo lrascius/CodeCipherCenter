@@ -2,6 +2,7 @@
 '''This file contains Django the models for the cccenter app.'''
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.encoding import smart_unicode
 
 # Create your models here.
 
@@ -9,6 +10,9 @@ class UserProfile(models.Model):
     '''A model for storing users.'''
     user = models.OneToOneField(User)
     profile_image = models.ImageField(upload_to = 'images/profile', default = 'images/profile/default.png')
+
+    def __unicode__(self):
+        return smart_unicode(self.user)
 
 class Challenge(models.Model):
     '''A model for ciphertext display and plaintext submission.  Contains
@@ -26,9 +30,16 @@ class Challenge(models.Model):
                                                               ('competitive', 'competitive')))
     solved = models.BooleanField(default=False)
 
+    def __unicode__(self):
+        return smart_unicode(self.users)
+
+
 class Comment(models.Model):
     '''A model for comments in the forums.'''
     user = models.OneToOneField(User)
     text = models.TextField(default="")
     datetime = models.DateTimeField()
     forum = models.ForeignKey(Challenge)
+
+    def __unicode__(self):
+        return smart_unicode(self.user)
