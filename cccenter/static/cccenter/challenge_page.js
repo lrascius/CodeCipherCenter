@@ -48,7 +48,13 @@ function checkPlaintext(challenge_id) {
         async: true,
         success: function(data) { // what to do when the data is recieved
             // put the ciphertext on the 
-            alert(data); // for now
+            if (data['success'] == true) {
+                alert('You got it!');
+            }
+            
+            else {
+                alert('Not quite...');
+            }
             //TODO post result to page
             
         }
