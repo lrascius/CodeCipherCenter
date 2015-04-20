@@ -21,5 +21,7 @@ def generate_paragraph():
     #Select 2 random sentences
     paragraph = random.choice(sentences) + random.choice(sentences)
 
-    paragraph = re.sub(r'\s+', '', paragraph).lower()
+    paragraph = re.sub(r'\s+', '', paragraph)
+    regex = re.compile('[^a-zA-Z]')
+    paragraph = regex.sub('', paragraph).lower()
     return paragraph

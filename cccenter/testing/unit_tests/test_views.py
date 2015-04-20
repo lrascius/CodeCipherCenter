@@ -1,6 +1,7 @@
 from unittest.mock import patch
 import cccenter.views as views
 from django.test import TestCase
+from django.contrib.auth.models import User
 from django.test.client import Client
 import json
 
@@ -12,28 +13,27 @@ class TestViews(TestCase):
     def tearDown(self):
         self.user.delete()
 
-    @patch.mock('cccenter.views.django.shortcuts.render')
-    @patch.mock('cccenter.views.request')
-    def test_index(self, mock_request, mock_render):
-        #response = self.client.get('/')
-        views.index(mock_request)
+    #@patch.mock('cccenter.views.django.shortcuts.render')
+    #@patch.mock('cccenter.views.request')
+    #def test_index(self, mock_request, mock_render):
+    #    #response = self.client.get('/')
+    #    views.index(mock_request)
         
         #self.assertEqual(response.status_code, 200)
-        mock_render.assert_called_with(mock_request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
+    #    mock_render.assert_called_with(mock_request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
     def test_register(self):
         ''' Test registration form (get and post requests)'''
-        
         # test if registration form is returned to get request
-        resp = self.client.get('/register')
+        resp = self.client.get('/accounts/register/')
         self.assertEqual(resp.status_code, 200)
         
         # empty post request to test response to incorrect post
-        resp = self.client.post('/register')
+        resp = self.client.post('/accounts/register/')
         self.assertEqual(resp.status_code, 200)
         
         # test correct response
-        resp = self.client.post('/register', {'username':'mk', 'first_name':'m', 'last_name':'k', 'email':'mk@example.com', 
+        resp = self.client.post('/accounts/register/', {'username':'mk', 'first_name':'m', 'last_name':'k', 'email':'mk@example.com', 
                                               'password1':'a', 'password2':'a'})
         self.assertEqual(resp.status_code, 200)
 
@@ -42,8 +42,8 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_challengeList(self):
-    	resp = self.client.get('/challengeList/')
-    	self.assertEqual(resp.status_code, 200)
+        resp = self.client.get('/challengeList/')
+        self.assertEqual(resp.status_code, 200)
         
     def test_challengeCreation(self):
         resp = self.client.post('/cipher/createchallenge/')
@@ -53,8 +53,16 @@ class TestViews(TestCase):
         self.assertTrue(data['ciphertext'])
         self.assertTrue(data['challenge_id'])
         
+        resp = self.client.get('/cipher/createchallenge/')
+        self.assertEqual(resp.status_code, 404)
+        
+    def test_challengePage(self):
+        resp = self.client.get('/cipher/challengepage/', {'challenge_id':'1'})
+        self.assertNotEqual(resp, None)
+        self.assertEqual(resp.status_code, 200)
+        
     def test_checkPlaintext(self):
-        resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':1, 'user_id':2, 'guessed_plaintext':'def'})
+        resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':'1', 'user_id':2, 'guessed_plaintext':'def'})
         self.assertEqual(resp.status_code, 200)
         
         data = json.loads(resp.content.decode('utf-8'))
@@ -63,11 +71,10 @@ class TestViews(TestCase):
     def test_login(self):
         response = self.client.get('/accounts/login/')
 
-       	
-       	value = self.client.login(username='fred', password='secret')
-       	self.assertEqual(value, False)
-       	value = self.client.logout()
-       	self.assertEqual(value, None)
+        value = self.client.login(username='fred', password='secret')
+        self.assertEqual(value, False)
+        value = self.client.logout()
+        self.assertEqual(value, None)
 
     def test_auth_view(self):
         ''' Test authorization '''

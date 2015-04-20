@@ -3,7 +3,7 @@
 import json
 from django.shortcuts import render
 from django.template import Context
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib import auth
@@ -15,6 +15,7 @@ import cccenter.python.cipher as cf
 from random import randint
 from cccenter.python.forms import RegistrationForm
 from django.contrib.auth.models import User, AnonymousUser
+import cccenter.python.challenge as challenge
 
 def index(request):
     '''Returns the homepage.'''
@@ -35,28 +36,47 @@ def getCipher(request):
 @login_required
 def create_challenge(request):
     '''Creates a new challenge.'''
-    cipher = {}
-    cipher['plaintext'] = general.generate_paragraph()
-    cipher['key'] = randint(1, 25)
-    cipher['ciphertext'] = cf.ceasar_shift_encode(cipher['plaintext'], cipher['key'])
-    cipher['ciphertype'] = "Caesar Shift Cipher"
-    cipher['challenge_type'] = "single"
-    cipher['users'] = [User.objects.get(pk=request.user.id)]
+    if request.method == 'GET':
+        return Http404()
+        
+    elif request.method == 'POST':
+        cipher = {}
+        cipher['plaintext'] = general.generate_paragraph()
+        cipher['key'] = randint(1, 25)
+        cipher['ciphertext'] = cf.ceasar_shift_encode(cipher['plaintext'], cipher['key'])
+        cipher['ciphertype'] = "Caesar Shift Cipher"
+        cipher['challenge_type'] = "single"
+        cipher['users'] = [User.objects.get(pk=request.user.id)]
 
-    cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],
-                             cipher['key'], cipher['challenge_type'], cipher['users'])
+        cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],
+                                 cipher['key'], cipher['challenge_type'], cipher['users'])
 
-    return HttpResponse(json.dumps(cd), content_type="application/json")
+        return HttpResponse(json.dumps(cd), content_type="application/json")
     
 @login_required
 def check_plaintext(request):
     '''Checks if submitted plaintext is the correct answer.  Returns True or False.'''
-    challenge_id = request.POST.get("challenge_id", "")
-    user_id = request.user.id
-    guessed_plaintext = request.POST.get("guessed_plaintext", "")
-    success = cf.check_solution(challenge_id, user_id, guessed_plaintext)
+    if request.method == 'GET':
+        return Http404()
+    elif request.method == 'POST':
+        challenge_id = int(request.POST.get("challenge_id", ""))
+        user_id = request.user.id
+        guessed_plaintext = request.POST.get("guessed_plaintext", "")
+        success = cf.check_solution(challenge_id, user_id, guessed_plaintext)
     
-    return HttpResponse(json.dumps(success), content_type="application/json")
+        return HttpResponse(json.dumps({'success':success}), content_type="application/json")
+    
+def challenge_page(request):
+    '''Returns the challenge page associated with the given challenge_id.'''
+    if request.method == 'POST':
+        return Http404()
+        
+    elif request.method == 'GET':
+        challenge_id = int(request.GET.get('challenge_id', ''))
+        ct = challenge.get_ciphertext(challenge_id)
+        c = {"title":"Code and Cipher Center", "challenge_id":challenge_id, "ciphertext":ct}
+        c.update(csrf(request))
+        return render(request, 'cccenter/challenge_page.html', c)
 
 def login(request):
     '''Returns login page.'''
