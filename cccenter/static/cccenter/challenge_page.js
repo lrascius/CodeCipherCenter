@@ -27,8 +27,9 @@ function getCiphertext() {
 function checkPlaintext(challenge_id) {
     // send the plaintext for verification
     var pt = $('#plaintextDisplay').text();
-    //var csrftoken = $.cookie('csrftoken');
-    var csrftoken = $("[name='csrfmiddlewaretoken']");
+    var csrftoken = $.cookie('csrftoken');
+    
+    //var csrftoken = $("[name='csrfmiddlewaretoken']");
     /*$.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -41,7 +42,7 @@ function checkPlaintext(challenge_id) {
     $.ajax({
         url: "/cipher/checkplaintext/", // source page relative to the current page (cccenter/)
         type: "POST",
-        data: JSON.stringify({'challenge_id':challenge_id, 'guessed_plaintext':pt}, 'csrfmiddlewaretoken':csrftoken),
+        data: JSON.stringify({'challenge_id':challenge_id, 'guessed_plaintext':pt, 'csrfmiddlewaretoken':csrftoken}),
         contentType: 'application/json', // data type sent to server
         dataType: 'application/json', // data type expected from server
         async: true,
