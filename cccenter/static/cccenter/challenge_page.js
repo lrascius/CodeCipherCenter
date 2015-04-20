@@ -4,17 +4,9 @@
  * and run the comments and forum sections.
  */
  
-var csrftoken = $.cookie('csrftoken');
 function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
 
 function getCiphertext() {
     // get a ciphertext
@@ -35,6 +27,14 @@ function getCiphertext() {
 function checkPlaintext(challenge_id) {
     // send the plaintext for verification
     var pt = $('#plaintextDisplay').text();
+    var csrftoken = $.cookie('csrftoken');
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
     
     // submit the plaintext
     $.ajax({
