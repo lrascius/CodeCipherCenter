@@ -21,7 +21,7 @@
 	        <form method="post" action="/cipher/joinchallenge/">{% csrf_token %}
 	            <!--<input class="btn btn-success" type="button" value="Join" onclick="joinChallenge({{challenge_id}})">-->
 	            <input type="hidden" name="challenge_id" value="{{challenge_id}}">
-	            <input class="btn btn-success" type="submit">
+	            <input class="btn btn-success" type="submit" value="Join">
 	        </form>
         {% endif %}
 	</div>

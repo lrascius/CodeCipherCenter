@@ -1,0 +1,11 @@
+{% extends 'cccenter/base.html' %}
+{% block body %}
+<div class="container">
+    <h1 style="width:100%; text-align:center">New Challenge</h1>
+    <div align="center">
+        <form method="post" action="/cipher/createchallenge/">{% csrf_token %}
+            <input class="btn btn-success" type="submit" value="Create New Challenge">
+        </form>
+    </div>
+</div>
+{% endblock %}
