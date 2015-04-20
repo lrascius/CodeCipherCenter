@@ -3,7 +3,7 @@
 import json
 from django.shortcuts import render
 from django.template import Context
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib import auth
@@ -56,12 +56,15 @@ def create_challenge(request):
 @login_required
 def check_plaintext(request):
     '''Checks if submitted plaintext is the correct answer.  Returns True or False.'''
-    challenge_id = int(request.POST.get("challenge_id", ""))
-    user_id = request.user.id
-    guessed_plaintext = request.POST.get("guessed_plaintext", "")
-    success = cf.check_solution(challenge_id, user_id, guessed_plaintext)
+    if request.method == 'GET':
+        return Http404()
+    elif request.method == 'POST':
+        challenge_id = int(request.POST.get("challenge_id", ""))
+        user_id = request.user.id
+        guessed_plaintext = request.POST.get("guessed_plaintext", "")
+        success = cf.check_solution(challenge_id, user_id, guessed_plaintext)
     
-    return HttpResponse(json.dumps(success), content_type="application/json")
+        return HttpResponse(json.dumps(success), content_type="application/json")
     
 def challenge_page(request):
     '''Returns the challenge page associated with the given challenge_id.'''
