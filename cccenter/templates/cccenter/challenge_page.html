@@ -14,7 +14,7 @@
 		<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
 		<br>
 		{% if user.is_authenticated %}
-		    <form method='post' action="checkPlaintext({{challenge_id}})">{% csrf_token %}
+		    <form onsubmit="return checkPlaintext({{challenge_id}});">{% csrf_token %}
 		    <input class="btn btn-success" type="submit" value="Check Solution">
 		    </form>
 	    {% else %}
