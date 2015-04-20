@@ -26,7 +26,7 @@ function getCiphertext() {
 
 function checkPlaintext(challenge_id) {
     // send the plaintext for verification
-    var pt = $('#plaintextDisplay').text();
+    var pt = $('#plaintextDisplay').val();
     var csrftoken = $.cookie('csrftoken');
     
     //var csrftoken = $("[name='csrfmiddlewaretoken']");
