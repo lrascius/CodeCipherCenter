@@ -77,6 +77,17 @@ def challenge_page(request):
         c = {"title":"Code and Cipher Center", "challenge_id":challenge_id, "ciphertext":ct}
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
+        
+@login_required
+def join_challenge(request):
+    '''Adds the current user to the returned challenge.'''
+    if request.method == 'GET':
+        return Http404()
+        
+    elif request.method == 'POST':
+        challenge_id = int(request.POST.get('challenge_id', ''))
+        success = challenge.join_challenge(challenge_id=challenge_id, user_id=request.user.id)
+        return HttpResponse(json.dumps({'success':success}), content_type="application/json")
 
 def login(request):
     '''Returns login page.'''
