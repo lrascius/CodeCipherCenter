@@ -13,7 +13,9 @@ from django.contrib.auth.decorators import login_required
 import cccenter.python.general as general
 import cccenter.python.cipher as cf
 from random import randint
+from cccenter.models import UserProfile
 from cccenter.python.forms import RegistrationForm
+from cccenter.python.forms import SettingsForm
 from django.contrib.auth.models import User, AnonymousUser
 import cccenter.python.challenge as challenge
 
