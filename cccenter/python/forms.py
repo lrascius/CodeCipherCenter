@@ -4,6 +4,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from cccenter.models import UserProfile
 
 class RegistrationForm(UserCreationForm):
     '''User registration form.'''
@@ -15,4 +16,10 @@ class RegistrationForm(UserCreationForm):
            proper fields for the form.'''
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+
+class SettingsForm(forms.ModelForm):
+
+	class Meta:
+	    model = UserProfile
+	    fields = ('profile_image',)
 

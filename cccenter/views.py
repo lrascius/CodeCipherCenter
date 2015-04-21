@@ -13,13 +13,15 @@ from django.contrib.auth.decorators import login_required
 import cccenter.python.general as general
 import cccenter.python.cipher as cf
 from random import randint
+from cccenter.models import UserProfile
 from cccenter.python.forms import RegistrationForm
+from cccenter.python.forms import SettingsForm
 from django.contrib.auth.models import User, AnonymousUser
 import cccenter.python.challenge as challenge
 
 def index(request):
     '''Returns the homepage.'''
-    return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
+    return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center", "active":"home"})
 
 # def register(request):
 #     '''Returns the register page.'''
@@ -76,7 +78,7 @@ def challenge_page(request):
     elif request.method == 'GET':
         challenge_id = int(request.GET.get('challenge_id', ''))
         ct = challenge.get_ciphertext(challenge_id)
-        c = {"title":"Code and Cipher Center", "challenge_id":challenge_id, "ciphertext":ct}
+        c = {"title":"Code and Cipher Center", "challenge_id":challenge_id, "ciphertext":ct, "active":"challenge"}
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
         
@@ -94,7 +96,7 @@ def join_challenge(request):
 
 def login(request):
     '''Returns login page.'''
-    c = {}
+    c = {"active":"login"}
     c.update(csrf(request))
     return render_to_response('cccenter/login.html', c)
 
@@ -118,8 +120,9 @@ def challengeList(request):
 
 def loggedin(request):
     '''Returns challenge page.'''
-    return render(request, 'cccenter/challenge_page.html')
+    return render(request, 'cccenter/challenge_page.html', {"active":"challenge"})
 
+@login_required
 def logout(request):
     '''Logs user out and returns challenge page.'''
     auth.logout(request)
@@ -146,5 +149,38 @@ def register(request):
 
     return render(request,
                   'cccenter/register.html',
-                  {'user_form': user_form, 'registered': registered})
+                  {'user_form': user_form, 'registered': registered, "active":"register"})
+
+@login_required
+def profile(request):
+    user = User.objects.get(username=request.user)
+    try:
+        userprofile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        userprofile = UserProfile(user=request.user)
+
+    return render(request, 
+                  'cccenter/profile.html',
+                   {'user' : user, 'userprofile' : userprofile})
+
+@login_required
+def settings(request):
+    try:
+        profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        profile = UserProfile(user=request.user)
+
+    if request.method == 'POST':
+        form = SettingsForm(request.POST, request.FILES, instance=profile)
+        form.user = request.user
+
+        if form.is_valid():
+            
+            form.save()
+
+            return HttpResponseRedirect('/profile/')
+
+    return render(request, 
+                  'cccenter/settings.html') 
+
 

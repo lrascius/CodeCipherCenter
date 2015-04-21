@@ -18,6 +18,7 @@ TEMPLATE_DIRS = ('cccenter/templates/',)
 # Login url
 LOGIN_URL = '/accounts/login/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'cccenter/static') 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
