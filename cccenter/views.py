@@ -18,6 +18,8 @@ from cccenter.python.forms import RegistrationForm
 from cccenter.python.forms import SettingsForm
 from django.contrib.auth.models import User, AnonymousUser
 import cccenter.python.challenge as challenge
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 def index(request):
     '''Returns the homepage.'''
@@ -157,14 +159,24 @@ def settings(request):
         profile = UserProfile(user=request.user)
 
     if request.method == 'POST':
-        form = SettingsForm(request.POST, request.FILES, instance=profile)
-        form.user = request.user
-        
-        if form.is_valid():
-            
-            form.save()
+        settings_form = SettingsForm(request.POST, request.FILES, instance=profile)
+        user_form = RegistrationForm(data=request.POST)
+        password_form = PasswordChangeForm(user=request.user, data=request.POST)
 
-            return HttpResponseRedirect('/profile/')
+        if password_form.is_valid():
+            password_form.save()
+            update_session_auth_hash(request, password_form.user)
+
+        user = request.user
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.email = request.POST['email']
+        user.save()         
+        
+        if settings_form.is_valid():
+            settings_form.save()
+        
+        return HttpResponseRedirect('/profile/') 
 
     return render(request, 
                   'cccenter/settings.html') 
