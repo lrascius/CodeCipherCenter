@@ -30,6 +30,7 @@ def join_challenge(challenge_id, user_id):
         
     challenge.users.add(user)
     challenge.save()
+    return True
     
 def get_ciphertext(challenge_id):
     if type(challenge_id) is not int:

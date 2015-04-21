@@ -26,10 +26,10 @@ urlpatterns = patterns('',
     url(r'^cipher/checkplaintext/$', views.check_plaintext),
     url(r'^challengeList/$', views.challengeList, name="cccenter.views.challengeList"),
     url(r'^cipher/challengepage/$', views.challenge_page),
+    url(r'^cipher/joinchallenge/$', views.join_challenge),
 
     # Profile page url
     url(r'^profile/$', 'cccenter.views.profile'),
     # Settings page url
-    url(r'^settings/$', 'cccenter.views.settings'),  
-    
+    url(r'^settings/$', 'cccenter.views.settings'),
 )

@@ -62,11 +62,20 @@ function checkPlaintext(challenge_id) {
 }
 
 function joinChallenge(challenge_id) {
+    var csrftoken = $.cookie('csrftoken');
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    
     $.ajax({
         url: "/cipher/joinchallenge/",
         type: "POST",
-        data: JSON.stringify({'challenge_id':challenge_id}),
-        contentType: 'application/json',
+        data: {'challenge_id':challenge_id},
+        //contentType: 'application/json',
         async: false,
         success: function(data) {
             window.location.reload(true);

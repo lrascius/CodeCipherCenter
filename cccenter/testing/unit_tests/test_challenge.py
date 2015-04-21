@@ -98,3 +98,15 @@ class TestChallenge(TestCase):
             
         with self.assertRaises(TypeError):
             ct = get_ciphertext(challenge_id=1.0)
+            
+    @mock.patch('cccenter.python.challenge.User')
+    @mock.patch('cccenter.python.challenge.models')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
+    def test_userInChallenge_Pass1(self, mock_challenge, mock_models, mock_user):
+        mock_models.Challenge.objects.get.return_value = mock_challenge
+        mock_models.Challenge.objects.filter.return_value = [mock_user]
+        
+        success = user_in_challenge(challenge_id=1, user=mock_user)
+        
+        self.assertTrue(success)
+        mock_models.Challenge.objects.filter.assert_called_with(pk=mock_user.id)
