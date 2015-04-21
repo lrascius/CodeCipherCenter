@@ -89,7 +89,8 @@ def join_challenge(request):
     elif request.method == 'POST':
         challenge_id = int(request.POST.get('challenge_id', ''))
         success = challenge.join_challenge(challenge_id=challenge_id, user_id=request.user.id)
-        return HttpResponseRedirect('/cipher/challengepage/', {'challenge_id':challenge_id})
+        #return HttpResponseRedirect('/cipher/challengepage/', {'challenge_id':challenge_id})
+        return HttpResponseRedirect('/cipher/challengepage/?challenge_id='+str(challenge_id))
 
 def login(request):
     '''Returns login page.'''
