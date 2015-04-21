@@ -320,6 +320,29 @@ class TestCipherFunctions(TestCase):
         with self.assertRaises(ValueError):
             success = check_solution(challenge_id=1, user_id=-2, guessed_plaintext='abc')
 
+class TestMultiplicitiveCipher(unittest.TestCase):
+    def setUp(self):
+        self.text = "#32344  ABCDEfgHIJKLMNOpqrSTUVWXYZ ? 3232 /32"
+        
+    def test_multiplicitive_cipher_mult1(self):
+        self.assertTrue(multiplicitive_cipher(self.text, 1) == "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                                                                
+    def test_multiplicitive_cipher_mult3(self):
+        self.assertTrue(multiplicitive_cipher(self.text, 3) == "CFILORUXADGJMPSVYBEHKNQTWZ")
+
+    def test_multiplicitive_cipher_mult5(self):
+        self.assertTrue(multiplicitive_cipher(self.text, 5) == "EJOTYDINSXCHMRWBGLQVAFKPUZ")
+
+    def test_multiplicitive_even_mult2(self):
+        with self.assertRaises(Exception) as context:
+            multiplicitive_cipher(self.text, 2)
+        self.assertTrue("Even key is invalid for a multiplicitive cipher" in context.exception)
+
+    def test_multiplicitive_even_mult10(self):
+        with self.assertRaises(Exception) as context:
+            multiplicitive_cipher(self.text, 10)
+        self.assertTrue("Even key is invalid for a multiplicitive cipher" in context.exception)
+
 if __name__ == '__main__':
     unittest.main()
 
