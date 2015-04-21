@@ -18,6 +18,22 @@ def ceasar_shift_encode(text, shift):
             encoded_text += char
     return encoded_text.upper()
 
+def multiplicitive_cipher(text, mult):
+    '''Function that applies a multiplicitive shift on a piece of text. The encrypted text is returned.'''
+    # List of 26 lowercase letters
+    if(mult % 2 == 0):
+        raise Exception("Even key is invalid for a multiplicitive cipher")
+
+    alphabet = list(map(chr, range(97, 123)))
+
+    encoded_text = ""
+    text = "".join(text.lower().split())
+    for char in text:
+        if char in alphabet:
+            char = alphabet[(((alphabet.index(char)+1) * mult) % len(alphabet)) - 1]
+            encoded_text += char
+    return encoded_text.upper()
+
 def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
                      users=None, dt_created=None, solved=False, dt_solved=None, solved_by=None):
     '''Creates a challenge object and puts it in the database.'''
