@@ -343,6 +343,27 @@ class TestMultiplicitiveCipher(unittest.TestCase):
             multiplicitive_cipher(self.text, 10)
         self.assertTrue("Even key is invalid for a multiplicitive cipher" in context.exception)
 
+class TestAffineCipher(unittest.TestCase):
+    def setUp(self):
+        self.text = "# $# d $r (i n k w a t e r ? 3232 /32"
+        self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        
+    def test_affine_cipher(self):
+        self.assertTrue(affine_cipher(self.text, 239, 152) == "PHONYGARUH")
+
+    def test_affine_cipher2(self):
+        self.assertTrue(affine_cipher(self.alphabet, 15, 12) == "APETIXMBQFUJYNCRGVKZODSHWL")
+
+    def test_affine_cipher_even2(self):
+        with self.assertRaises(Exception) as context:
+            affine_cipher(self.text, 2, 15)
+        self.assertTrue("Invalid value for a in affine cipher" in context.exception)
+ 
+    def test_affine_cipher_mod13(self):
+        with self.assertRaises(Exception) as context:
+            affine_cipher(self.text, 13, 12)
+        self.assertTrue("Invalid value for a in affine cipher" in context.exception) 
+
 if __name__ == '__main__':
     unittest.main()
 
