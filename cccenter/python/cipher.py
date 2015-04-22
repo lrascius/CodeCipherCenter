@@ -34,6 +34,22 @@ def multiplicitive_cipher(text, mult):
             encoded_text += char
     return encoded_text.upper()
 
+def affine_cipher(text, a, b):
+    '''Function that applies a affine cipher on a piece of text. The encrypted text is returned.'''
+    # List of 26 lowercase letters
+    if(a % 2 == 0 or a % 13 == 0):
+        raise Exception("Invalid value for a in affine cipher")
+
+    alphabet = list(map(chr, range(97, 123)))
+
+    encoded_text = ""
+    text = "".join(text.lower().split())
+    for char in text:
+        if char in alphabet:
+            char = alphabet[((((alphabet.index(char)+1) * a) + b) % len(alphabet)) - 1]
+            encoded_text += char
+    return encoded_text.upper()
+
 def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
                      users=None, dt_created=None, solved=False, dt_solved=None, solved_by=None):
     '''Creates a challenge object and puts it in the database.'''
