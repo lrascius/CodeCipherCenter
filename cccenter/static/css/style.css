@@ -12,3 +12,22 @@ footer {
 	width: 100%; 
 	height: 40px;
 }
+
+#cipherDifficulty {
+    border: 2px outset #303030;
+    background-color: #A0A0A0;
+    height:45px;
+    width:120px;
+    cursor:pointer;
+}
+
+#cipherDifficulty:hover {
+    background-color: #808080;
+/*    color:#100000 ;*/
+}
+
+#cipherChoice {
+	width:250px;
+    border: 2px outset #303030;
+    background-color: #F0F0F0;
+}
