@@ -155,6 +155,8 @@ def register(request):
 
 @login_required
 def profile(request):
+    '''Get the user information, and if the profile does not exist create one
+       Render the page with the user and user profile information'''
     user = User.objects.get(username=request.user)
     try:
         userprofile = request.user.userprofile
@@ -167,6 +169,10 @@ def profile(request):
 
 @login_required
 def settings(request):
+    '''Try getting the user profile, if it does not exists create one.
+       If called with a GET request, returns settings page.
+       If called with POST, create a settings, user, and password forms.
+       Update all the corresponding tables and return the profile page'''
     try:
         profile = request.user.userprofile
     except UserProfile.DoesNotExist:
