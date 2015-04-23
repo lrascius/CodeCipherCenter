@@ -6,12 +6,13 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 	    {% block css_includes %}
 	    {% endblock %}
 		<title>{{ title }}</title>
 		<meta charset="utf-8">
 	</head>
-	<body style="padding-top: 60px; padding-bottom: 60px;">
+	<body>
 	    {% include 'cccenter/header.html' %}
 	    {% block body %}
 	    {% endblock %}

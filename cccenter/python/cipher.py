@@ -19,8 +19,13 @@ def ceasar_shift_encode(text, shift):
     return encoded_text.upper()
 
 def multiplicitive_cipher(text, mult):
+<<<<<<< local
+    '''Function that applies a multiplicitive shift on a piece of text. The encrypted text is returned.
+       The multiplicitive cipher computes Cipher = (mult * position) mod 26 and is invalid for even multiples'''
+=======
     '''Function that applies a multiplicitive shift on a piece of text.
        The encrypted text is returned.'''
+>>>>>>> other
     # List of 26 lowercase letters
     if mult % 2 == 0:
         raise Exception("Even key is invalid for a multiplicitive cipher")
@@ -36,7 +41,9 @@ def multiplicitive_cipher(text, mult):
     return encoded_text.upper()
 
 def affine_cipher(text, a, b):
-    '''Function that applies a affine cipher on a piece of text. The encrypted text is returned.'''
+    '''Function that applies a affine cipher on a piece of text. The encrypted text is returned.
+       The affine cipher computes Cipher = (a*position + b) mod 26 and is invalid for even values of a
+       and when a is congruent to 13 mod 26'''
     # List of 26 lowercase letters
     if a % 2 == 0 or a % 13 == 0:
         raise Exception("Invalid value for a in affine cipher")
