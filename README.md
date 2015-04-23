@@ -24,6 +24,6 @@ Code and Cipher Center
 
 ### Who do I talk to? ###
 
-* Marc Kurtz (repo owner)
+* Marc Kurtz
 * Lukas Rascius
 * Andrew Williams
