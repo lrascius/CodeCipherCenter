@@ -19,13 +19,8 @@ def ceasar_shift_encode(text, shift):
     return encoded_text.upper()
 
 def multiplicitive_cipher(text, mult):
-<<<<<<< local
     '''Function that applies a multiplicitive shift on a piece of text. The encrypted text is returned.
        The multiplicitive cipher computes Cipher = (mult * position) mod 26 and is invalid for even multiples'''
-=======
-    '''Function that applies a multiplicitive shift on a piece of text.
-       The encrypted text is returned.'''
->>>>>>> other
     # List of 26 lowercase letters
     if mult % 2 == 0:
         raise Exception("Even key is invalid for a multiplicitive cipher")
