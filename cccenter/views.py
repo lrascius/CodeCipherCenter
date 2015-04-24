@@ -42,7 +42,7 @@ def getCipher(request):
 def create_challenge(request):
     '''Creates a new challenge.'''
     if request.method == 'GET':
-        return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center"})
+        return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge"})
 
     elif request.method == 'POST':
         cipher = {}
