@@ -320,6 +320,13 @@ class TestCipherFunctions(TestCase):
         with self.assertRaises(ValueError):
             success = check_solution(challenge_id=1, user_id=-2, guessed_plaintext='abc')
 
+    def test_create_ciphertext(self):
+        ciphertext = create_ciphertext("Caesar Shift", self.text)      
+        self.assertTrue(ceasar_shift_encode(self.text, ciphertext['cipherkey']) == ciphertext['ciphertext'])
+
+        ciphertext = create_ciphertext("Multiplicitive", self.text)      
+        self.assertTrue(multiplicitive_cipher(self.text, ciphertext['cipherkey']) == ciphertext['ciphertext'])
+
 class TestMultiplicitiveCipher(TestCase):
     def setUp(self):
         self.text = "#32344  ABCDEfgHIJKLMNOpqrSTUVWXYZ ? 3232 /32"
