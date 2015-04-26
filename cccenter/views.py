@@ -14,6 +14,7 @@ import cccenter.python.general as general
 import cccenter.python.cipher as cf
 from random import randint
 from cccenter.models import UserProfile
+from cccenter.models import Cipher
 from cccenter.python.forms import RegistrationForm
 from cccenter.python.forms import SettingsForm
 from django.contrib.auth.models import User, AnonymousUser
@@ -40,16 +41,24 @@ def getCipher(request):
 
 @login_required
 def create_challenge(request):
-    '''Creates a new challenge.'''
+    '''Creates a new challenge
+       If a difficulty was selected we pick a random cipher based on the difficulty
+       Else we create a cipher based on what the user chose.'''
+
     if request.method == 'GET':
         return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge"})
 
     elif request.method == 'POST':
         cipher = {}
         cipher['plaintext'] = general.generate_paragraph()
-        cipher['key'] = randint(1, 25)
-        cipher['ciphertext'] = cf.ceasar_shift_encode(cipher['plaintext'], cipher['key'])
-        cipher['ciphertype'] = "Caesar Shift Cipher"
+        if(len(request.POST.getlist('radiogroup')) != 0):
+            difficulty_ciphers = Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0])
+            cipher['ciphertype'] = str(difficulty_ciphers[randint(0,len(difficulty_ciphers)-1)])
+        else:    
+            cipher['ciphertype'] = request.POST.getlist('cipher')[0]
+        ciphertext = cf.create_ciphertext(cipher['ciphertype'], cipher['plaintext'])
+        cipher['key'] = ciphertext['cipherkey']
+        cipher['ciphertext'] = ciphertext['ciphertext']
         cipher['challenge_type'] = "single"
         cipher['users'] = [User.objects.get(pk=request.user.id)]
 
