@@ -82,8 +82,9 @@ def challenge_page(request):
     elif request.method == 'GET':
         challenge_id = int(request.GET.get('challenge_id', ''))
         ct = challenge.get_ciphertext(challenge_id)
+        in_challenge = challenge.user_in_challenge(challenge_id, user)
         c = {"title":"Code and Cipher Center", "challenge_id":challenge_id,
-             "ciphertext":ct, "active":"challenge"}
+             "ciphertext":ct, "user_in_challenge":in_challenge}
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
 
