@@ -11,7 +11,7 @@
 		<br>
 		<!--<input class="btn btn-default" type="button" value="Get Ciphertext" onclick="getCiphertext()">
 		<br>-->
-		{% if user.is_active && user_in_challenge %}
+		{% if user.is_active and user_in_challenge %}
 		<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
 		<br>
 		    <form>{% csrf_token %}
