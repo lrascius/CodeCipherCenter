@@ -22,7 +22,7 @@ class Challenge(models.Model):
     plaintext = models.TextField(default="")
     ciphertype = models.CharField(max_length=200)
     cipherkey = models.TextField(default="")
-    users = models.ManyToManyField(User, related_name="joined", blank=True, null=True)
+    users = models.ManyToManyField(User, related_name="user_challenge_set", blank=True, null=True)
     datetime_created = models.DateTimeField()
     datetime_solved = models.DateTimeField(blank=True, null=True)
     solved_by = models.OneToOneField(User, blank=True, null=True)
