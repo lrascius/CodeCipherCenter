@@ -45,3 +45,12 @@ def get_ciphertext(challenge_id):
         raise ValueError("Invalid challenge_id")
 
     return challenge.ciphertext
+    
+def user_in_challenge(challenge_id, user):
+    '''Returns True if the given user is registered in the given Challenge and False otherwise.'''
+    if type(challenge_id) != int:
+        raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
+        
+    success = user.challenge_set.filter(pk=challenge_id)
+    
+    return success
