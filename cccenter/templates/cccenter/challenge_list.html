@@ -1,0 +1,14 @@
+{% extends 'cccenter/base.html' %}
+{% load staticfiles %}
+{% block body %}
+<div class="container">
+	<h1 style="width:100%; text-align:center">Challenge List</h1>
+	<div align="center">
+		<ul>
+			{% for i in list %}	
+			<li><a href="/cipher/challengelist/?cipher/challenge_id={{i}}"></a> </li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>			
+{% endblock %}
