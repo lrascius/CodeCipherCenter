@@ -103,38 +103,43 @@ class TestChallenge(TestCase):
     @mock.patch('cccenter.python.challenge.models')
     @mock.patch('cccenter.python.challenge.models.Challenge')
     def test_userInChallenge_Pass1(self, mock_challenge, mock_models, mock_user):
-        mock_user.challenge_set.filter.return_value = mock_user
+        #mock_user.challenge_set.filter.return_value = mock_user
+        mock_models.Challenge.user_set.filter.return_value = mock_user
         mock_user.exists.return_value = True
+        mock_user.id = 2
         
         success = user_in_challenge(challenge_id=1, user=mock_user)
         
         self.assertTrue(success)
-        mock_user.challenge_set.filter.assert_called_with(id=1)
+        #mock_user.challenge_set.filter.assert_called_with(id=1)
+        mock_models.Challenge.user_set.filter.assert_called_with(pk=2)
         
     @mock.patch('cccenter.python.challenge.User')
     @mock.patch('cccenter.python.challenge.models')
     @mock.patch('cccenter.python.challenge.models.Challenge')
     def test_userInChallenge_Pass2(self, mock_challenge, mock_models, mock_user):
-        mock_user.challenge_set.filter.return_value = mock_user
+        #mock_user.challenge_set.filter.return_value = mock_user
+        mock_models.Challenge.user_set.filter.return_value = mock_user
         mock_user.exists.return_value = False
+        mock_user.id = 2
         
         success = user_in_challenge(challenge_id=1, user=mock_user)
         
         self.assertFalse(success)
-        mock_user.challenge_set.filter.assert_called_with(id=1)
+        #mock_user.challenge_set.filter.assert_called_with(id=1)
+        mock_models.Challenge.user_set.filter.assert_called_with(pk=2)
         
     @mock.patch('cccenter.python.challenge.User')
     @mock.patch('cccenter.python.challenge.models')
     @mock.patch('cccenter.python.challenge.models.Challenge')
     def test_userInChallenge_Fail1(self, mock_challenge, mock_models, mock_user):
-        mock_user.challenge_set.filter.return_value = mock_user
-        mock_user.exists.return_value = False
+        #mock_user.challenge_set.filter.return_value = mock_user
+        mock_models.Challenge.user_set.filter.return_value = mock_user
+        mock_user.exists.return_value = True
+        mock_user.id = 2
         
         with self.assertRaises(TypeError):
             success = user_in_challenge(challenge_id=-1, user=mock_user)
         
         with self.assertRaises(TypeError):
             success = user_in_challenge(challenge_id=1.0, user=mock_user)
-        
-        self.assertFalse(success)
-        mock_user.challenge_set.filter.assert_called_with(id=1)
