@@ -51,6 +51,11 @@ def user_in_challenge(challenge_id, user):
     if type(challenge_id) != int:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
         
-    success = user.challenge_set.filter(pk=challenge_id)
+    challenge = models.Challenge.objects.get(pk=challenge_id)
+
+    if challenge == None:
+        raise ValueError("Invalid challenge_id")
+        
+    success = challenge.user_set.filter(pk=user_id)
     
     return success
