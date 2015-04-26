@@ -122,3 +122,19 @@ class TestChallenge(TestCase):
         
         self.assertFalse(success)
         mock_user.challenge_set.filter.assert_called_with(id=1)
+        
+    @mock.patch('cccenter.python.challenge.User')
+    @mock.patch('cccenter.python.challenge.models')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
+    def test_userInChallenge_Fail1(self, mock_challenge, mock_models, mock_user):
+        mock_user.challenge_set.filter.return_value = mock_user
+        mock_user.exists.return_value = False
+        
+        with self.assertRaises(TypeError):
+            success = user_in_challenge(challenge_id=-1, user=mock_user)
+        
+        with self.assertRaises(TypeError):
+            success = user_in_challenge(challenge_id=1.0, user=mock_user)
+        
+        self.assertFalse(success)
+        mock_user.challenge_set.filter.assert_called_with(id=1)
