@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import UserProfile, Challenge, Comment
+from .models import UserProfile, Challenge, Comment, Cipher
 
 class UserProfileAdmin(admin.ModelAdmin):
 	class Meta:
@@ -20,3 +20,9 @@ class CommentAdmin(admin.ModelAdmin):
 		model = Comment
 
 admin.site.register(Comment, CommentAdmin)
+
+class CipherAdmin(admin.ModelAdmin):
+	class Meta:
+		model = Cipher
+
+admin.site.register(Cipher, CipherAdmin)

@@ -44,3 +44,12 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return smart_text(self.user)
+
+class Cipher(models.Model):
+    '''A model for ciphers including their difficulty and function to create one'''
+    ciphertype = models.CharField(max_length=200)
+    difficulty = models.CharField(max_length=50, choices=(('beginner', 'Beginner'),
+                                                          ('intermediate', 'Intermediate'),
+                                                          ('advanced', 'Advanced'))) 
+    def __unicode__(self):
+        return smart_text(self.ciphertype)
