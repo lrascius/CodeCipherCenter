@@ -4,6 +4,7 @@
 import cccenter.models as models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from random import randint
 
 def ceasar_shift_encode(text, shift):
     '''Function that applies a ceasar shift on a piece of text. The encrypted text is returned.'''
@@ -120,3 +121,26 @@ def check_solution(challenge_id, user_id, guessed_plaintext):
     else:
         return False
 
+def create_ciphertext(ciphertype, plaintext):
+    '''Function that returns a ciphertext and a key based on the 
+       particular ciphertype'''
+    if ciphertype == "Caesar Shift":
+        cipherkey = randint(1, 25)
+        ciphertext = ceasar_shift_encode(plaintext, cipherkey)
+        return {'ciphertext':ciphertext, 'cipherkey':cipherkey}
+
+    if ciphertype == "Multiplicitive":
+        cipherkey = randint(1, 1000)
+        while (cipherkey % 2 == 0):
+            cipherkey = randint(1, 1000)
+        ciphertext = multiplicitive_cipher(plaintext, cipherkey)
+        return {'ciphertext':ciphertext, 'cipherkey':cipherkey}
+
+    if ciphertype == "Affine Cipher":
+        a = randint(1, 1000) 
+        while (a % 2 == 0 or a % 13 == 0):
+            a = randint(1, 1000)   
+        b = randint(1, 1000)
+        cipherkey = "a: " + str(a) + " b: " + str(b)
+        ciphertext = affine_cipher(plaintext, a, b)
+        return {'ciphertext':ciphertext, 'cipherkey':cipherkey}
