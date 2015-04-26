@@ -11,9 +11,9 @@
 		<br>
 		<!--<input class="btn btn-default" type="button" value="Get Ciphertext" onclick="getCiphertext()">
 		<br>-->
+		{% if user.is_active && user_in_challenge %}
 		<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
 		<br>
-		{% if user.is_authenticated %}
 		    <form>{% csrf_token %}
 		        <input class="btn btn-success" type="button" value="Check Solution" onclick="checkPlaintext({{challenge_id}})">
 		    </form>
