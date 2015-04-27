@@ -132,8 +132,8 @@ def auth_view(request):
 
 def challengeList(request):
     '''Returns challenge list'''
-    challenge = Challenge.objects.all()
-    print challenge.get(id=22, users=request.user)
+    # challenge = Challenge.objects.all()
+    # print challenge.get(id=22, users=request.user)
     return render(request, 'cccenter/challenge_list.html', {'challenges' : Challenge.objects.all()})
 
 def loggedin(request):
