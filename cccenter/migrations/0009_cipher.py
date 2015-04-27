@@ -1,30 +1,3 @@
-<<<<<<< local
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.db import models, migrations
-
-
-class Migration(migrations.Migration):
-
-    dependencies = [
-        ('cccenter', '0008_merge'),
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='Cipher',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('ciphertype', models.CharField(max_length=200)),
-                ('difficulty', models.CharField(max_length=50, choices=[(b'beginner', b'Beginner'), (b'intermediate', b'Intermediate'), (b'advanced', b'Advanced')])),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-    ]
-=======
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
@@ -50,4 +23,4 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
     ]
->>>>>>> other
+
