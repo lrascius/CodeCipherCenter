@@ -57,12 +57,12 @@ def create_challenge(request):
         cipher = {}
         cipher['plaintext'] = general.generate_paragraph()
         if(len(request.POST.getlist('radiogroup')) != 0):
-            difficulty_ciphers = Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0])
-            cipher['ciphertype'] = str(difficulty_ciphers[randint(0,len(difficulty_ciphers)-1)])
+            difficulty_ciphers =[ i.ciphertype for i in [Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0]).get()]]
+            cipher['ciphertype'] = difficulty_ciphers[randint(0,len(difficulty_ciphers)-1)]
         else:    
-            cipher['ciphertype'] = request.POST.getlist('cipher')[0] 
+            cipher['ciphertype'] = request.POST.getlist('cipher')[0]
         ciphertext = cf.create_ciphertext(cipher['ciphertype'], cipher['plaintext'])
-        print ciphertext
+
         cipher['key'] = ciphertext['cipherkey']
         cipher['ciphertext'] = ciphertext['ciphertext']
         cipher['challenge_type'] = request.POST.getlist('challengetype')[0]
