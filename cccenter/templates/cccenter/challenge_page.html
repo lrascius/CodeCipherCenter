@@ -27,10 +27,28 @@
 	</div>
 	<div id="challenge-info" align="center" class="col-md-4">
 	    <ul class="list-group">
-	        <li class="list-group-item">
+	        {% if difficulty == 'Beginner' %}
+	        <li class="list-group-item list-group-item-success">
 	            <span class="badge">{{difficulty}}</span>
 	            Difficulty:
 	        </li>
+	        {% elif difficulty == 'Intermediate' %}
+	        <li class="list-group-item list-group-item-warning">
+	            <span class="badge">{{difficulty}}</span>
+	            Difficulty:
+	        </li>
+	        {% elif difficulty == 'Advanced' %}
+	        <li class="list-group-item list-group-item-danger">
+	            <span class="badge">{{difficulty}}</span>
+	            Difficulty:
+	        </li>
+	        {% else %}
+	        <li class="list-group-item list-group-item-primary">
+	            <span class="badge">{{difficulty}}</span>
+	            Difficulty:
+	        </li>
+	        {% endif %}
+	        
 	        {% if challenge_type == 'Single' %}
 	            {% if solved %}
 	        <li class="list-group-item list-group-item-success">
