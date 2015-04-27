@@ -1,0 +1,51 @@
+{% extends 'cccenter/base.html' %}
+{% load staticfiles %}
+{% block js_includes %}
+<script type='application/javascript' src= 'https://cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js'></script>
+<script type='application/javascript' src= 'https://cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.js'></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#example').dataTable();
+		} );		
+</script>
+<link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.css">
+{% endblock %}
+{% block body %}
+<div class="container">
+	<h1 style="width:100%; text-align:center">Challenge List</h1>
+	<div align="center">
+		<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+	        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Challenge Type</th>                
+                <!-- <th>Solved by</th> -->
+                <th>Join</th>                
+            </tr>
+	        </thead>
+	        <tfoot>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Challenge Type</th>                
+                <!-- <th>Solved by</th> -->
+                <th>Join</th>                
+            </tr>
+	        </tfoot> 
+	        <tbody>
+	        {% for challenge in challenges %}
+            <tr>  
+                <td> {{challenge.id}} </td>
+                <td> {{challenge.datetime_created}} </td>
+                <td> {{challenge.challenge_type}}</td>
+                <td style="text-align:center"> <a href="/cipher/challengepage/?challenge_id={{challenge.id}}" 
+                	class="btn btn-success" role="button">Join</a></td> 
+            </tr>
+            {% endfor %}
+	        </tbody>
+	    </table>
+	</div>			
+</div>
+</div>			
+{% endblock %}

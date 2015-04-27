@@ -1,0 +1,89 @@
+{% extends 'cccenter/base.html' %}
+{% load staticfiles %}
+{% block js_includes %}
+<script src="{% static 'cccenter/challenge_page.js' %}"></script>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1 style="width:100%; text-align:center">Challenge {{challenge_id}}</h1>
+	<div id="challenge-content" align="center" class="col-md-10">
+		<textarea id="ciphertextDisplay" readonly rows='10' cols='50'>{{ciphertext}}</textarea>
+		<br>
+		<!--<input class="btn btn-default" type="button" value="Get Ciphertext" onclick="getCiphertext()">
+		<br>-->
+		{% if user.is_active and user_in_challenge %}
+		<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
+		<br>
+	    <form>{% csrf_token %}
+	        <input class="btn btn-success" type="button" value="Check Solution" onclick="checkPlaintext({{challenge_id}})">
+	    </form>
+	    {% else %}
+        <form method="post" action="/cipher/joinchallenge/">{% csrf_token %}
+            <!--<input class="btn btn-success" type="button" value="Join" onclick="joinChallenge({{challenge_id}})">-->
+            <input type="hidden" name="challenge_id" value="{{challenge_id}}">
+            <input class="btn btn-success" type="submit" value="Join">
+        </form>
+        {% endif %}
+	</div>
+	<div id="challenge-info" class="col-md-2">
+	    <ul class="list-group">
+	        {% if difficulty == 'beginner' %}
+	        <li class="list-group-item list-group-item-success">
+	            Difficulty: <span class="label label-success">{{difficulty}}</span>
+	        </li>
+	        {% elif difficulty == 'intermediate' %}
+	        <li class="list-group-item list-group-item-warning">
+	            Difficulty: <span class="label label-warning">{{difficulty}}</span>
+	        </li>
+	        {% elif difficulty == 'advanced' %}
+	        <li class="list-group-item list-group-item-danger">
+	            Difficulty: <span class="label label-danger">{{difficulty}}</span>
+	        </li>
+	        {% else %}
+	        <li class="list-group-item list-group-item-primary">
+	            Difficulty: <span class="label label-primary">{{difficulty}}</span>
+	        </li>
+	        {% endif %}
+	        
+	        {% if challenge_type == 'single' %}
+	            {% if solved %}
+	        <li class="list-group-item list-group-item-success">
+	            Status: <span class="label label-success">solved</span>
+	        </li>
+	            {% else %}
+	        <li class="list-group-item list-group-item-danger">
+	            Status: <span class="label label-danger">unsolved</span>
+	        </li>
+	            {% endif %}
+	        
+	        {% else %}
+	        <li class="list-group-item">
+	            Users: <span class="label">{{num_users}}</span>
+	        </li>
+	            {% if num_solved == 0 %}
+	        <li class="list-group-item list-group-item-danger">
+	            Solved: <span class="label">{{num_solved}}</span>
+	        </li>
+	            {% else %}
+	        <li class="list-group-item list-group-item-success">
+	            Solved: <span class="label">{{num_solved}}</span>
+	        </li>
+	            {% endif %}
+	            
+	            {% if num_solved > 0 %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Solved by:</h3>
+                </div>
+                    {% for user in solved_by %}
+                <div class="panel-body">
+                    user['first_name'] user['last_name']
+                </div>
+                    {% endfor %}
+            </div>
+	            {% endif %}
+	        {% endif %}
+	    </ul>
+	</div>
+</div>
+{% endblock %}
