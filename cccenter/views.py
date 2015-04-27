@@ -51,15 +51,18 @@ def create_challenge(request):
 
     elif request.method == 'POST':
         if (len(request.POST.getlist('challengetype')) == 0):
-            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge" , "bool" : True, "error" : "Challenge Type is required"})           
+            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge" , "bool" : True, "error" : "Challenge type is required"})           
+        if (len(request.POST.getlist('radiogroup')) == 0 and len(request.POST.getlist('cipher')) == 0):
+            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge" , "bool" : True, "error" : "Select by difficulty or list of ciphers"})           
         cipher = {}
         cipher['plaintext'] = general.generate_paragraph()
         if(len(request.POST.getlist('radiogroup')) != 0):
             difficulty_ciphers = Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0])
             cipher['ciphertype'] = str(difficulty_ciphers[randint(0,len(difficulty_ciphers)-1)])
         else:    
-            cipher['ciphertype'] = request.POST.getlist('cipher')[0]
+            cipher['ciphertype'] = request.POST.getlist('cipher')[0] 
         ciphertext = cf.create_ciphertext(cipher['ciphertype'], cipher['plaintext'])
+        print ciphertext
         cipher['key'] = ciphertext['cipherkey']
         cipher['ciphertext'] = ciphertext['ciphertext']
         cipher['challenge_type'] = request.POST.getlist('challengetype')[0]
@@ -180,7 +183,7 @@ def profile(request):
         userprofile = request.user.userprofile
     except UserProfile.DoesNotExist:
         userprofile = UserProfile(user=request.user)
-
+    
     return render(request,
                   'cccenter/profile.html',
                   {'user' : user, 'userprofile' : userprofile})
