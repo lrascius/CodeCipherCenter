@@ -5,14 +5,15 @@ import mock
 
 class TestChallenge(TestCase):
 
-	@mock.patch('cccenter.python.challenge.User')
-	@mock.patch('cccenter.python.challenge.models')
-	@mock.patch('cccenter.python.challenge.models.Challenge')
-	def test_challengeList(self, mock_challenge, mock_models, mock_user):
-		
-    	#    a = challenge_list()
-    	#    self.assertEqual(type(a), str)
-    	#    self.assertGreater(len(a), 0)
+    @mock.patch('cccenter.python.challenge.User')
+    @mock.patch('cccenter.python.challenge.models')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
+    def test_challengeList(self, mock_challenge, mock_models, mock_user):
+        
+        #    a = challenge_list()
+        #    self.assertEqual(type(a), str)
+        #    self.assertGreater(len(a), 0)
+        pass
         
     @mock.patch('cccenter.python.challenge.User')
     @mock.patch('cccenter.python.challenge.models')
@@ -157,7 +158,7 @@ class TestChallenge(TestCase):
     @mock.patch('cccenter.python.challenge.models.Challenge')
     def test_userInChallenge_Fail2(self, mock_challenge, mock_models, mock_user):
         mock_user.user_challenge_set.filter.return_value = mock_user
-        #mock_models.Challenge.objects.get.return_value = mock_challenge
+        mock_models.Challenge.objects.get.return_value = None
         #mock_challenge.user_set.filter.return_value = mock_user
         mock_user.exists.return_value = True
         mock_user.id = 2
