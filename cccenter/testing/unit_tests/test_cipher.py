@@ -364,10 +364,10 @@ class TestAffineCipher(TestCase):
     def test_affine_cipher_even2(self):
         with self.assertRaises(Exception) as context:
             affine_cipher(self.text, 2, 15)
-        self.assertTrue("Invalid value for a in affine cipher" in context.exception)
+        self.assertEqual("Invalid value for a in affine cipher", str(context.exception))
  
     def test_affine_cipher_mod13(self):
         with self.assertRaises(Exception) as context:
             affine_cipher(self.text, 13, 12)
-        self.assertTrue("Invalid value for a in affine cipher" in context.exception)
+        self.assertEqual("Invalid value for a in affine cipher", str(context.exception))
 
