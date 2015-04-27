@@ -50,6 +50,8 @@ def create_challenge(request):
         return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge"})
 
     elif request.method == 'POST':
+        if (len(request.POST.getlist('challengetype')) == 0):
+            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge" , "bool" : True, "error" : "Challenge Type is required"})           
         cipher = {}
         cipher['plaintext'] = general.generate_paragraph()
         if(len(request.POST.getlist('radiogroup')) != 0):
@@ -60,7 +62,7 @@ def create_challenge(request):
         ciphertext = cf.create_ciphertext(cipher['ciphertype'], cipher['plaintext'])
         cipher['key'] = ciphertext['cipherkey']
         cipher['ciphertext'] = ciphertext['ciphertext']
-        cipher['challenge_type'] = "single"
+        cipher['challenge_type'] = request.POST.getlist('challengetype')[0]
         cipher['users'] = [User.objects.get(pk=request.user.id)]
 
         cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],

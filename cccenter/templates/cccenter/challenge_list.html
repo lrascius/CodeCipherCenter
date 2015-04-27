@@ -20,7 +20,7 @@ $(document).ready(function() {
                 <th>ID</th>
                 <th>Date</th>
                 <th>Challenge Type</th>                
-                <th>Solved by</th>
+                <!-- <th>Solved by</th> -->
                 <th>Join</th>                
             </tr>
 	        </thead>
@@ -29,7 +29,7 @@ $(document).ready(function() {
                 <th>ID</th>
                 <th>Date</th>
                 <th>Challenge Type</th>                
-                <th>Solved by</th>
+                <!-- <th>Solved by</th> -->
                 <th>Join</th>                
             </tr>
 	        </tfoot> 
@@ -39,7 +39,6 @@ $(document).ready(function() {
                 <td> {{challenge.id}} </td>
                 <td> {{challenge.datetime_created}} </td>
                 <td> {{challenge.challenge_type}}</td>
-                <td> {{challenge.solved_by}} </td>
                 <td style="text-align:center"> <a href="/cipher/challengepage/?challenge_id={{challenge.id}}" 
                 	class="btn btn-success" role="button">Join</a></td> 
             </tr>
