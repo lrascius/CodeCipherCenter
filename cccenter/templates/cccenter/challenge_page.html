@@ -5,7 +5,7 @@
 {% endblock %}
 {% block body %}
 <div class="container">
-	<h1 style="width:100%; text-align:center">Challenge #{{challenge_id}}</h1>
+	<h1 style="width:100%; text-align:center">Challenge {{challenge_id}}</h1>
 	<div id="challenge-content" align="center" class="col-md-8">
 		<textarea id="ciphertextDisplay" readonly rows='10' cols='50'>{{ciphertext}}</textarea>
 		<br>
@@ -14,19 +14,65 @@
 		{% if user.is_active and user_in_challenge %}
 		<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
 		<br>
-		    <form>{% csrf_token %}
-		        <input class="btn btn-success" type="button" value="Check Solution" onclick="checkPlaintext({{challenge_id}})">
-		    </form>
+	    <form>{% csrf_token %}
+	        <input class="btn btn-success" type="button" value="Check Solution" onclick="checkPlaintext({{challenge_id}})">
+	    </form>
 	    {% else %}
-	        <form method="post" action="/cipher/joinchallenge/">{% csrf_token %}
-	            <!--<input class="btn btn-success" type="button" value="Join" onclick="joinChallenge({{challenge_id}})">-->
-	            <input type="hidden" name="challenge_id" value="{{challenge_id}}">
-	            <input class="btn btn-success" type="submit" value="Join">
-	        </form>
+        <form method="post" action="/cipher/joinchallenge/">{% csrf_token %}
+            <!--<input class="btn btn-success" type="button" value="Join" onclick="joinChallenge({{challenge_id}})">-->
+            <input type="hidden" name="challenge_id" value="{{challenge_id}}">
+            <input class="btn btn-success" type="submit" value="Join">
+        </form>
         {% endif %}
 	</div>
 	<div id="challenge-info" align="center" class="col-md-4">
-	    
+	    <ul class="list-group">
+	        <li class="list-group-item">
+	            <span class="badge">{{difficulty}}</span>
+	            Difficulty:
+	        </li>
+	        {% if challenge_type == 'Single' %}
+	            {% if solved %}
+	        <li class="list-group-item list-group-item-success">
+	            Solved
+	        </li>
+	            {% else %}
+	        <li class="list-group-item list-group-item-danger">
+	            Unsolved
+	        </li>
+	            {% endif %}
+	        
+	        {% else %}
+	        <li class="list-group-item">
+	            <span class="badge">{{num_users}}</span>
+	            Users in this challenge:
+	        </li>
+	            {% if num_solved == 0 %}
+	        <li class="list-group-item list-group-item-danger">
+	            <span class="badge">{{num_solved}}</span>
+	            Solved by users:
+	        </li>
+	            {% else %}
+	        <li class="list-group-item list-group-item-success">
+	            <span class="badge">{{num_solved}}</span>
+	            Solved by users:
+	        </li>
+	            {% endif %}
+	            
+	            {% if num_solved > 0 %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Solved by:</h3>
+                </div>
+                    {% for user in solved_by %}
+                <div class="panel-body">
+                    user['first_name'] user['last_name']
+                </div>
+                    {% endfor %}
+            </div>
+	            {% endif %}
+	        {% endif %}
+	    </ul>
 	</div>
 </div>
 {% endblock %}
