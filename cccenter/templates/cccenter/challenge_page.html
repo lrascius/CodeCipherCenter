@@ -9,11 +9,11 @@
 	<div id="challenge-content" align="center" class="col-md-10">
 		<textarea id="ciphertextDisplay" readonly rows='10' cols='50'>{{ciphertext}}</textarea>
 		<br>
-		<!--<input class="btn btn-default" type="button" value="Get Ciphertext" onclick="getCiphertext()">
-		<br>-->
 		{% if user.is_active and user_in_challenge %}
 		<textarea id="plaintextDisplay" rows='10' cols='50'></textarea>
 		<br>
+		<div id="alert-success" class="alert alert-success" style="display:none">Correct! Good work!</div>
+		<div id="alert-failure" class="alert alert-danger" style="display:none">Sorry... Try something else</div>
 	    <form>{% csrf_token %}
 	        <input class="btn btn-success" type="button" value="Check Solution" onclick="checkPlaintext({{challenge_id}})">
 	    </form>

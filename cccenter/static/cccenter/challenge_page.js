@@ -38,22 +38,26 @@ function checkPlaintext(challenge_id) {
         }
     });
     
-    // submit the plaintext
     $.ajax({
         url: "/cipher/checkplaintext/", // source page relative to the current page (cccenter/)
         type: "POST",
         data: {'challenge_id':challenge_id, 'guessed_plaintext':pt},//, 'csrfmiddlewaretoken':csrftoken}),
         //contentType: 'application/json', // data type sent to server
-        dataType: 'application/json', // data type expected from server
+        //dataType: 'application/json', // data type expected from server
         async: true,
         success: function(data) { // what to do when the data is recieved
             // put the ciphertext on the 
             if (data['success'] == true) {
-                alert('You got it!');
+                //alert('You got it!');
+                //window.location.reload(true);
+                $('#alert-failure').hide();
+                $('#alert-success').show();
             }
             
             else {
-                alert('Not quite...');
+                //alert('Not quite...');
+                $('#alert-failure').show();
+                $('#alert-success').hide();
             }
             //TODO post result to page
             
