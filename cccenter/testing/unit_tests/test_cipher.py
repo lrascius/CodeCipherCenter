@@ -306,47 +306,6 @@ class TestCipherFunctions(TestCase):
         
         with self.assertRaises(ValueError):
             success = check_solution(challenge_id=-1, user_id=2, guessed_plaintext='abc')
-            
-    @mock.patch('cccenter.python.cipher.timezone')
-    @mock.patch('cccenter.python.cipher.User')
-    @mock.patch('cccenter.python.cipher.models')
-    @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_checksolutionFail5(self, mock_challenge, mock_models, mock_user, mock_timezone):
-        mock_timezone.now.return_value = "now"
-        mock_models.Challenge.objects.get.return_value = None
-        mock_user.objects.get.return_value= "user"
-        mock_challenge.plaintext = 'abc'
-        
-        with self.assertRaises(ValueError):
-            success = check_solution(challenge_id=1, user_id=-2, guessed_plaintext='abc')
-
-    @mock.patch('cccenter.python.cipher.Cipher')
-    @mock.patch('cccenter.python.cipher.models')
-    @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_get_difficulty_Pass1(self, mock_challenge, mock_models, mock_cipher):
-        mock_challenge.cipher.get.return_value = [mock_cipher]
-        mock_cipher.difficulty = 'beginner'
-        mock_models.Challenge.objects.get.return_value = mock_challenge
-        
-        difficulty = get_difficulty(challenge_id=1)
-        
-        self.assertEqual(difficulty, mock_cipher.difficulty)
-    
-    @mock.patch('cccenter.python.cipher.Cipher')
-    @mock.patch('cccenter.python.cipher.Cipher')   
-    @mock.patch('cccenter.python.cipher.Cipher')
-    @mock.patch('cccenter.python.cipher.models')
-    @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_get_difficulty_Pass2(self, mock_challenge, mock_models, mock_cipher1, mock_cipher2, mock_cipher3):
-        mock_challenge.cipher.get.return_value = [mock_cipher1, mock_cipher2, mock_cipher3]
-        mock_cipher1.difficulty = 'beginner'
-        mock_cipher2.difficulty = 'intermediate'
-        mock_cipher3.difficulty = 'advanced'
-        mock_models.Challenge.objects.get.return_value = mock_challenge
-        
-        difficulty = get_difficulty(challenge_id=1)
-        
-        self.assertEqual(difficulty, 'advanced')
 
     def test_create_ciphertext(self):
         ciphertext = create_ciphertext("Caesar Shift", self.text)      
