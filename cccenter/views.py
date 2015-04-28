@@ -105,7 +105,7 @@ def challenge_page(request):
              "ciphertext":ct, "user_in_challenge":in_challenge, "difficulty":difficulty,
              "challenge_type":info['challenge_type'], "solved":info['solved'],
              "num_users":len(info['users']), "num_solved":len(info['solved_by']),
-             "solved_by":info['solved_by']}
+             "users": info['users'], "solved_by":info['solved_by']}
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
 
