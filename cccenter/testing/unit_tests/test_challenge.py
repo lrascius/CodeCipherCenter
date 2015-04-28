@@ -9,7 +9,8 @@ class TestChallenge(TestCase):
 	@mock.patch('cccenter.python.challenge.models')
 	@mock.patch('cccenter.python.challenge.models.Challenge')
 	def test_challengeList(self, mock_challenge, mock_models, mock_user):
-		
+
+	    mock_models.Challenge.objects.get.return_value = mock_challenge		
     	#    a = challenge_list()
     	#    self.assertEqual(type(a), str)
     	#    self.assertGreater(len(a), 0)
