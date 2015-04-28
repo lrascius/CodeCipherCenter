@@ -48,6 +48,7 @@ def get_ciphertext(challenge_id):
     
 def user_in_challenge(challenge_id, user):
     '''Returns True if the given user is registered in the given Challenge and False otherwise.'''
+    
     if type(challenge_id) != int:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
         
@@ -63,3 +64,22 @@ def user_in_challenge(challenge_id, user):
         return False
     
     return True
+    
+def get_difficulty(challenge_id):
+    '''Returns the difficulty of the given challenge. If multiple ciphers
+       have been applied, returns the hardest one.'''
+    
+    if type(challenge_id) != int:
+        raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
+        
+    challenge = models.Challenge.objects.get(pk=challenge_id)
+    
+    ciphers = challenge.cipher.get()
+    difficulties = [i.difficulty for i in ciphers]
+    
+    if 'advanced' in difficulties:
+        return 'advanced'
+    elif 'intermediate' in difficulties:
+        return 'intermediate'
+    else:
+        return 'beginner'
