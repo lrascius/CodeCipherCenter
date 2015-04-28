@@ -138,15 +138,20 @@ def auth_view(request):
                                                  {"alert":"Invalid username or password!"}))
 
 def challengeList(request):
-    '''Returns challenge list'''
-    # challenge = Challenge.objects.all()
-    # print challenge.get(id=22, users=request.user)
+    '''Returns challenge list with collumns of id, date, difficulty, and challengetype'''
+    challenges = Challenge.objects.all()
     challenges_of_user = Challenge.objects.filter(users=request.user)
     c = []
+    difficulty = []
+    challenge_type = []
     for challenge in challenges_of_user:
         c.append(challenge.id)
-    # in_challenge = challenge.user_in_challenge(challenge_id, request.user)
-    return render(request, 'cccenter/challenge_list.html', {'challenges' : Challenge.objects.all(), 'in_challenge': c})
+    for chall in challenges:
+        difficulty.append(Cipher.objects.get(ciphertype=chall.ciphertype).difficulty.capitalize())
+        challenge_type.append(chall.challenge_type.capitalize())
+    array = zip(challenges, difficulty, challenge_type)
+
+    return render(request, 'cccenter/challenge_list.html', {'in_challenge': c, 'list' : array})
 
 def loggedin(request):
     '''Returns challenge page.'''
