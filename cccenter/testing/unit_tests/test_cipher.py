@@ -320,6 +320,18 @@ class TestCipherFunctions(TestCase):
         with self.assertRaises(ValueError):
             success = check_solution(challenge_id=1, user_id=-2, guessed_plaintext='abc')
 
+    @mock.patch('cccenter.python.cipher.Cipher')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_get_difficulty_Pass1(self, mock_challenge, mock_models, mock_cipher):
+        mock_challenge.cipher.get.return_value = [mock_cipher]
+        mock_cipher.difficulty = 'beginner'
+        mock_models.Challenge.objects.get.return_value = mock_challenge
+        
+        difficulty = get_difficulty(challenge_id=1)
+        
+        self.assertEqual(difficulty, mock_cipher.difficulty)
+
     def test_create_ciphertext(self):
         ciphertext = create_ciphertext("Caesar Shift", self.text)      
         self.assertTrue(ceasar_shift_encode(self.text, ciphertext['cipherkey']) == ciphertext['ciphertext'])
