@@ -343,12 +343,12 @@ class TestMultiplicitiveCipher(TestCase):
     def test_multiplicitive_even_mult2(self):
         with self.assertRaises(Exception) as context:
             multiplicitive_cipher(self.text, 2)
-        self.assertTrue("Even key is invalid for a multiplicitive cipher" == context.exception)
+        self.assertEqual("Even key is invalid for a multiplicitive cipher", str(context.exception))
 
     def test_multiplicitive_even_mult10(self):
         with self.assertRaises(Exception) as context:
             multiplicitive_cipher(self.text, 10)
-        self.assertTrue("Even key is invalid for a multiplicitive cipher" == context.exception)
+        self.assertEqual("Even key is invalid for a multiplicitive cipher", str(context.exception))
 
 class TestAffineCipher(TestCase):
     def setUp(self):

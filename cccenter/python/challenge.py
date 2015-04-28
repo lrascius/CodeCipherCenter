@@ -57,6 +57,10 @@ def user_in_challenge(challenge_id, user):
         raise ValueError("Invalid challenge_id")
         
     #success = challenge.user_set.filter(pk=user_id)
-    success = user.user_challenge_set.filter(pk=challenge_id)
+    success = user.user_challenge_set.get(pk=challenge_id)
     
-    return success
+    if success != None:
+        return True
+        
+    else:
+        return False
