@@ -88,3 +88,18 @@ def get_difficulty(challenge_id):
         return 'intermediate'
     else:
         return 'beginner'
+        
+def get_challenge_info(challenge_id):
+    '''Returns information about the Challenge to display on the challenge page.'''
+    
+    if type(challenge_id) != int:
+        raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
+        
+    challenge = models.Challenge.objects.get(pk=challenge_id)
+    
+    res = {}
+    res['datetime_created'] = challenge.datetime_created
+    res['datetime_solved'] = challenge.datetime_solved
+    res['challenge_type'] = challenge.challenge_type
+    res['solved_by'] = challenge.solved_by.all()
+    res['solved'] = challenge.solved
