@@ -39,8 +39,13 @@ $(document).ready(function() {
                 <td> {{challenge.id}} </td>
                 <td> {{challenge.datetime_created}} </td>
                 <td> {{challenge.challenge_type}}</td>
+                {% if user.is_active and challenge.id in in_challenge %}
                 <td style="text-align:center"> <a href="/cipher/challengepage/?challenge_id={{challenge.id}}" 
-                	class="btn btn-success" role="button">Join</a></td> 
+                	class="btn btn-primary" role="button">Go to Page</a></td> 
+                {% else %}
+                <td style="text-align:center"> <a href="/cipher/challengepage/?challenge_id={{challenge.id}}" 
+                    class="btn btn-success" id="joinButton" role="button">Join</a></td>                 
+                {% endif %}
             </tr>
             {% endfor %}
 	        </tbody>

@@ -38,3 +38,8 @@ footer {
     border: 2px outset #303030;
     background-color: #F0F0F0;
 }
+
+#joinButton {
+	width: 38%;
+
+}

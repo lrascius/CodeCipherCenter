@@ -140,7 +140,12 @@ def challengeList(request):
     '''Returns challenge list'''
     # challenge = Challenge.objects.all()
     # print challenge.get(id=22, users=request.user)
-    return render(request, 'cccenter/challenge_list.html', {'challenges' : Challenge.objects.all()})
+    challenges_of_user = Challenge.objects.filter(users=request.user)
+    c = []
+    for challenge in challenges_of_user:
+        c.append(challenge.id)
+    # in_challenge = challenge.user_in_challenge(challenge_id, request.user)
+    return render(request, 'cccenter/challenge_list.html', {'challenges' : Challenge.objects.all(), 'in_challenge': c})
 
 def loggedin(request):
     '''Returns challenge page.'''
