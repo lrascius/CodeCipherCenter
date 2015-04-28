@@ -4,6 +4,7 @@ import cccenter.models as models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from cccenter.models import Cipher
+from cccenter.models import Challenge
 
 def challenge_list():
     '''Returns a list of the challenges in the database.'''
@@ -78,7 +79,7 @@ def get_difficulty(challenge_id):
         
     challenge = models.Challenge.objects.get(pk=challenge_id)
     
-    ciphers = challenge.cipher.get()
+    ciphers = challenge.cipher.all()
     difficulties = [i.difficulty for i in ciphers]
     
     if 'advanced' in difficulties:
