@@ -98,9 +98,14 @@ def challenge_page(request):
         challenge_id = int(request.GET.get('challenge_id', ''))
         ct = challenge.get_ciphertext(challenge_id)
         in_challenge = challenge.user_in_challenge(challenge_id, request.user)
+        info = challenge.get_challenge_info(challenge_id)
+
+        difficulty = challenge.get_difficulty(challenge_id)
         c = {"title":"Code and Cipher Center", "challenge_id":challenge_id,
-             "ciphertext":ct, "user_in_challenge":in_challenge, "difficulty":'beginner',
-             "challenge_type":'single', "solved":False, "num_users":1, "num_solved":0}
+             "ciphertext":ct, "user_in_challenge":in_challenge, "difficulty":difficulty,
+             "challenge_type":info['challenge_type'], "solved":info['solved'],
+             "num_users":len(info['users']), "num_solved":len(info['solved_by']),
+             "solved_by":info['solved_by']}
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
 

@@ -103,3 +103,6 @@ def get_challenge_info(challenge_id):
     res['challenge_type'] = challenge.challenge_type
     res['solved_by'] = challenge.solved_by.all()
     res['solved'] = challenge.solved
+    res['users'] = challenge.users.all()
+    
+    return res

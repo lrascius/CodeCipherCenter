@@ -58,15 +58,15 @@
 	        
 	        {% else %}
 	        <li class="list-group-item">
-	            Users: <span class="label">{{num_users}}</span>
+	            Users: <span class="label label-primary">{{num_users}}</span>
 	        </li>
 	            {% if num_solved == 0 %}
 	        <li class="list-group-item list-group-item-danger">
-	            Solved: <span class="label">{{num_solved}}</span>
+	            Solved: <span class="label label-danger">{{num_solved}}</span>
 	        </li>
 	            {% else %}
 	        <li class="list-group-item list-group-item-success">
-	            Solved: <span class="label">{{num_solved}}</span>
+	            Solved: <span class="label label-success">{{num_solved}}</span>
 	        </li>
 	            {% endif %}
 	            

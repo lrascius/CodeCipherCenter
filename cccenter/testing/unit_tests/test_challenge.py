@@ -211,6 +211,7 @@ class TestChallenge(TestCase):
     @mock.patch('cccenter.python.challenge.Challenge')
     def test_get_challenge_info_Pass1(self, mock_challenge, mock_models):
         mock_models.Challenge.objects.all.return_value = [mock_challenge]
+        mock_challenge.users = ['u1', 'u2']
         mock_challenge.datetime_created = "now1"
         mock_challenge.datetime_solved = "now2"
         mock_challenge.solved_by = ['user1', 'user2']
@@ -225,6 +226,7 @@ class TestChallenge(TestCase):
         self.assertEqual(res['solved_by'], mock_challenge.solved_by)
         self.assertEqual(res['challenge_type'], mock_challenge.challenge_type)
         self.assertEqual(res['solved'], mock_challenge.solved)
+        self.assertEqual(res['users'], mock_challenge.users)
         
     @mock.patch('cccenter.python.challenge.models')
     @mock.patch('cccenter.python.challenge.Challenge')
