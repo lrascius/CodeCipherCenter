@@ -195,10 +195,32 @@ def profile(request):
         userprofile = request.user.userprofile
     except UserProfile.DoesNotExist:
         userprofile = UserProfile(user=request.user)
-    
+
+    difficulty = []    
+    # challenges = Challenge.objects.all()
+    challenges_user_in = Challenge.objects.filter(users=request.user)
+    for challenge in challenges_user_in:
+        difficulty.append(Cipher.objects.get(ciphertype=challenge.ciphertype).difficulty.capitalize())
+    array = zip(challenges_user_in,difficulty)
+    # c = []
+    # difficulty = []
+    # challenge_type = []
+    # for challenge in challenges_of_user:
+    #     c.append(challenge.id)
+
+    # for challenge in challenges:
+    #     if(challenge.id in challenges_id):
+    #         challenges_user_in.append(challenge)
+
+    # array = zip(challenges, difficulty, challenge_type)
+
+    # for chall in challenges:
+    #     difficulty.append(Cipher.objects.get(ciphertype=chall.ciphertype).difficulty.capitalize())
+    #     challenge_type.append(chall.challenge_type.capitalize())
+            
     return render(request,
                   'cccenter/profile.html',
-                  {'user' : user, 'userprofile' : userprofile})
+                  {'user' : user, 'userprofile' : userprofile, 'challenges_user_in' : array})
 
 @login_required
 def settings(request):
