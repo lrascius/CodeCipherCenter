@@ -306,6 +306,19 @@ class TestCipherFunctions(TestCase):
         
         with self.assertRaises(ValueError):
             success = check_solution(challenge_id=-1, user_id=2, guessed_plaintext='abc')
+            
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_checksolutionFail5(self, mock_challenge, mock_models, mock_user, mock_timezone):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.get.return_value = None
+        mock_user.objects.get.return_value= "user"
+        mock_challenge.plaintext = 'abc'
+        
+        with self.assertRaises(ValueError):
+            success = check_solution(challenge_id=1, user_id=-2, guessed_plaintext='abc')
 
     def test_create_ciphertext(self):
         ciphertext = create_ciphertext("Caesar Shift", self.text)      

@@ -3,6 +3,7 @@
 import cccenter.models as models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from cccenter.models import Cipher
 
 def challenge_list():
     '''Returns a list of the challenges in the database.'''
@@ -59,11 +60,14 @@ def user_in_challenge(challenge_id, user):
         
     #success = challenge.user_set.filter(pk=user_id)
     try:
-        user.user_challenge_set.get(pk=challenge_id)
+        success = user.user_challenge_set.get(pk=challenge_id)
     except:
         return False
     
-    return True
+    if success == None:
+        return False
+    else:
+        return True
     
 def get_difficulty(challenge_id):
     '''Returns the difficulty of the given challenge. If multiple ciphers
