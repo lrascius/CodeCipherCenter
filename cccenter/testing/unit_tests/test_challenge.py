@@ -225,3 +225,11 @@ class TestChallenge(TestCase):
         self.assertEqual(res['solved_by'], mock_challenge.solved_by)
         self.assertEqual(res['challenge_type'], mock_challenge.challenge_type)
         self.assertEqual(res['solved'], mock_challenge.solved)
+        
+    @mock.patch('cccenter.python.challenge.models')
+    @mock.patch('cccenter.python.challenge.Challenge')
+    def test_get_challenge_info_Fail1(self, mock_challenge, mock_models):
+        with self.assertRaises(TypeError):
+            res = get_challenge_info(challenge_id=1.0)
+        with self.assertRaises(TypeError):
+            res = get_challenge_info(challenge_id='1')
