@@ -50,16 +50,19 @@ def create_challenge(request):
         return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge"})
 
     elif request.method == 'POST':
-        if (len(request.POST.getlist('challengetype')) == 0):
-            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge" , "bool" : True, "error" : "Challenge type is required"})           
-        if (len(request.POST.getlist('radiogroup')) == 0 and len(request.POST.getlist('cipher')) == 0):
-            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge" , "bool" : True, "error" : "Select by difficulty or list of ciphers"})           
+        if len(request.POST.getlist('challengetype')) == 0:
+            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge",
+                                                                      "bool": True, "error" : "Challenge type is required"})
+        if len(request.POST.getlist('radiogroup')) == 0 and len(request.POST.getlist('cipher')) == 0:
+            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge",
+                                                                      "bool":True,
+                                                                      "error":"Select by difficulty or list of ciphers"})
         cipher = {}
         cipher['plaintext'] = general.generate_paragraph()
-        if(len(request.POST.getlist('radiogroup')) != 0):
-            difficulty_ciphers =[ i.ciphertype for i in Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0])]
-            cipher['ciphertype'] = difficulty_ciphers[randint(0,len(difficulty_ciphers)-1)]
-        else:    
+        if len(request.POST.getlist('radiogroup')) != 0:
+            difficulty_ciphers =[i.ciphertype for i in Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0])]
+            cipher['ciphertype'] = difficulty_ciphers[randint(0, len(difficulty_ciphers)-1)]
+        else:
             cipher['ciphertype'] = request.POST.getlist('cipher')[0]
         ciphertext = cf.create_ciphertext(cipher['ciphertype'], cipher['plaintext'])
 
@@ -201,12 +204,12 @@ def profile(request):
     except UserProfile.DoesNotExist:
         userprofile = UserProfile(user=request.user)
 
-    difficulty = []    
+    difficulty = []
     # challenges = Challenge.objects.all()
     challenges_user_in = Challenge.objects.filter(users=request.user)
     for challenge in challenges_user_in:
         difficulty.append(Cipher.objects.get(ciphertype=challenge.ciphertype).difficulty.capitalize())
-    array = zip(challenges_user_in,difficulty)
+    array = zip(challenges_user_in, difficulty)
     # c = []
     # difficulty = []
     # challenge_type = []
@@ -222,7 +225,7 @@ def profile(request):
     # for chall in challenges:
     #     difficulty.append(Cipher.objects.get(ciphertype=chall.ciphertype).difficulty.capitalize())
     #     challenge_type.append(chall.challenge_type.capitalize())
-            
+
     return render(request,
                   'cccenter/profile.html',
                   {'user' : user, 'userprofile' : userprofile, 'challenges_user_in' : array})

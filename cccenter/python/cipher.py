@@ -20,8 +20,9 @@ def ceasar_shift_encode(text, shift):
     return encoded_text.upper()
 
 def multiplicitive_cipher(text, mult):
-    '''Function that applies a multiplicitive shift on a piece of text. The encrypted text is returned.
-       The multiplicitive cipher computes Cipher = (mult * position) mod 26 and is invalid for even multiples'''
+    '''Function that applies a multiplicitive shift on a piece of text. The
+       encrypted text is returned. The multiplicitive cipher computes
+       Cipher = (mult * position) mod 26 and is invalid for even multiples'''
     # List of 26 lowercase letters
     if mult % 2 == 0:
         raise Exception("Even key is invalid for a multiplicitive cipher")
@@ -37,9 +38,9 @@ def multiplicitive_cipher(text, mult):
     return encoded_text.upper()
 
 def affine_cipher(text, a, b):
-    '''Function that applies a affine cipher on a piece of text. The encrypted text is returned.
-       The affine cipher computes Cipher = (a*position + b) mod 26 and is invalid for even values of a
-       and when a is congruent to 13 mod 26'''
+    '''Function that applies a affine cipher on a piece of text. The encrypted text
+       is returned. The affine cipher computes Cipher = (a*position + b) mod 26 and
+       is invalid for even values of a and when a is congruent to 13 mod 26'''
     # List of 26 lowercase letters
     if a % 2 == 0 or a % 13 == 0:
         raise Exception("Invalid value for a in affine cipher")
@@ -113,7 +114,7 @@ def check_solution(challenge_id, user_id, guessed_plaintext):
         u_s = challenge.solved_by.all()
         if user not in u_s:
             challenge.solved_by.add(user)
-            
+
         if challenge.solved == False or challenge.solved == None:
             challenge.solved = True
             challenge.solved_by = user
@@ -126,7 +127,7 @@ def check_solution(challenge_id, user_id, guessed_plaintext):
         return False
 
 def create_ciphertext(ciphertype, plaintext):
-    '''Function that returns a ciphertext and a key based on the 
+    '''Function that returns a ciphertext and a key based on the
        particular ciphertype'''
     if ciphertype == "Caesar Shift":
         cipherkey = randint(1, 25)
@@ -135,15 +136,15 @@ def create_ciphertext(ciphertype, plaintext):
 
     if ciphertype == "Multiplicitive":
         cipherkey = randint(1, 1000)
-        while (cipherkey % 2 == 0):
+        while cipherkey % 2 == 0:
             cipherkey = randint(1, 1000)
         ciphertext = multiplicitive_cipher(plaintext, cipherkey)
         return {'ciphertext':ciphertext, 'cipherkey':cipherkey}
 
     if ciphertype == "Affine Cipher":
-        a = randint(1, 1000) 
-        while (a % 2 == 0 or a % 13 == 0):
-            a = randint(1, 1000)   
+        a = randint(1, 1000)
+        while a % 2 == 0 or a % 13 == 0:
+            a = randint(1, 1000)
         b = randint(1, 1000)
         cipherkey = "a: " + str(a) + " b: " + str(b)
         ciphertext = affine_cipher(plaintext, a, b)

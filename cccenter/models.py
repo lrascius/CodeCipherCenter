@@ -21,7 +21,7 @@ class Cipher(models.Model):
     difficulty = models.CharField(max_length=50, choices=(('beginner', 'Beginner'),
                                                           ('intermediate', 'Intermediate'),
                                                           ('advanced', 'Advanced')))
-                                                          
+
     def __unicode__(self):
         return smart_text(self.ciphertype)
 
