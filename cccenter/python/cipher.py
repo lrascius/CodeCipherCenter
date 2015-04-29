@@ -112,13 +112,12 @@ def check_solution(challenge_id, user_id, guessed_plaintext):
     if challenge.plaintext == guessed_plaintext:
         # if challenge has not already been solved
         u_s = challenge.solved_by.all()
-        raise Exception(u_s)
-        if user not in u_s:
+        if not user in u_s:
             challenge.solved_by.add(user)
 
         if challenge.solved == False or challenge.solved == None:
             challenge.solved = True
-            challenge.solved_by = user
+            challenge.solved_by.add(user)
             challenge.datetime_solved = timezone.now()
             challenge.save()
 
