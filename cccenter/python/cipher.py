@@ -69,6 +69,9 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
                                                 ciphertype=ciphertype, cipherkey=key,
                                                 challenge_type=challenge_type,
                                                 datetime_created=dt_created)
+                                                
+    cipher = Cipher.objects.get(ciphertype=ciphertype)
+    challenge.cipher.add(cipher)
 
     if users != None:
         for user in users:
