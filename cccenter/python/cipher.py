@@ -138,9 +138,9 @@ def create_ciphertext(ciphertype, plaintext):
         return {'ciphertext':ciphertext, 'cipherkey':cipherkey}
 
     if ciphertype == "Multiplicitive":
-        cipherkey = randint(1, 1000)
-        while cipherkey % 2 == 0:
-            cipherkey = randint(1, 1000)
+        cipherkey = randint(2, 1000)
+        while cipherkey % 2 == 0 or cipherkey % 26 == 1:
+            cipherkey = randint(2, 1000)
         ciphertext = multiplicitive_cipher(plaintext, cipherkey)
         return {'ciphertext':ciphertext, 'cipherkey':cipherkey}
 
