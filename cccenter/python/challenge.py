@@ -63,12 +63,15 @@ def user_in_challenge(challenge_id, user):
     try:
         success = user.user_challenge_set.get(pk=challenge_id)
     except:
-        return False
+        return False, False
 
     if success == None:
-        return False
+        return False, False
     else:
-        return True
+        if user.user_solved_challenge_set.filter(pk=challenge_id).exists():
+            return True, True
+        else:
+            return True, False
 
 def get_difficulty(challenge_id):
     '''Returns the difficulty of the given challenge. If multiple ciphers

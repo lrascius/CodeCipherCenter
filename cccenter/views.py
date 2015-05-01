@@ -52,7 +52,7 @@ def create_challenge(request):
     elif request.method == 'POST':
         if len(request.POST.getlist('challengetype')) == 0:
             return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge",
-                                                                      "bool": True, "error" : "Challenge type is required"})
+                                                                      "bool":True, "error":"Challenge type is required"})
         if len(request.POST.getlist('radiogroup')) == 0 and len(request.POST.getlist('cipher')) == 0:
             return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge",
                                                                       "bool":True,
@@ -100,7 +100,7 @@ def challenge_page(request):
     elif request.method == 'GET':
         challenge_id = int(request.GET.get('challenge_id', ''))
         ct = challenge.get_ciphertext(challenge_id)
-        in_challenge = challenge.user_in_challenge(challenge_id, request.user)
+        in_challenge, solved_by_user = challenge.user_in_challenge(challenge_id, request.user)
         info = challenge.get_challenge_info(challenge_id)
 
         difficulty = challenge.get_difficulty(challenge_id)
@@ -108,7 +108,7 @@ def challenge_page(request):
              "ciphertext":ct, "user_in_challenge":in_challenge, "difficulty":difficulty,
              "challenge_type":info['challenge_type'], "solved":info['solved'],
              "num_users":len(info['users']), "num_solved":len(info['solved_by']),
-             "users": info['users'], "solved_by":info['solved_by']}
+             "users": info['users'], "solved_by":info['solved_by'], "solved_by_user":solved_by_user}
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
 

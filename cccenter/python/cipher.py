@@ -117,7 +117,6 @@ def check_solution(challenge_id, user_id, guessed_plaintext):
 
         if challenge.solved == False or challenge.solved == None:
             challenge.solved = True
-            challenge.solved_by.add(user)
             challenge.datetime_solved = timezone.now()
             challenge.save()
 
