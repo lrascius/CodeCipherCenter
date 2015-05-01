@@ -5,6 +5,7 @@ import cccenter.models as models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from random import randint
+from cccenter.models import Cipher
 
 def ceasar_shift_encode(text, shift):
     '''Function that applies a ceasar shift on a piece of text. The encrypted text is returned.'''

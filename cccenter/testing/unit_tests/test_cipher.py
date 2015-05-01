@@ -34,13 +34,15 @@ class TestCipherFunctions(TestCase):
     def test_ceasar_shift_5(self):
         self.assertTrue(ceasar_shift_encode(self.text, 5) == "XTRJWFSITRYJCYBNYMXTRJBJNWIHMFWFHYJWX")
         
+    @mock.patch('cccenter.Cipher')
     @mock.patch('cccenter.python.cipher.timezone')
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
     @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_createchallenge(self, mock_challenge, mock_models, mock_user, mock_timezone):
+    def test_createchallenge(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):
         mock_timezone.now.return_value = "now"
         mock_models.Challenge.objects.create.return_value = mock_challenge
+        mock_cipher.objects.get.return_value = mock_cipher
         #mock_models.Challenge.users.add.return_value = ""
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
@@ -53,6 +55,8 @@ class TestCipherFunctions(TestCase):
                                                                 challenge_type=self.challengetype, datetime_created=self.tn)
         self.assertTrue(mock_challenge.users.add.called)
         self.assertTrue(mock_challenge.save.called)
+        mock_cipher.objects.get.assert_called_with(ciphertype=self.challengetype)
+        mock_challenge.cipher.add.assert_called_with(mock_cipher)
         
         #a = Challenge.objects.get(pk=c_data['challenge_id'])
         #self.assertEqual(a.ciphertext, self.ciphertext)
