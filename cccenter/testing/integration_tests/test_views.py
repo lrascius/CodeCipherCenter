@@ -28,14 +28,23 @@ class TestViews(TestCase):
         resp = self.client.get('/accounts/register/')
         self.assertEqual(resp.status_code, 200)
         
+        with open('../html_validation/register1.html', 'w') as outfile:
+            outfile.write(str(resp))
+        
         # empty post request to test response to incorrect post
         resp = self.client.post('/accounts/register/')
         self.assertEqual(resp.status_code, 200)
+        
+        with open('../html_validation/register2.html', 'w') as outfile:
+            outfile.write(str(resp))
         
         # test correct response
         resp = self.client.post('/accounts/register/', {'username':'mk', 'first_name':'m', 'last_name':'k', 'email':'mk@example.com', 
                                               'password1':'a', 'password2':'a'})
         self.assertEqual(resp.status_code, 200)
+        
+        with open('../html_validation/register3.html', 'w') as outfile:
+            outfile.write(str(resp))
 
     def test_getCipher(self):
         resp = self.client.get('/getcipher/')
