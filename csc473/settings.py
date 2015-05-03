@@ -97,7 +97,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/cccenter/static/'
 STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = (
