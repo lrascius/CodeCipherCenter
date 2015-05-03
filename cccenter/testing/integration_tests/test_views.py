@@ -54,12 +54,18 @@ class TestViews(TestCase):
         resp = self.client.get('/cipher/challengelist/')
         self.assertEqual(resp.status_code, 200)
         
+        with open('cccenter/testing/html_validation/challengelist1.html', 'w') as outfile:
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
+        
     def test_challengeCreation(self):
         #response = self.client.get('/cipher/createchallenge/', follow=True)
         #self.assertRedirects(response, '/accounts/login/')
 
         resp = self.client.post('/cipher/createchallenge/')
         self.assertEqual(resp.status_code, 200)
+        
+        with open('cccenter/testing/html_validation/createchallenge1.html', 'w') as outfile:
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
         #data = json.loads(resp.content.decode('utf-8'))
         #self.assertTrue(data['ciphertext'])
@@ -68,14 +74,23 @@ class TestViews(TestCase):
         resp = self.client.get('/cipher/createchallenge/')
         self.assertEqual(resp.status_code, 200)
         
+        with open('cccenter/testing/html_validation/createchallenge2.html', 'w') as outfile:
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
+        
     def test_challengePage(self):
         resp = self.client.get('/cipher/challengepage/', {'challenge_id':'30'})
         self.assertNotEqual(resp, None)
         self.assertEqual(resp.status_code, 200)
         
+        with open('cccenter/testing/html_validation/challengepage1.html', 'w') as outfile:
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
+        
     def test_joinChallenge(self):
         resp = self.client.post('/cipher/joinchallenge/', {'challenge_id':'30'})
         self.assertEqual(resp.status_code, 200)
+        
+        with open('cccenter/testing/html_validation/joinchallenge1.html', 'w') as outfile:
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
         resp = self.client.get('/cipher/joinchallenge/', {'challenge_id':'1'})
         self.assertEqual(resp.status_code, 404)
@@ -97,6 +112,9 @@ class TestViews(TestCase):
         self.assertEqual(value, False)
         value = self.client.logout()
         self.assertEqual(value, None)
+        
+        with open('cccenter/testing/html_validation/login1.html', 'w') as outfile:
+            outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
     def test_auth_view(self):
         ''' Test authorization '''
@@ -104,20 +122,32 @@ class TestViews(TestCase):
         # test bad authorization
         resp = self.client.post('/accounts/auth/', {'username':'t1', 'password':'1'})
         self.assertEqual(resp.status_code, 200)
+        
+        with open('cccenter/testing/html_validation/auth1.html', 'w') as outfile:
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
         # test good authorization
         resp = self.client.post('/accounts/auth/', {'username':'marctest0', 'password':'test0'})
         self.assertEqual(resp.status_code, 200)
+        
+        with open('cccenter/testing/html_validation/auth2.html', 'w') as outfile:
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
     def test_loggedin(self):
         response = self.client.get('/accounts/loggedin/')
         self.assertEqual(response.status_code, 200)
+        
+        with open('cccenter/testing/html_validation/loggedin1.html', 'w') as outfile:
+            outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
     def test_logout(self):
         #response = self.client.get('/accounts/logout', follow=True)
         #self.assertRedirects(response, '/accounts/login/')        
         response = self.client.get('/accounts/logout/')
         self.assertEqual(response.status_code, 200)
+        
+        with open('cccenter/testing/html_validation/logout1.html', 'w') as outfile:
+            outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
     def test_profile(self):
         #response = self.client.get('/profile/', follow=True)
@@ -125,6 +155,9 @@ class TestViews(TestCase):
         response = self.client.get('/profile/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'cccenter/profile.html')
+        
+        with open('cccenter/testing/html_validation/profile1.html', 'w') as outfile:
+            outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
     def test_settings(self):
         #response = self.client.get('/settings/', follow=True)
@@ -133,4 +166,7 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         #response = self.client.post('/settings', {})
         #self.assertTemplateUsed(response, 'cccenter/settings.html')
+        
+        with open('cccenter/testing/html_validation/settings1.html', 'w') as outfile:
+            outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
