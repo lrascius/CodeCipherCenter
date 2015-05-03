@@ -29,14 +29,14 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 200)
 
         with open('cccenter/testing/html_validation/register1.html', 'w') as outfile:
-            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t')).replace("\\'", "'")
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
         # empty post request to test response to incorrect post
         resp = self.client.post('/accounts/register/')
         self.assertEqual(resp.status_code, 200)
         
         with open('cccenter/testing/html_validation/register2.html', 'w') as outfile:
-            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t')).replace("\\'", "'")
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
         # test correct response
         resp = self.client.post('/accounts/register/', {'username':'mk', 'first_name':'m', 'last_name':'k', 'email':'mk@example.com', 
@@ -44,7 +44,7 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 200)
         
         with open('cccenter/testing/html_validation/register3.html', 'w') as outfile:
-            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t')).replace("\\'", "'")
+            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
     def test_getCipher(self):
         resp = self.client.get('/getcipher/')
