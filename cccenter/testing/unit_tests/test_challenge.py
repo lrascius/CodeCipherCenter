@@ -133,7 +133,7 @@ class TestChallenge(TestCase):
         
         success = user_in_challenge(challenge_id=1, user=mock_user)
         
-        self.assertFalse(success)
+        self.assertEqual(success, (False, False))
         mock_user.user_challenge_set.get.assert_called_with(pk=1)
         #mock_models.Challenge.user_set.filter.assert_called_with(pk=2)
         

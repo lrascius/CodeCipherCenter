@@ -8,6 +8,7 @@ django-toolbelt==0.0.1
 gunicorn==19.3.0
 Gutenberg==0.4.0
 html5lib==0.999
+html5validator==0.1.9
 ipython==3.0.0
 isodate==0.5.1
 linecache2==1.0.0
