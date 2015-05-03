@@ -127,7 +127,7 @@ def join_challenge(request):
 
 def login(request):
     '''Returns login page.'''
-    c = {"active":"login"}
+    c = {"active":"login", "title":"Code and Cipher Center"}
     c.update(csrf(request))
     return render_to_response('cccenter/login.html', c)
 
@@ -143,7 +143,7 @@ def auth_view(request):
     else:
         return render_to_response('cccenter/login.html',
                                   RequestContext(request,
-                                                 {"alert":"Invalid username or password!"}))
+                                                 {"alert":"Invalid username or password!", "title":"Code and Cipher Center"}))
 
 def challengeList(request):
     '''Returns challenge list with collumns of id, date, difficulty, and challengetype'''
@@ -159,17 +159,17 @@ def challengeList(request):
         challenge_type.append(chall.challenge_type.capitalize())
     array = zip(challenges, difficulty, challenge_type)
 
-    return render(request, 'cccenter/challenge_list.html', {'in_challenge': c, 'list' : array})
+    return render(request, 'cccenter/challenge_list.html', {'in_challenge':c, 'list':array, "title":"Code and Cipher Center"})
 
 def loggedin(request):
     '''Returns challenge page.'''
-    return render(request, 'cccenter/challenge_page.html', {"active":"challenge"})
+    return render(request, 'cccenter/challenge_page.html', {"active":"challenge", "title":"Code and Cipher Center"})
 
 @login_required
 def logout(request):
     '''Logs user out and returns challenge page.'''
     auth.logout(request)
-    return render_to_response('cccenter/challenge_page.html')
+    return render_to_response('cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
 def register(request):
     '''If called with a GET request, returns registration page.
@@ -192,7 +192,7 @@ def register(request):
 
     return render(request,
                   'cccenter/register.html',
-                  {'user_form': user_form, 'registered': registered, "active":"register"})
+                  {'user_form': user_form, 'registered': registered, "active":"register", "title":"Code and Cipher Center"})
 
 @login_required
 def profile(request):
@@ -228,7 +228,7 @@ def profile(request):
 
     return render(request,
                   'cccenter/profile.html',
-                  {'user' : user, 'userprofile' : userprofile, 'challenges_user_in' : array})
+                  {'user':user, 'userprofile':userprofile, 'challenges_user_in':array, "title":"Code and Cipher Center"})
 
 @login_required
 def settings(request):
@@ -261,5 +261,5 @@ def settings(request):
 
         return HttpResponseRedirect('/profile/')
 
-    return render(request, 'cccenter/settings.html')
+    return render(request, 'cccenter/settings.html', {"title":"Code and Cipher Center"})
 
