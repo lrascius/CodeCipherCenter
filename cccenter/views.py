@@ -25,8 +25,12 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 def index(request):
     '''Returns the homepage.'''
-    return render(request, 'cccenter/challenge_page.html',
+    return render(request, 'cccenter/home_page.html',
                   {"title":"Code and Cipher Center", "active":"home"})
+
+def home(request):
+    return render(request, 'cccenter/challenge_page.html',
+		{"title":"Code and Cipher Center"})
 
 # def register(request):
 #     '''Returns the register page.'''
