@@ -29,21 +29,18 @@ def index(request):
     '''Returns the homepage.'''
     return render(request, 'cccenter/home_page.html',
                   {"title":"Code and Cipher Center", 
-                   "active":"home", 
-                   "notifications" : general.get_notifications(request.user),
-                   "unseen_notification" : general.unviewed_notifications(request.user)})
+                   "active":"home"})
 
 
 def update_notifications(request):
     '''Udates the notifications based on which has been viewed'''
+    print request.user
     general.viewed_notification(request.user, request.GET.get('notification_id'))
 
 def home(request):
     '''Returns the home page.'''
     return render(request, 'cccenter/challenge_page.html',
-		          {"title":"Code and Cipher Center", 
-                   "notifications" : general.get_notifications(request.user),
-                   "unseen_notification" : general.unviewed_notifications(request.user)})
+		          {"title":"Code and Cipher Center"})
 
 # def register(request):
 #     '''Returns the register page.'''
@@ -166,9 +163,7 @@ def join_challenge(request):
 def login(request):
     '''Returns login page.'''
     c = {"active":"login", 
-         "title":"Code and Cipher Center", 
-         "notifications" : general.get_notifications(request.user),
-         "unseen_notification" : general.unviewed_notifications(request.user)}
+         "title":"Code and Cipher Center"}
     c.update(csrf(request))
     return render_to_response('cccenter/login.html', c)
 
@@ -221,9 +216,7 @@ def loggedin(request):
 def logout(request):
     '''Logs user out and returns challenge page.'''
     auth.logout(request)
-    return render_to_response('cccenter/challenge_page.html', {"title":"Code and Cipher Center", 
-                                                               "notifications" : general.get_notifications(request.user),
-                                                               "unseen_notification" : general.unviewed_notifications(request.user)})
+    return render_to_response('cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
 def register(request):
     '''If called with a GET request, returns registration page.
@@ -249,9 +242,7 @@ def register(request):
                   {'user_form': user_form, 
                    'registered': registered, 
                    "active":"register", 
-                   "title":"Code and Cipher Center", 
-                   "notifications" : general.get_notifications(request.user),
-                   "unseen_notification" : general.unviewed_notifications(request.user)})
+                   "title":"Code and Cipher Center"})
 
 @login_required
 def profile(request):
