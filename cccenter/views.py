@@ -33,6 +33,7 @@ def index(request):
                    "notifications" : general.get_notifications(request.user),
                    "unseen_notification" : general.unviewed_notifications(request.user)})
 
+
 def update_notifications(request):
     '''Udates the notifications based on which has been viewed'''
     general.viewed_notification(request.user, request.GET.get('notification_id'))
@@ -123,8 +124,9 @@ def challenge_page(request):
         user = User.objects.get(username = request.POST.getlist('username')[0])        
         notification = Notification(user=user, notification=notify, link=link)
         notification.save()
-        return render(request, 'cccenter/challenge_page.html', {"notifications" : general.get_notifications(request.user),
-                                                                "unseen_notification" : general.unviewed_notifications(request.user) })
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        # return render(request, 'cccenter/challenge_page.html', {"notifications" : general.get_notifications(request.user),
+                                                                # "unseen_notification" : general.unviewed_notifications(request.user) })
 
     elif request.method == 'GET':
         challenge_id = int(request.GET.get('challenge_id', ''))
@@ -204,6 +206,7 @@ def challengeList(request):
     return render(request, 'cccenter/challenge_list.html', {'in_challenge':c, 
                                                             'list':array, 
                                                             "title":"Code and Cipher Center", 
+                                                            "active":"challengelist",
                                                             "notifications" : general.get_notifications(request.user),
                                                             "unseen_notification" : general.unviewed_notifications(request.user)})
 
