@@ -183,11 +183,10 @@ def auth_view(request):
 
     return render_to_response('cccenter/login.html',
                               RequestContext(request,
-                                  {"alert":"Invalid username or password!",
-                                   "title":"Code and Cipher Center",
-                                   "notifications":notify.get_notifications(request.user),
-                                   "unseen_notification":notify.unviewed_notifications(request.user)
-                                  }))
+                                             {"alert":"Invalid username or password!",
+                                              "title":"Code and Cipher Center",
+                                             }
+                                            ))
 
 def challengeList(request):
     '''Returns challenge list with collumns of id, date, difficulty, and challengetype'''

@@ -94,6 +94,8 @@
                     {{user.first_name}} {{user.last_name}}<br>
                     {% endfor %}
                 </div>
+                {% if user.is_authenticated %}
+                <!-- invite user -->
                	<ul class="list-group">
 	        		<li class="list-group-item">			      
 		               	<form class="form-inline" method="POST"> {% csrf_token %}
@@ -104,7 +106,8 @@
 				  			</div>
 			    		</form>
 			    	</li>
-			    </ul>                
+			    </ul>    
+			    {% endif %}            
             </div>
             
             <br>
