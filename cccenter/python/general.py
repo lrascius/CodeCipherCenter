@@ -25,3 +25,8 @@ def generate_paragraph():
     regex = re.compile('[^a-zA-Z]')
     paragraph = regex.sub('', paragraph).lower()
     return paragraph
+
+def get_notifications(username):
+    '''Grabs a users notifications'''
+    notifications = Notification.objects.filter(user=username)
+    return notifications
