@@ -14,3 +14,10 @@ class TestGeneral(TestCase):
         notification = mock.Mock(spec=models.Notification)
         models.Notification.get_notifications(notification, user)
         notification.filter.assert_called_with(user=user)        
+
+    def test_unviewed_notification(self):
+        user = mock.Mock()
+        notification = mock.Mock(spec=models.Notification)
+        models.Notification.get_notifications(notification, user)
+        notification = notification.filter.assert_called_with(user=user) 
+        self.assertTrue(len(notification) != 0)
