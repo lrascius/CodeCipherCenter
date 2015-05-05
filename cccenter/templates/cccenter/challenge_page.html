@@ -94,6 +94,17 @@
                     {{user.first_name}} {{user.last_name}}<br>
                     {% endfor %}
                 </div>
+               	<ul class="list-group">
+	        		<li class="list-group-item">			      
+		               	<form class="form-inline" method="POST"> {% csrf_token %}
+		               		<label>Invite a user</label>
+			      			<div class="form-group">
+				    			<input type="text" class="form-control" style="width: 150px" placeholder="Username" name="username">	
+				    			<button type="submit" class="btn btn-success"> Send </button>
+				  			</div>
+			    		</form>
+			    	</li>
+			    </ul>                
             </div>
             
             <br>
