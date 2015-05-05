@@ -100,5 +100,14 @@
 	        {% endif %}
 	    </ul>
 	</div>
+	
+	<!-- Comments section -->
+	{% if challenge_type == 'collaborative' %}
+	    {% for comment in comments %}
+	        <p>{{comment.user.first_name}} {{comment.user.last_name}} says...</p>
+	        <p>{{comment.text}}</p>
+	        <br>
+	    {% endfor %}
+	{% endif %}
 </div>
 {% endblock %}
