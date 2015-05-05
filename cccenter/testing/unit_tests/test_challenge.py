@@ -31,6 +31,17 @@ class TestChallenge(TestCase):
     @mock.patch('cccenter.python.challenge.User')
     @mock.patch('cccenter.python.challenge.models')
     @mock.patch('cccenter.python.challenge.models.Challenge')
+    def test_joinChallenge_Pass2(self, mock_challenge, mock_models, mock_user):
+        mock_models.Challenge.objects.get.return_value = mock_challenge
+        mock_challenge.challenge_type = 'single'
+        
+        res = join_challenge(challenge_id=1, user_id=2)
+        
+        self.assertFalse(res)
+        
+    @mock.patch('cccenter.python.challenge.User')
+    @mock.patch('cccenter.python.challenge.models')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
     def test_joinChallenge_Fail1(self, mock_challenge, mock_models, mock_user):
         mock_models.Challenge.objects.get.return_value = None
         mock_user.objects.get.return_value= "user"

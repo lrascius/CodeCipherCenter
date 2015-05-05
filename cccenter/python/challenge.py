@@ -27,6 +27,9 @@ def join_challenge(challenge_id, user_id):
     if challenge == None:
         raise ValueError("challenge_id is invalid")
 
+    if challenge.challenge_type == 'single':
+        return False
+
     user = User.objects.get(pk=user_id)
 
     if user == None:

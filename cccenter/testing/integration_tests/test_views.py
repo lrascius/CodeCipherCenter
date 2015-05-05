@@ -79,7 +79,6 @@ class TestViews(TestCase):
         
     def test_challengePage(self):
         resp = self.client.get('/cipher/challengepage/', {'challenge_id':'30'})
-        self.assertNotEqual(resp, None)
         self.assertEqual(resp.status_code, 200)
         
         with open('cccenter/testing/html_validation/challengepage1.html', 'w') as outfile:

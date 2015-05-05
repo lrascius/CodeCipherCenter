@@ -86,3 +86,13 @@ function joinChallenge(challenge_id) {
         }
     });
 }
+
+function notification_clicked(notification_id) {
+    // Javascript code for when a notification is clicked we want to get its id and
+    // set that that notification has been viewed in the model. 
+    $.ajax({
+        url: "/cccenter/notificationsupdate/",
+        type: "GET",
+        data: {'notification_id': notification_id},
+    });
+}
