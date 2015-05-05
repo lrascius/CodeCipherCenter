@@ -30,6 +30,10 @@ def index(request):
     return render(request, 'cccenter/home_page.html',
                   {"title":"Code and Cipher Center", "active":"home", "notifications" : general.get_notifications(request.user)})
 
+def update_notifications(request):
+    '''Udates the notifications based on which has been viewed'''
+    general.viewed_notification(request.user, request.GET.get('notification_id'))
+
 def home(request):
     '''Returns the home page.'''
     return render(request, 'cccenter/challenge_page.html',
