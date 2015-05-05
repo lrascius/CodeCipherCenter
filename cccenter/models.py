@@ -48,10 +48,10 @@ class Challenge(models.Model):
 
 class Comment(models.Model):
     '''A model for comments in the forums.'''
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='user_comment_set')
     text = models.TextField(default="")
     datetime = models.DateTimeField()
-    forum = models.ForeignKey(Challenge)
+    forum = models.ForeignKey(Challenge, related_name='challenge_comment_set')
 
     def __unicode__(self):
         return smart_text(self.user)
