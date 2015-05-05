@@ -55,3 +55,14 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return smart_text(self.user)
+
+class Notification(models.Model):
+    '''A model for notifications.'''
+    user = models.ForeignKey(User)
+    notification = models.CharField(max_length=200)
+    link = models.CharField(max_length=200)  
+    viewed = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return smart_text(self.user)
+
