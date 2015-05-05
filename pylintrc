@@ -1,0 +1,3 @@
+[MASTER]
+ignore=migrations, __pycache__, admin.py
+disable=bad-builtin, no-member, too-many-arguments, too-few-public-methods, unidiomatic-typecheck, duplicate-code, invalid-name
