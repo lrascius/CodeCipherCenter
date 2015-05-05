@@ -24,6 +24,19 @@
             <input class="btn btn-success" type="submit" value="Join">
         </form>
         {% endif %}
+        
+        {% if challenge_type == 'collaborative' %}
+	    <!-- Comments section -->
+	    <br>
+	    <h3>Forum</h3>
+	    <div id="forum" class="well" style="text-align:left">
+	        {% for comment in comments %}
+            <p>{{comment.user.first_name}} {{comment.user.last_name}} says...</p>
+            <p>{{comment.text}}</p>
+            <br>
+	        {% endfor %}
+	    </div>
+	    {% endif %}
 	</div>
 	<div id="challenge-info" class="col-md-3">
 	    <ul class="list-group">
@@ -100,14 +113,5 @@
 	        {% endif %}
 	    </ul>
 	</div>
-	
-	<!-- Comments section -->
-	{% if challenge_type == 'collaborative' %}
-	    {% for comment in comments %}
-	        <p>{{comment.user.first_name}} {{comment.user.last_name}} says...</p>
-	        <p>{{comment.text}}</p>
-	        <br>
-	    {% endfor %}
-	{% endif %}
 </div>
 {% endblock %}

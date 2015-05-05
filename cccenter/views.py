@@ -12,7 +12,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 import cccenter.python.general as general
 import cccenter.python.cipher as cf
-import cccenter.python.comments as comments
+import cccenter.python.comment as comment
 from random import randint
 from cccenter.models import UserProfile
 from cccenter.models import Cipher
@@ -116,9 +116,9 @@ def challenge_page(request):
              "users": info['users'], "solved_by":info['solved_by'], "solved_by_user":solved_by_user}
              
         if info['challenge_type'] == 'collaborative':
-            cmts = comments.get_comments(challenge_id)
+            cmts = comment.get_comments(challenge_id)
             c['comments'] = cmts
-             
+            
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
 
