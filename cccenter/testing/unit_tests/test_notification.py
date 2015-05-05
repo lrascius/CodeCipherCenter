@@ -19,5 +19,14 @@ class TestNotification(TestCase):
         
         res = unviewed_notifications('user')
         
+        self.assertFalse(res)
+        mock_notification.objects.filter.assert_called_with(user='user', viewed=False)
+        
+    @mock.patch('cccenter.python.notification.Notification')
+    def test_unviewed_notification2(self, mock_notification):
+        mock_notification.objects.filter.return_value = [0, 0]
+        
+        res = unviewed_notifications('user')
+        
         self.assertTrue(res)
         mock_notification.objects.filter.assert_called_with(user='user', viewed=False)
