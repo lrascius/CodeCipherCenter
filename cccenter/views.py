@@ -108,7 +108,13 @@ def check_plaintext(request):
 def challenge_page(request):
     '''Returns the challenge page associated with the given challenge_id.'''
     if request.method == 'POST':
-        return Http404()
+        link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0]) 
+        notify = str(request.user) + " has invited you to a challenge"
+        user = User.objects.get(username = request.POST.getlist('username')[0])        
+        notification = Notification(user=user, notification=notify, link=link)
+        notification.save()
+        return render(request, 'cccenter/challenge_page.html', {"notifications" : general.get_notifications(request.user),
+                                                                "unseen_notification" : general.unviewed_notifications(request.user) })
 
     elif request.method == 'GET':
         challenge_id = int(request.GET.get('challenge_id', ''))
