@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^register$', views.register, name="cccenter"),   
     url(r'^cccenter/', include('cccenter.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', views.tutorial,name="tutorial"),
  
     # User authentication urls
     url(r'^accounts/login/$', 'cccenter.views.login'),

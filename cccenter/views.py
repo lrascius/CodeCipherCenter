@@ -45,6 +45,10 @@ def home(request):
                    "notifications" : general.get_notifications(request.user),
                    "unseen_notification" : general.unviewed_notifications(request.user)})
 
+def tutorial(request):
+    '''Returns the tutorial page.'''
+    return render(request, 'cccenter/tutorial.html',
+			{"title":"Code and Cipher Center"})
 # def register(request):
 #     '''Returns the register page.'''
 #     return render(request, 'cccenter/register.html')
