@@ -30,8 +30,9 @@ def index(request):
                   {"title":"Code and Cipher Center", "active":"home"})
 
 def home(request):
+    '''Returns the home page.'''
     return render(request, 'cccenter/challenge_page.html',
-		{"title":"Code and Cipher Center"})
+		          {"title":"Code and Cipher Center"})
 
 # def register(request):
 #     '''Returns the register page.'''
@@ -65,7 +66,7 @@ def create_challenge(request):
         cipher = {}
         cipher['plaintext'] = general.generate_paragraph()
         if len(request.POST.getlist('radiogroup')) != 0:
-            difficulty_ciphers =[i.ciphertype for i in Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0])]
+            difficulty_ciphers = [i.ciphertype for i in Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0])]
             cipher['ciphertype'] = difficulty_ciphers[randint(0, len(difficulty_ciphers)-1)]
         else:
             cipher['ciphertype'] = request.POST.getlist('cipher')[0]
@@ -114,11 +115,11 @@ def challenge_page(request):
              "challenge_type":info['challenge_type'], "solved":info['solved'],
              "num_users":len(info['users']), "num_solved":len(info['solved_by']),
              "users": info['users'], "solved_by":info['solved_by'], "solved_by_user":solved_by_user}
-             
+
         if info['challenge_type'] == 'collaborative':
             cmts = comment.get_comments(challenge_id)
             c['comments'] = cmts
-            
+
         c.update(csrf(request))
         return render(request, 'cccenter/challenge_page.html', c)
 

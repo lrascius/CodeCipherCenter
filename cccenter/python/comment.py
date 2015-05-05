@@ -17,7 +17,7 @@ def get_comments(challenge_id):
 
     if challenge == None:
         raise ValueError("Invalid challenge_id")
-        
+
     comments = challenge.challenge_comment_set.all()
-    
+
     return comments
