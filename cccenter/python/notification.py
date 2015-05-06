@@ -1,8 +1,12 @@
 from cccenter.models import Notification
 
-def get_notifications(user):
-    '''Grabs a users notifications'''
-    notifications = Notification.objects.filter(user=user)
+def get_notifications(user, get_all):
+    '''If get_all is true, grabs all the user notifications sorted by date
+       Else, grabs the 5 most recent user notifications'''
+    if get_all == True:
+        notifications = Notification.objects.filter(user=user).order_by('-datetime')
+    else:
+        notifications = Notification.objects.filter(user=user).order_by('-datetime')[:5]
     return notifications
 
 def unviewed_notifications(username):

@@ -13,15 +13,15 @@
         </div>
         <div class="panel-body">
             <div class="list-group">
-                {% for notification in notifications %}
+                {% for notification in all_notifications %}
                     {% if notification.viewed == True %}
                         <a href="{{notification.link}}" onclick="notification_clicked({{notification.id}})" class="list-group-item">
-                            <span class="badge">{{notification.datetimeformated}}</span>
+                            <span class="badge">{{notification.datetime}}</span>
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{notification.notification}}
                         </a>
                     {% else %}
                         <a href="{{notification.link}}" onclick="notification_clicked({{notification.id}})" class="list-group-item" style="background:#E0E0E0">
-                            <span class="badge">{{notification.datetimeformated}}</span>
+                            <span class="badge">{{notification.datetime}}</span>
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{notification.notification}}
                         </a>    
                     {% endif %}
