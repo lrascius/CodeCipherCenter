@@ -1,0 +1,55 @@
+{% extends 'cccenter/base.html' %}
+{% load staticfiles %}
+{% block js_includes %}
+<script src="{% static 'cccenter/create_challenge.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <legend style="width:100%; text-align:left"> <b>New Challenge</b> </legend>
+    <!-- <div align="center"> -->
+    <!-- "/cipher/createchallenge/" -->
+        <form method="post">{% csrf_token %}
+		    <div class="row">
+		        <div class="col-sm-9">
+					{% if bool != None %}
+					<div class="alert alert-danger" role="alert">
+					  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					  <span class="sr-only">Error:</span>
+						{{error}}
+					</div>
+					{% endif %}
+		        	<h4 style="text-align:left"> Choose by the difficulty level of a cipher: </h4>
+		            <div class="btn-group" data-toggle="buttons" id="difficultyRadio">
+		                <label class="btn btn-default" id="cipherDifficulty">
+		                    <input type="radio" name="radiogroup" value="beginner" id="difficultyRadio"/> <b> Beginner </b>
+		                </label> 
+		                <label class="btn btn-default" id="cipherDifficulty">
+		                    <input type="radio" name="radiogroup" value="intermediate" id="difficultyRadio"/> <b> Intermediate </b>
+		                </label> 
+		                <label class="btn btn-default" id="cipherDifficulty">
+		                    <input type="radio" name="radiogroup" value="advanced" id="difficultyRadio"/> <b> Advanced </b>
+		                </label> 
+		            </div>
+		            <h4 style="text-align:left"> Choose from a list of ciphers: </h4>
+					<select class="form-control" name="cipher" id="cipherChoice">
+						<option disabled selected> -- select a cipher -- </option>
+						<option value="Caesar Shift">Caesar Shift</option>
+						<option value="Multiplicitive">Multiplicitive</option>
+						<option value="Affine Cipher">Affine Cipher</option>
+					</select>	
+		            <h4 style="text-align:left"> Choose challenge type: </h4>
+					<select class="form-control" name="challengetype" id="challengeType" required="true">
+						<option disabled selected> -- select a type -- </option>
+						<option value="single">Single</option>
+						<option value="collaborative">Collaborative</option>
+						<option value="competitive">Competitive</option>
+					</select>
+		        </div>	
+		    </div>        
+		    <br>
+            <input class="btn btn-success" type="submit" value="Create New Challenge" id="createSubmit">
+        </form>
+    <!-- </div> -->
+</div>
+{% endblock %}
