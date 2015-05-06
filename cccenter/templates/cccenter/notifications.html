@@ -16,12 +16,12 @@
                 {% for notification in notifications %}
                     {% if notification.viewed == True %}
                         <a href="{{notification.link}}" onclick="notification_clicked({{notification.id}})" class="list-group-item">
-                            <span class="badge">just now</span>
+                            <span class="badge">{{notification.datetimeformated}}</span>
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{notification.notification}}
                         </a>
                     {% else %}
                         <a href="{{notification.link}}" onclick="notification_clicked({{notification.id}})" class="list-group-item" style="background:#E0E0E0">
-                            <span class="badge">just now</span>
+                            <span class="badge">{{notification.datetimeformated}}</span>
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{notification.notification}}
                         </a>    
                     {% endif %}

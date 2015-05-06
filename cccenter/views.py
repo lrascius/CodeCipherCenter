@@ -10,6 +10,7 @@ from django.contrib import auth
 from django.template import RequestContext
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 import cccenter.python.general as general
 import cccenter.python.notification as notify
 import cccenter.python.cipher as cf
@@ -41,10 +42,6 @@ def home(request):
     '''Returns the home page.'''
     return render(request, 'cccenter/challenge_page.html',
 		          {"title":"Code and Cipher Center"})
-
-# def register(request):
-#     '''Returns the register page.'''
-#     return render(request, 'cccenter/register.html')
 
 def getCipher(request):
     '''Returns a ciphertext as JSON.'''
@@ -117,9 +114,10 @@ def challenge_page(request):
     '''Returns the challenge page associated with the given challenge_id.'''
     if request.method == 'POST':
         link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0]) 
-        notify_message = str(request.user) + " has invited you to a challenge"
-        user = User.objects.get(username = request.POST.getlist('username')[0])        
-        notification = Notification(user=user, notification=notify_message, link=link)
+        notify_message = str(request.user) + " has invited you to a challenge # " + str(request.GET.getlist('challenge_id')[0])
+        user = User.objects.get(username = request.POST.getlist('username')[0]) 
+        datetime = timezone.now()
+        notification = Notification(user=user, notification=notify_message, link=link, datetime=datetime, datetimeformated=str(datetime.strftime("%A, %B %I%p %Y")))
         notification.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -271,6 +269,8 @@ def profile(request):
 @login_required
 def notifications(request):
     ''' View that generates all the notifications for a user '''
+    note = notify.get_notifications(request.user)
+    # print note[0].datetime.strftime("%A, %B %I%p %Y")
     return render(request, 'cccenter/notifications.html', {"notifications" : notify.get_notifications(request.user),
                                                            "unseen_notification" : notify.unviewed_notifications(request.user)})
 @login_required

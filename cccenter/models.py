@@ -63,6 +63,7 @@ class Notification(models.Model):
     link = models.CharField(max_length=200)  
     viewed = models.BooleanField(default=False)
     datetime = models.DateTimeField()
+    datetimeformated = models.CharField(max_length=64) 
     
     def __unicode__(self):
         return smart_text(self.user)
