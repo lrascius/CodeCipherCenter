@@ -3,10 +3,6 @@
    and their related Challenges and Users.'''
 
 from cccenter import models
-from cccenter.models import Comment
-from cccenter.models import Challenge
-from django.contrib.auth.models import User
-from django.utils import timezone
 
 def get_comments(challenge_id):
     '''Returns the comments associated with the given Challenge.'''

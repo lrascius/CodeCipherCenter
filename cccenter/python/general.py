@@ -35,7 +35,7 @@ def get_notifications(user):
 def unviewed_notifications(username):
     '''Checks if there is any unviewed notifications for a user'''
     notifications = Notification.objects.filter(user=username, viewed=False)
-    if (len(notifications) != 0):
+    if len(notifications) != 0:
         return True
     else:
         return False
@@ -45,9 +45,10 @@ def viewed_notification(username, notification_id):
     notifications = Notification.objects.filter(user=username, viewed=False)
 
     for notification in notifications:
-        if(int(notification.id) == int(notification_id)):
+        if int(notification.id) == int(notification_id):
             notification.viewed = True
             notification.save()
             return True
 
     return False
+

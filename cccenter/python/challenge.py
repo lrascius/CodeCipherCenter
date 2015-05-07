@@ -2,9 +2,6 @@
 
 import cccenter.models as models
 from django.contrib.auth.models import User
-from django.utils import timezone
-from cccenter.models import Cipher
-from cccenter.models import Challenge
 
 def challenge_list():
     '''Returns a list of the challenges in the database.'''

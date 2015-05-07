@@ -35,7 +35,8 @@ class Challenge(models.Model):
     users = models.ManyToManyField(User, related_name="user_challenge_set", blank=True, null=True)
     datetime_created = models.DateTimeField()
     datetime_solved = models.DateTimeField(blank=True, null=True)
-    solved_by = models.ManyToManyField(User, related_name="user_solved_challenge_set", blank=True, null=True)
+    solved_by = models.ManyToManyField(User, related_name="user_solved_challenge_set",
+                                       blank=True, null=True)
     challenge_type = models.CharField(max_length=50, choices=(('single', 'Single'),
                                                               ('collaborative', 'Collaborative'),
                                                               ('competitive', 'Competitive')))
@@ -60,7 +61,7 @@ class Notification(models.Model):
     '''A model for notifications.'''
     user = models.ForeignKey(User)
     notification = models.CharField(max_length=200)
-    link = models.CharField(max_length=200)  
+    link = models.CharField(max_length=200)
     viewed = models.BooleanField(default=False)
     datetime = models.DateTimeField()
 

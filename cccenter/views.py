@@ -2,7 +2,6 @@
 '''Holds the views for the cccenter app.'''
 import json
 from django.shortcuts import render
-from django.template import Context
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -22,7 +21,7 @@ from cccenter.models import Challenge
 from cccenter.models import Notification
 from cccenter.python.forms import RegistrationForm
 from cccenter.python.forms import SettingsForm
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 import cccenter.python.challenge as challenge
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -30,7 +29,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 def index(request):
     '''Returns the homepage.'''
     return render(request, 'cccenter/home_page.html',
-                  {"title":"Code and Cipher Center", 
+                  {"title":"Code and Cipher Center",
                    "active":"home"})
 
 
@@ -40,8 +39,7 @@ def update_notifications(request):
 
 def home(request):
     '''Returns the home page.'''
-    return render(request, 'cccenter/challenge_page.html',
-		          {"title":"Code and Cipher Center"})
+    return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
 
 def getCipher(request):
     '''Returns a ciphertext as JSON.'''
@@ -58,23 +56,29 @@ def create_challenge(request):
        Else we create a cipher based on what the user chose.'''
 
     if request.method == 'GET':
-        return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", 
-                                                                  "active":"newchallenge",
-                                                                  "notifications" : notify.get_notifications(request.user, False),
-                                                                  "unseen_notification" : notify.unviewed_notifications(request.user)})
+        return render(request, 'cccenter/create_challenge.html',
+                      {"title":"Code and Cipher Center", "active":"newchallenge",
+                       "notifications" : notify.get_notifications(request.user, False),
+                       "unseen_notification" : notify.unviewed_notifications(request.user)
+                      })
 
     elif request.method == 'POST':
         if len(request.POST.getlist('challengetype')) == 0:
-            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge",
-                                                                      "bool":True, "error":"Challenge type is required",
-                                                                      "notifications" : notify.get_notifications(request.user, False),
-                                                                      "unseen_notification" : notify.unviewed_notifications(request.user)})
-        if len(request.POST.getlist('radiogroup')) == 0 and len(request.POST.getlist('cipher')) == 0:
-            return render(request, 'cccenter/create_challenge.html', {"title":"Code and Cipher Center", "active":"newchallenge",
-                                                                      "bool":True,
-                                                                      "error":"Select by difficulty or list of ciphers",
-                                                                      "notifications" : notify.get_notifications(request.user, False),
-                                                                      "unseen_notification" : notify.unviewed_notifications(request.user)})
+            return render(request, 'cccenter/create_challenge.html',
+                          {"title":"Code and Cipher Center", "active":"newchallenge",
+                           "bool":True, "error":"Challenge type is required",
+                           "notifications" : notify.get_notifications(request.user, False),
+                           "unseen_notification" : notify.unviewed_notifications(request.user)
+                          })
+
+        if len(request.POST.getlist('radiogroup')) == 0 \
+           and len(request.POST.getlist('cipher')) == 0:
+            return render(request, 'cccenter/create_challenge.html',
+                          {"title":"Code and Cipher Center", "active":"newchallenge",
+                           "bool":True, "error":"Select by difficulty or list of ciphers",
+                           "notifications" : notify.get_notifications(request.user, False),
+                           "unseen_notification" : notify.unviewed_notifications(request.user)
+                          })
         cipher = {}
         cipher['plaintext'] = general.generate_paragraph()
         if len(request.POST.getlist('radiogroup')) != 0:
@@ -114,8 +118,9 @@ def challenge_page(request):
     '''Returns the challenge page associated with the given challenge_id.'''
     if request.method == 'POST':
         link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0]) 
-        notify_message = str(request.user) + " has invited you to a challenge # " + str(request.GET.getlist('challenge_id')[0])
-        user = User.objects.get(username = request.POST.getlist('username')[0]) 
+        notify_message = str(request.user) + " has invited you to a challenge # "
+                         + str(request.GET.getlist('challenge_id')[0])
+        user = User.objects.get(username=request.POST.getlist('username')[0]) 
         notification = Notification(user=user, notification=notify_message, link=link, datetime=timezone.now())
         notification.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -131,9 +136,11 @@ def challenge_page(request):
              "ciphertext":ct, "user_in_challenge":in_challenge, "difficulty":difficulty,
              "challenge_type":info['challenge_type'], "solved":info['solved'],
              "num_users":len(info['users']), "num_solved":len(info['solved_by']),
-             "users": info['users'], "solved_by":info['solved_by'], "solved_by_user":solved_by_user,
-             "notifications" : notify.get_notifications(request.user, False),
-             "unseen_notification" : notify.unviewed_notifications(request.user)}
+             "users": info['users'], "solved_by":info['solved_by'], "solved_by_user":solved_by_user}
+
+        if not request.user.is_anonymous:
+            c["notifications"] = notify.get_notifications(request.user, False)
+            c["unseen_notification"] = notify.unviewed_notifications(request.user)
 
         if info['challenge_type'] == 'collaborative':
             cmts = comment.get_comments(challenge_id)
@@ -157,7 +164,7 @@ def join_challenge(request):
 
 def login(request):
     '''Returns login page.'''
-    c = {"active":"login", 
+    c = {"active":"login",
          "title":"Code and Cipher Center"}
     c.update(csrf(request))
     return render_to_response('cccenter/login.html', c)
@@ -171,13 +178,13 @@ def auth_view(request):
     if user is not None:
         auth.login(request, user)
         return HttpResponseRedirect('/accounts/loggedin')
-    else:
-        return render_to_response('cccenter/login.html',
-                                  RequestContext(request,
-                                                 {"alert":"Invalid username or password!", 
-                                                  "title":"Code and Cipher Center",
-                                                  "notifications" : notify.get_notifications(request.user, False),
-                                                  "unseen_notification" : notify.unviewed_notifications(request.user)}))
+
+    return render_to_response('cccenter/login.html',
+                              RequestContext(request,
+                                             {"alert":"Invalid username or password!",
+                                              "title":"Code and Cipher Center",
+                                             }
+                                            ))
 
 def challengeList(request):
     '''Returns challenge list with collumns of id, date, difficulty, and challengetype'''
@@ -193,19 +200,25 @@ def challengeList(request):
         challenge_type.append(chall.challenge_type.capitalize())
     array = zip(challenges, difficulty, challenge_type)
 
-    return render(request, 'cccenter/challenge_list.html', {'in_challenge':c, 
-                                                            'list':array, 
-                                                            "title":"Code and Cipher Center", 
-                                                            "active":"challengelist",
-                                                            "notifications" : notify.get_notifications(request.user, False),
-                                                            "unseen_notification" : notify.unviewed_notifications(request.user)})
+    return render(request, 'cccenter/challenge_list.html',
+                  {"in_challenge":c,
+                   "list":array,
+                   "title":"Code and Cipher Center",
+                   "active":"challengelist",
+                   "notifications":notify.get_notifications(request.user, False),
+                   "unseen_notification":notify.unviewed_notifications(request.user)
+                  }
+                 )
 
 def loggedin(request):
     '''Returns challenge page.'''
-    return render(request, 'cccenter/challenge_page.html', {"active":"challenge", 
-                                                            "title":"Code and Cipher Center", 
-                                                            "notifications" : notify.get_notifications(request.user, False),
-                                                            "unseen_notification" : notify.unviewed_notifications(request.user)})
+    return render(request, 'cccenter/challenge_page.html',
+                  {"active":"challenge",
+                   "title":"Code and Cipher Center",
+                   "notifications" : notify.get_notifications(request.user, False),
+                   "unseen_notification" : notify.unviewed_notifications(request.user)
+                  }
+                 )
 
 @login_required
 def logout(request):
@@ -234,9 +247,9 @@ def register(request):
 
     return render(request,
                   'cccenter/register.html',
-                  {'user_form': user_form, 
-                   'registered': registered, 
-                   "active":"register", 
+                  {'user_form': user_form,
+                   'registered': registered,
+                   "active":"register",
                    "title":"Code and Cipher Center"})
 
 @login_required
@@ -253,15 +266,17 @@ def profile(request):
 
     challenges_user_in = Challenge.objects.filter(users=request.user)
     for challenge in challenges_user_in:
-        difficulty.append(Cipher.objects.get(ciphertype=challenge.ciphertype).difficulty.capitalize())
+        cipher = Cipher.objects.get(ciphertype=challenge.ciphertype)
+        difficulty.append(cipher.difficulty.capitalize())
+
     array = zip(challenges_user_in, difficulty)
 
     return render(request,
                   'cccenter/profile.html',
-                  {'user':user, 
-                   'userprofile':userprofile, 
-                   'challenges_user_in':array, 
-                   "title":"Code and Cipher Center", 
+                  {'user':user,
+                   'userprofile':userprofile,
+                   'challenges_user_in':array,
+                   "title":"Code and Cipher Center",
                    "notifications" : notify.get_notifications(request.user, False),
                    "unseen_notification" : notify.unviewed_notifications(request.user)})
 
@@ -301,7 +316,10 @@ def settings(request):
 
         return HttpResponseRedirect('/profile/')
 
-    return render(request, 'cccenter/settings.html', {"title":"Code and Cipher Center", 
-                                                      "notifications" : notify.get_notifications(request.user, False),
-                                                      "unseen_notification" : notify.unviewed_notifications(request.user)})
+    return render(request, 'cccenter/settings.html',
+                  {"title":"Code and Cipher Center",
+                   "notifications":notify.get_notifications(request.user, False),
+                   "unseen_notification" : notify.unviewed_notifications(request.user)
+                  }
+                 )
 
