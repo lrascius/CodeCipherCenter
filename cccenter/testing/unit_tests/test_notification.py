@@ -30,3 +30,14 @@ class TestNotification(TestCase):
         
         self.assertTrue(res)
         mock_notification.objects.filter.assert_called_with(user='user', viewed=False)
+        
+    @mock.patch('cccenter.python.notification.Notification')
+    def test_viewed_notification_Pass1(self, mock_notification):
+        mock_notification.objects.filter.return_value = mock_notification
+        mock_notification.id = 1
+        
+        res = viewed_notification('user', 1)
+        
+        self.assertTrue(res)
+        self.assertEqual(mock_notification.viewed)
+        self.assertTrue(mock_notification.save.called)
