@@ -118,7 +118,7 @@ def challenge_page(request):
     '''Returns the challenge page associated with the given challenge_id.'''
     if request.method == 'POST':
         link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0]) 
-        notify_message = str(request.user) + " has invited you to a challenge # "
+        notify_message = str(request.user) + " has invited you to a challenge # "\
                          + str(request.GET.getlist('challenge_id')[0])
         user = User.objects.get(username=request.POST.getlist('username')[0]) 
         notification = Notification(user=user, notification=notify_message, link=link, datetime=timezone.now())
