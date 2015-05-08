@@ -39,7 +39,9 @@ def update_notifications(request):
 
 def home(request):
     '''Returns the home page.'''
-    return render(request, 'cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
+    return render(request, 'cccenter/home_page.html',
+                  {"title":"Code and Cipher Center",
+                   "active":"home"})
 
 def getCipher(request):
     '''Returns a ciphertext as JSON.'''
@@ -224,7 +226,8 @@ def loggedin(request):
 def logout(request):
     '''Logs user out and returns challenge page.'''
     auth.logout(request)
-    return render_to_response('cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
+    #return render_to_response('cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
+    return HttpResponseRedirect('/')
 
 def register(request):
     '''If called with a GET request, returns registration page.
