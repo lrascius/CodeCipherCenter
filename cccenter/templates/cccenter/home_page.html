@@ -2,14 +2,27 @@
 {% load static from staticfiles %}
 
 {% block body %}
-<h1 class="text-center">Code and Cipher Center</h1>
+<!DOCTYPE html>
+<head>
+	<meta charset = "utf-8">
+	<title>Code and Cipher Center</title>
 
-<p class="text-center">
-    <a class = "btn" href="/accounts/login">Login</a>
-    <a class = "btn" href="/accounts/register">Register</a>
-    <br>
-    <a  href="/cipher/tutorials">Tutorials</a>
-</p>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+	<h1 class="text-center">Code and Cipher Center</h1>
+
+	<p class="text-center">
+	<a class = "btn" href="/accounts/login">Login</a>
+	<a class = "btn" href="/accounts/register">Register</a>
+	<br>
+	<a  href="/tutorial">Tutorials</a>
+	</p>
+</body>
 {% endblock %}
 
 	
