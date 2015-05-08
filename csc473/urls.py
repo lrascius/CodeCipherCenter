@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     # static assets
     url(r'^static/cccenter/(?P<filename>)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
     url(r'^static/css/(?P<filename>)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
+    url(r'^static/(?P<filename>)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
 
     url(r'^$', views.home, name='home'),
     # url(r'^blog/', include('blog.urls')),
