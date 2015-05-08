@@ -27,9 +27,9 @@ def generate_paragraph():
     paragraph = regex.sub('', paragraph).lower()
     return paragraph
 
-def get_notifications(username):
+def get_notifications(user):
     '''Grabs a users notifications'''
-    notifications = Notification.objects.filter(user=username)
+    notifications = Notification.objects.filter(user=user)
     return notifications
 
 def unviewed_notifications(username):

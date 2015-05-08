@@ -11,6 +11,7 @@ from django.template import RequestContext
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 import cccenter.python.general as general
+import cccenter.python.notification as notify
 import cccenter.python.cipher as cf
 import cccenter.python.comment as comment
 from random import randint
@@ -29,7 +30,8 @@ def index(request):
     '''Returns the homepage.'''
     return render(request, 'cccenter/home_page.html',
                   {"title":"Code and Cipher Center",  
-                   "notifications" : general.get_notifications(request.user),
+                   "active":"home",
+		   "notifications" : general.get_notifications(request.user),
                    "unseen_notification" : general.unviewed_notifications(request.user)})
 
 
