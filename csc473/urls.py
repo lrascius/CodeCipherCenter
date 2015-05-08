@@ -5,7 +5,8 @@ from django.conf import settings
 
 urlpatterns = patterns('',
     # static assets
-    url(r'^static/(?P<document>)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
+    url(r'^static/cccenter/(?P.*)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
+    url(r'^static/css/(?P.*)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT}),
 
     url(r'^$', views.home, name='home'),
     # url(r'^blog/', include('blog.urls')),
