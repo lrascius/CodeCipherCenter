@@ -25,6 +25,8 @@ from django.contrib.auth.models import User
 import cccenter.python.challenge as challenge
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.db.models import Q
+import itertools
 
 def index(request):
     '''Returns the homepage.'''
@@ -190,10 +192,11 @@ def auth_view(request):
 
 def challengeList(request):
     '''Returns challenge list with collumns of id, date, difficulty, and challengetype'''
-    challenges = Challenge.objects.all()
     
-    if not request.user.is_anonymous:
-        challenges_of_user = Challenge.objects.filter(users=request.user)
+    if request.user.is_active:
+        query = Q(users__in=[request.user]) | Q(challenge_type='collaborative')\
+                | Q(challenge_type='competitive')
+        challenges_of_user =  Challenge.objects.filter(query).distinct()
     else:
         challenges_of_user = Challenge.objects.exclude(challenge_type='single')
 
@@ -202,10 +205,10 @@ def challengeList(request):
     challenge_type = []
     for challenge in challenges_of_user:
         c.append(challenge.id)
-    for chall in challenges:
+    for chall in challenges_of_user:
         difficulty.append(Cipher.objects.get(ciphertype=chall.ciphertype).difficulty.capitalize())
         challenge_type.append(chall.challenge_type.capitalize())
-    array = zip(challenges, difficulty, challenge_type)
+    array = zip(challenges_of_user, difficulty, challenge_type)
     
     context = {"in_challenge":c,
                "list":array,
