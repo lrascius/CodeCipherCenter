@@ -28,8 +28,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 def index(request):
     '''Returns the homepage.'''
     return render(request, 'cccenter/home_page.html',
-                  {"title":"Code and Cipher Center", 
-                   "active":"home", 
+                  {"title":"Code and Cipher Center",  
                    "notifications" : general.get_notifications(request.user),
                    "unseen_notification" : general.unviewed_notifications(request.user)})
 
@@ -42,13 +41,15 @@ def home(request):
     '''Returns the home page.'''
     return render(request, 'cccenter/challenge_page.html',
 		          {"title":"Code and Cipher Center", 
+		   "active":"home",
                    "notifications" : general.get_notifications(request.user),
                    "unseen_notification" : general.unviewed_notifications(request.user)})
 
 def tutorial(request):
     '''Returns the tutorial page.'''
-    return render(request, 'cccenter/tutorial.html',
-			{"title":"Code and Cipher Center"})
+    return render(request, 'cccenter/tutorials.html',
+			{"title":"Code and Cipher Center",
+			"active":"tutorial"})
 # def register(request):
 #     '''Returns the register page.'''
 #     return render(request, 'cccenter/register.html')
