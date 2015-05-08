@@ -191,7 +191,12 @@ def auth_view(request):
 def challengeList(request):
     '''Returns challenge list with collumns of id, date, difficulty, and challengetype'''
     challenges = Challenge.objects.all()
-    challenges_of_user = Challenge.objects.filter(users=request.user)
+    
+    if not request.user.is_anonymous:
+        challenges_of_user = Challenge.objects.filter(users=request.user)
+    else:
+        challenges_of_user = Challenge.objects.exclude(challenge_type='single')
+
     c = []
     difficulty = []
     challenge_type = []
@@ -201,16 +206,18 @@ def challengeList(request):
         difficulty.append(Cipher.objects.get(ciphertype=chall.ciphertype).difficulty.capitalize())
         challenge_type.append(chall.challenge_type.capitalize())
     array = zip(challenges, difficulty, challenge_type)
+    
+    context = {"in_challenge":c,
+               "list":array,
+               "title":"Code and Cipher Center",
+               "active":"challengelist"
+              }
+              
+    if not request.user.is_anonymous:
+        context["notifications"] = notify.get_notifications(request.user, False)
+        context["unseen_notification"] = notify.unviewed_notifications(request.user)
 
-    return render(request, 'cccenter/challenge_list.html',
-                  {"in_challenge":c,
-                   "list":array,
-                   "title":"Code and Cipher Center",
-                   "active":"challengelist",
-                   "notifications":notify.get_notifications(request.user, False),
-                   "unseen_notification":notify.unviewed_notifications(request.user)
-                  }
-                 )
+    return render(request, 'cccenter/challenge_list.html', context)
 
 def loggedin(request):
     '''Returns challenge page.'''
