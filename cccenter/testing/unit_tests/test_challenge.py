@@ -180,7 +180,7 @@ class TestChallenge(TestCase):
 
     @mock.patch('cccenter.python.challenge.models')
     @mock.patch('cccenter.python.challenge.models.Challenge')
-    @mock.patch('cccenter.python.challenge.Cipher')
+    @mock.patch('cccenter.python.challenge.models.Cipher')
     def test_get_difficulty_Pass1(self, mock_cipher, mock_challenge, mock_models):
         mock_challenge.cipher.all.return_value = [mock_cipher]
         mock_cipher.difficulty = 'beginner'
@@ -192,9 +192,9 @@ class TestChallenge(TestCase):
     
     @mock.patch('cccenter.python.challenge.models')
     @mock.patch('cccenter.python.challenge.models.Challenge')
-    @mock.patch('cccenter.python.challenge.Cipher')
-    @mock.patch('cccenter.python.challenge.Cipher')   
-    @mock.patch('cccenter.python.challenge.Cipher')
+    @mock.patch('cccenter.python.challenge.models.Cipher')
+    @mock.patch('cccenter.python.challenge.models.Cipher')   
+    @mock.patch('cccenter.python.challenge.models.Cipher')
     def test_get_difficulty_Pass2(self, mock_cipher1, mock_cipher2, mock_cipher3, mock_challenge, mock_models):
         mock_challenge.cipher.all.return_value = [mock_cipher1, mock_cipher2, mock_cipher3]
         mock_cipher1.difficulty = 'beginner'
@@ -208,7 +208,7 @@ class TestChallenge(TestCase):
         
     @mock.patch('cccenter.python.challenge.models')
     @mock.patch('cccenter.python.challenge.models.Challenge')
-    @mock.patch('cccenter.python.challenge.Cipher')
+    @mock.patch('cccenter.python.challenge.models.Cipher')
     def test_get_difficulty_Fail1(self,  mock_cipher, mock_challenge, mock_models):
         mock_challenge.cipher.all.return_value = [mock_cipher]
         mock_cipher.difficulty = 'beginner'
@@ -220,7 +220,7 @@ class TestChallenge(TestCase):
             difficulty = get_difficulty(challenge_id='1')
             
     @mock.patch('cccenter.python.challenge.models')
-    @mock.patch('cccenter.python.challenge.Challenge')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
     def test_get_challenge_info_Pass1(self, mock_challenge, mock_models):
         mock_models.Challenge.objects.all.return_value = [mock_challenge]
         mock_challenge.users = ['u1', 'u2']
@@ -241,7 +241,7 @@ class TestChallenge(TestCase):
         self.assertEqual(res['users'], mock_challenge.users)
         
     @mock.patch('cccenter.python.challenge.models')
-    @mock.patch('cccenter.python.challenge.Challenge')
+    @mock.patch('cccenter.python.challenge.models.Challenge')
     def test_get_challenge_info_Fail1(self, mock_challenge, mock_models):
         with self.assertRaises(TypeError):
             res = get_challenge_info(challenge_id=1.0)
