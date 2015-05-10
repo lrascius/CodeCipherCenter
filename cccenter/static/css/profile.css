@@ -57,3 +57,12 @@ img {
 .width-100 {
     width: 100%;
 }
+
+table #example {
+    width: 100%;
+    border-spacing: 0px;
+}
+
+div .image-align {
+    text-align: center;
+}

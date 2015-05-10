@@ -138,8 +138,8 @@ class TestViews(TestCase):
         #self.assertEqual(response.status_code, 200)
         self.assertRedirects(response, '/')
         
-        with open('cccenter/testing/html_validation/loggedin1.html', 'w') as outfile:
-            outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
+        #with open('cccenter/testing/html_validation/loggedin1.html', 'w') as outfile:
+        #    outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
     def test_logout(self):
         #response = self.client.get('/accounts/logout', follow=True)

@@ -14,7 +14,7 @@
         {          
           $("#cipherChoice").prop("disabled", true);
           $('select').val('0');
-        } 
+        }
     }
     // Check if the click was a cipher choice
     // If an option is selected disable the difficulty choice
