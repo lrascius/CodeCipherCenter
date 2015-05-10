@@ -13,10 +13,10 @@ def challenge_list():
 
 def join_challenge(challenge_id, user_id):
     '''Adds the given user to the given challenge.'''
-    if type(challenge_id) is not int:
+    if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
 
-    if type(user_id) is not int:
+    if isinstance(user_id, int) == False:
         raise TypeError("user_id is " + str(type(challenge_id)) + ", not int")
 
     challenge = models.Challenge.objects.get(pk=challenge_id)
@@ -38,7 +38,7 @@ def join_challenge(challenge_id, user_id):
 
 def get_ciphertext(challenge_id):
     '''Returns the ciphertext for the given challenge.'''
-    if type(challenge_id) != int:
+    if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
 
     challenge = models.Challenge.objects.get(pk=challenge_id)
@@ -51,7 +51,7 @@ def get_ciphertext(challenge_id):
 def user_in_challenge(challenge_id, user):
     '''Returns True if the given user is registered in the given Challenge and False otherwise.'''
 
-    if type(challenge_id) != int:
+    if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
 
     challenge = models.Challenge.objects.get(pk=challenge_id)
@@ -77,7 +77,7 @@ def get_difficulty(challenge_id):
     '''Returns the difficulty of the given challenge. If multiple ciphers
        have been applied, returns the hardest one.'''
 
-    if type(challenge_id) != int:
+    if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
 
     challenge = models.Challenge.objects.get(pk=challenge_id)
@@ -95,7 +95,7 @@ def get_difficulty(challenge_id):
 def get_challenge_info(challenge_id):
     '''Returns information about the Challenge to display on the challenge page.'''
 
-    if type(challenge_id) != int:
+    if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
 
     challenge = models.Challenge.objects.get(pk=challenge_id)

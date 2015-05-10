@@ -97,10 +97,10 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
 
 def check_solution(challenge_id, user_id, guessed_plaintext):
     '''Checks if the suggested solution is correct.'''
-    if type(challenge_id) is not int:
+    if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
 
-    if type(user_id) is not int:
+    if isinstance(user_id) == False:
         raise TypeError("user_id is " + str(type(challenge_id)) + ", not int")
 
     challenge = models.Challenge.objects.get(pk=challenge_id)

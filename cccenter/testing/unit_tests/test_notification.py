@@ -33,7 +33,7 @@ class TestNotification(TestCase):
         
     @mock.patch('cccenter.python.notification.Notification')
     def test_viewed_notification_Pass1(self, mock_notification):
-        mock_notification.objects.filter.return_value = mock_notification
+        mock_notification.objects.filter.return_value = [mock_notification]
         mock_notification.id = 1
         
         res = viewed_notification('user', 1)
