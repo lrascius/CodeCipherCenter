@@ -39,5 +39,5 @@ class TestNotification(TestCase):
         res = viewed_notification('user', 1)
         
         self.assertTrue(res)
-        self.assertEqual(mock_notification.viewed)
+        self.assertTrue(mock_notification.viewed)
         self.assertTrue(mock_notification.save.called)
