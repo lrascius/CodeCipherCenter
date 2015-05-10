@@ -1,0 +1,33 @@
+{% extends 'cccenter/base.html' %}
+{% load static from staticfiles %}
+
+{% block css_includes %}
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Your Notifications </h4>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                {% for notification in all_notifications %}
+                    {% if notification.viewed == True %}
+                        <a href="{{notification.link}}" onclick="notification_clicked({{notification.id}})" class="list-group-item">
+                            <span class="badge">{{notification.datetime}}</span>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{notification.notification}}
+                        </a>
+                    {% else %}
+                        <a href="{{notification.link}}" onclick="notification_clicked({{notification.id}})" class="list-group-item" style="background:#E0E0E0">
+                            <span class="badge">{{notification.datetime}}</span>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{notification.notification}}
+                        </a>    
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
