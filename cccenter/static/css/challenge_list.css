@@ -1,0 +1,21 @@
+table #example {
+    width: 100%;
+    border-spacing: 0px;
+}
+
+div .align-center {
+    text-align: center;
+}
+
+h1 .align-center {
+    text-align: center;
+    width: 100%;
+}
+
+th {
+    text-align: center;
+}
+
+td .align-center {
+    text-align: center;
+}
