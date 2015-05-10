@@ -14,4 +14,4 @@ cccenter/itsdangerous.py
 .gitignore
 cccenter/testing/html_validation
 staticfiles
-docs
+docs/_build
