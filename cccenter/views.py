@@ -223,14 +223,8 @@ def challengeList(request):
     return render(request, 'cccenter/challenge_list.html', context)
 
 def loggedin(request):
-    '''Returns challenge page.'''
-    return render(request, 'cccenter/challenge_page.html',
-                  {"active":"challenge",
-                   "title":"Code and Cipher Center",
-                   "notifications" : notify.get_notifications(request.user, False),
-                   "unseen_notification" : notify.unviewed_notifications(request.user)
-                  }
-                 )
+    '''Redirects to home page.'''
+    return HttpResponseRedirect('/')
 
 @login_required
 def logout(request):

@@ -135,7 +135,8 @@ class TestViews(TestCase):
 
     def test_loggedin(self):
         response = self.client.get('/accounts/loggedin/')
-        self.assertEqual(response.status_code, 200)
+        #self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, '/')
         
         with open('cccenter/testing/html_validation/loggedin1.html', 'w') as outfile:
             outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
@@ -146,8 +147,8 @@ class TestViews(TestCase):
         response = self.client.get('/accounts/logout/')
         self.assertRedirects(response, '/')
         
-        with open('cccenter/testing/html_validation/logout1.html', 'w') as outfile:
-            outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
+        #with open('cccenter/testing/html_validation/logout1.html', 'w') as outfile:
+        #    outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
     def test_profile(self):
         #response = self.client.get('/profile/', follow=True)
