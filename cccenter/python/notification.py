@@ -3,7 +3,7 @@
 
 from cccenter.models import Notification
 
-def get_notifications(user, get_all):
+def get_notifications(user, get_all=False):
     '''If get_all is true, grabs all the user notifications sorted by date
        Else, grabs the 5 most recent user notifications'''
     if get_all == True:
