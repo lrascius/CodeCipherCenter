@@ -12,18 +12,10 @@ class TestCipherFunctions(TestCase):
         self.ciphertext = "DEF"
         self.ciphertype = "Caesar Shift Cipher"
         self.key = "3"
-        self.user1 = User.objects.create(username="t1")
-        self.user1.save()
-        self.user2 = User.objects.create(username="t2")
-        self.user2.save()
+        self.user1 = 'user1'
+        self.user2 = 'user2'
         self.users = [self.user1, self.user2]
         self.challengetype = 'single'
-        self.client.login(username='marctest0', password='test0')
-        
-    def tearDown(self):
-        self.user1.delete()
-        self.user2.delete()
-        self.client.logout()
         
     def test_ceasar_shift_0(self):
         self.assertTrue(ceasar_shift_encode(self.text, 0) == "SOMERANDOMTEXTWITHSOMEWEIRDCHARACTERS")
@@ -34,12 +26,12 @@ class TestCipherFunctions(TestCase):
     def test_ceasar_shift_5(self):
         self.assertTrue(ceasar_shift_encode(self.text, 5) == "XTRJWFSITRYJCYBNYMXTRJBJNWIHMFWFHYJWX")
         
-    @mock.patch('cccenter.Cipher')
+    @mock.patch('cccenter.python.cipher.Cipher')
     @mock.patch('cccenter.python.cipher.timezone')
     @mock.patch('cccenter.python.cipher.User')
     @mock.patch('cccenter.python.cipher.models')
     @mock.patch('cccenter.python.cipher.models.Challenge')
-    def test_createchallenge(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):
+    def test_createchallenge_Pass1(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):
         mock_timezone.now.return_value = "now"
         mock_models.Challenge.objects.create.return_value = mock_challenge
         mock_cipher.objects.get.return_value = mock_cipher
@@ -55,45 +47,18 @@ class TestCipherFunctions(TestCase):
                                                                 challenge_type=self.challengetype, datetime_created=self.tn)
         self.assertTrue(mock_challenge.users.add.called)
         self.assertTrue(mock_challenge.save.called)
-        mock_cipher.objects.get.assert_called_with(ciphertype=self.challengetype)
+        mock_cipher.objects.get.assert_called_with(ciphertype=self.ciphertype)
         mock_challenge.cipher.add.assert_called_with(mock_cipher)
         
-        #a = Challenge.objects.get(pk=c_data['challenge_id'])
-        #self.assertEqual(a.ciphertext, self.ciphertext)
-        #self.assertEqual(a.plaintext, self.plaintext)
-        #self.assertEqual(a.ciphertype, self.ciphertype)
-        #self.assertEqual(a.cipherkey, self.key)
-        #self.assertEqual(a.challenge_type, self.challengetype)
-        #self.assertEqual(a.users, self.users)
-        #self.assertEqual(a.datetime_created, self.tn)
-        #self.assertEqual(a.datetime_solved, self.tn)
-        #self.assertEqual(a.solved_by, self.user1)
-        
-        #a.delete()
-        
-        c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
-                                            self.users, self.tn, self.tn)
-                                            
-        self.assertFalse(mock_timezone.now.called)
-        self.assertTrue(mock_models.Challenge.objects.create.called)
-        mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
-                                                                ciphertype=self.ciphertype, cipherkey=self.key,
-                                                                challenge_type=self.challengetype, datetime_created=self.tn)
-        self.assertTrue(mock_challenge.users.add.called)
-        self.assertTrue(mock_challenge.save.called)
-        
-        #a = Challenge.objects.get(pk=c_data['challenge_id'])
-        #self.assertEqual(a.ciphertext, self.ciphertext)
-        #self.assertEqual(a.plaintext, self.plaintext)
-        #self.assertEqual(a.ciphertype, self.ciphertype)
-        #self.assertEqual(a.cipherkey, self.key)
-        #self.assertEqual(a.challenge_type, self.challengetype)
-        #self.assertEqual(a.users, self.users)
-        #self.assertEqual(a.datetime_created, self.tn)
-        #self.assertEqual(a.datetime_solved, self.tn)
-        #self.assertEqual(a.solved_by, None)
-        
-        #a.delete()
+    @mock.patch('cccenter.python.cipher.Cipher')
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_createchallenge_Pass2(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.create.return_value = mock_challenge
+        mock_cipher.objects.get.return_value = mock_cipher
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
                                             self.users, self.tn)
@@ -106,17 +71,15 @@ class TestCipherFunctions(TestCase):
         self.assertTrue(mock_challenge.users.add.called)
         self.assertTrue(mock_challenge.save.called)
         
-        #a = Challenge.objects.get(pk=c_data['challenge_id'])
-        #self.assertEqual(a.ciphertext, self.ciphertext)
-        #self.assertEqual(a.plaintext, self.plaintext)
-        #self.assertEqual(a.ciphertype, self.ciphertype)
-        #self.assertEqual(a.cipherkey, self.key)
-        #self.assertEqual(a.challenge_type, self.challengetype)
-        #self.assertEqual(a.users, self.users)
-        #self.assertEqual(a.datetime_created, self.tn)
-        #self.assertEqual(a.datetime_solved, None)
-        
-        #a.delete()
+    @mock.patch('cccenter.python.cipher.Cipher')
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_createchallenge_Pass3(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):    
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.create.return_value = mock_challenge
+        mock_cipher.objects.get.return_value = mock_cipher
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
                                             self.users)
@@ -129,17 +92,15 @@ class TestCipherFunctions(TestCase):
         self.assertTrue(mock_challenge.users.add.called)
         self.assertTrue(mock_challenge.save.called)
         
-        #a = Challenge.objects.get(pk=c_data['challenge_id'])
-        #self.assertEqual(a.ciphertext, self.ciphertext)
-        #self.assertEqual(a.plaintext, self.plaintext)
-        #self.assertEqual(a.ciphertype, self.ciphertype)
-        #self.assertEqual(a.cipherkey, self.key)
-        #self.assertEqual(a.challenge_type, self.challengetype)
-        #self.assertEqual(a.users, self.users)
-        #self.assertEqual(a.datetime_created, self.tn)
-        
-        #a.delete()
-        
+    @mock.patch('cccenter.python.cipher.Cipher')
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_createchallenge_Pass4(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.create.return_value = mock_challenge
+        mock_cipher.objects.get.return_value = mock_cipher
         mock_challenge.users.add.called = False # set to false after previous tests
         
         c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype)
@@ -152,62 +113,55 @@ class TestCipherFunctions(TestCase):
         self.assertFalse(mock_challenge.users.add.called)
         self.assertTrue(mock_challenge.save.called)
         
-        #a = Challenge.objects.get(pk=c_data['challenge_id'])
-        #self.assertEqual(a.ciphertext, self.ciphertext)
-        #self.assertEqual(a.plaintext, self.plaintext)
-        #self.assertEqual(a.ciphertype, self.ciphertype)
-        #self.assertEqual(a.cipherkey, self.key)
-        #self.assertEqual(a.challenge_type, self.challengetype)
-        #self.assertEqual(a.users, None)
-        
-        #a.delete()
-        
+    @mock.patch('cccenter.python.cipher.Cipher')
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_createchallenge_Pass5(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.create.return_value = mock_challenge
+        mock_cipher.objects.get.return_value = mock_cipher
         mock_challenge.users.add.called = False # set to false after previous tests
         
         with self.assertRaises(ValueError):
             c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype, solved=True)
         
-        self.assertTrue(mock_timezone.now.called)
-        self.assertTrue(mock_models.Challenge.objects.create.called)
-        mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
-                                                                ciphertype=self.ciphertype, cipherkey=self.key,
-                                                                challenge_type=self.challengetype, datetime_created="now")
-        self.assertFalse(mock_challenge.users.add.called)
-        self.assertTrue(mock_challenge.save.called)
-        
-        #a = Challenge.objects.get(pk=c_data['challenge_id'])
-        #self.assertEqual(a.ciphertext, self.ciphertext)
-        #self.assertEqual(a.plaintext, self.plaintext)
-        #self.assertEqual(a.ciphertype, self.ciphertype)
-        #self.assertEqual(a.cipherkey, self.key)
-        #self.assertEqual(a.challenge_type, self.challengetype)
-        #self.assertEqual(a.users, None)
-        
-        #a.delete()
-        
+    @mock.patch('cccenter.python.cipher.Cipher')
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_createchallenge_Pass6(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.create.return_value = mock_challenge
+        mock_cipher.objects.get.return_value = mock_cipher
         mock_challenge.users.add.called = False # set to false after previous tests
         
         with self.assertRaises(ValueError):
             c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
                                   solved=True, dt_solved=self.tn)
         
-        self.assertTrue(mock_timezone.now.called)
+    @mock.patch('cccenter.python.cipher.Cipher')
+    @mock.patch('cccenter.python.cipher.timezone')
+    @mock.patch('cccenter.python.cipher.User')
+    @mock.patch('cccenter.python.cipher.models')
+    @mock.patch('cccenter.python.cipher.models.Challenge')
+    def test_createchallenge_Pass7(self, mock_challenge, mock_models, mock_user, mock_timezone, mock_cipher):
+        mock_timezone.now.return_value = "now"
+        mock_models.Challenge.objects.create.return_value = mock_challenge
+        mock_cipher.objects.get.return_value = mock_cipher
+        
+        c_data = create_challenge(self.plaintext, self.ciphertext, self.ciphertype, self.key, self.challengetype,
+                                            self.users, self.tn, self.tn)
+                                            
+        self.assertFalse(mock_timezone.now.called)
         self.assertTrue(mock_models.Challenge.objects.create.called)
         mock_models.Challenge.objects.create.assert_called_with(plaintext=self.plaintext, ciphertext=self.ciphertext,
                                                                 ciphertype=self.ciphertype, cipherkey=self.key,
-                                                                challenge_type=self.challengetype, datetime_created="now")
-        self.assertFalse(mock_challenge.users.add.called)
+                                                                challenge_type=self.challengetype, datetime_created=self.tn)
+        self.assertTrue(mock_challenge.users.add.called)
         self.assertTrue(mock_challenge.save.called)
-        
-        #a = Challenge.objects.get(pk=c_data['challenge_id'])
-        #self.assertEqual(a.ciphertext, self.ciphertext)
-        #self.assertEqual(a.plaintext, self.plaintext)
-        #self.assertEqual(a.ciphertype, self.ciphertype)
-        #self.assertEqual(a.cipherkey, self.key)
-        #self.assertEqual(a.challenge_type, self.challengetype)
-        #self.assertEqual(a.users, None)
-        
-        #a.delete()
         
     @mock.patch('cccenter.python.cipher.timezone')
     @mock.patch('cccenter.python.cipher.User')
