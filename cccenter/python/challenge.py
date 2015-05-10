@@ -5,11 +5,9 @@ from django.contrib.auth.models import User
 
 def challenge_list():
     '''Returns a list of the challenges in the database.'''
-    chList = []
-    i = models.Challenge.objects.all()
+    chList = models.Challenge.objects.all()
 
-    for names in i:
-        chList.append(names.id)
+    return chList
 
 def join_challenge(challenge_id, user_id):
     '''Adds the given user to the given challenge.'''
