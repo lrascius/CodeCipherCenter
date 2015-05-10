@@ -218,15 +218,17 @@ class TestCipherFunctions(TestCase):
         mock_models.Challenge.objects.get.return_value = mock_challenge
         mock_user.objects.get.return_value = "user"
         mock_challenge.plaintext = 'abc'
+        mock_challenge.solved = False
         
         success = check_solution(challenge_id=1, user_id=2, guessed_plaintext='abc')
         
         mock_models.Challenge.objects.get.assert_called_with(pk=1)
         mock_user.objects.get.assert_called_with(pk=2)
         self.assertTrue(success)
-        self.assertEqual(mock_challenge.solved_by, "user")
-        self.assertEqual(mock_challenge.datetime_solved, "now")
+        self.assertTrue(mock_challenge.solved_by.all.called)
+        mock_challenge.solved_by.add.assert_called_with('user')
         self.assertTrue(mock_challenge.solved)
+        self.assertEqual(mock_challenge.datetime_solved, "now")
         self.assertTrue(mock_challenge.save.called)
         
     @mock.patch('cccenter.python.cipher.timezone')

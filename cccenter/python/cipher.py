@@ -100,7 +100,7 @@ def check_solution(challenge_id, user_id, guessed_plaintext):
     if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
 
-    if isinstance(user_id) == False:
+    if isinstance(user_id, int) == False:
         raise TypeError("user_id is " + str(type(challenge_id)) + ", not int")
 
     challenge = models.Challenge.objects.get(pk=challenge_id)
