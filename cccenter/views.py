@@ -26,7 +26,6 @@ import cccenter.python.challenge as challenge
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Q
-import itertools
 
 def index(request):
     '''Returns the homepage.'''
@@ -121,11 +120,12 @@ def check_plaintext(request):
 def challenge_page(request):
     '''Returns the challenge page associated with the given challenge_id.'''
     if request.method == 'POST':
-        link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0]) 
+        link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0])
         notify_message = str(request.user) + " has invited you to a challenge # "\
                          + str(request.GET.getlist('challenge_id')[0])
-        user = User.objects.get(username=request.POST.getlist('username')[0]) 
-        notification = Notification(user=user, notification=notify_message, link=link, datetime=timezone.now())
+        user = User.objects.get(username=request.POST.getlist('username')[0])
+        notification = Notification(user=user, notification=notify_message,
+                                    link=link, datetime=timezone.now())
         notification.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -192,11 +192,11 @@ def auth_view(request):
 
 def challengeList(request):
     '''Returns challenge list with collumns of id, date, difficulty, and challengetype'''
-    
+
     if request.user.is_active:
         query = Q(users__in=[request.user]) | Q(challenge_type='collaborative')\
                 | Q(challenge_type='competitive')
-        challenges_of_user =  Challenge.objects.filter(query).distinct()
+        challenges_of_user = Challenge.objects.filter(query).distinct()
     else:
         challenges_of_user = Challenge.objects.exclude(challenge_type='single')
 
@@ -209,13 +209,13 @@ def challengeList(request):
         difficulty.append(Cipher.objects.get(ciphertype=chall.ciphertype).difficulty.capitalize())
         challenge_type.append(chall.challenge_type.capitalize())
     array = zip(challenges_of_user, difficulty, challenge_type)
-    
+
     context = {"in_challenge":c,
                "list":array,
                "title":"Code and Cipher Center",
                "active":"challengelist"
               }
-              
+
     if not request.user.is_anonymous:
         context["notifications"] = notify.get_notifications(request.user, False)
         context["unseen_notification"] = notify.unviewed_notifications(request.user)
@@ -302,9 +302,10 @@ def tutorial(request):
 @login_required
 def notifications(request):
     ''' View that generates all the notifications for a user '''
-    return render(request, 'cccenter/notifications.html', {"notifications" : notify.get_notifications(request.user, False),
-                                                           "unseen_notification" : notify.unviewed_notifications(request.user),
-                                                           "all_notifications" : notify.get_notifications(request.user, True)})
+    return render(request, 'cccenter/notifications.html',
+                  {"notifications" : notify.get_notifications(request.user, False),
+                   "unseen_notification" : notify.unviewed_notifications(request.user),
+                   "all_notifications" : notify.get_notifications(request.user, True)})
 @login_required
 def settings(request):
     '''Try getting the user profile, if it does not exists create one.
