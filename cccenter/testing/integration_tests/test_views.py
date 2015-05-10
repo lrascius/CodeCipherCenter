@@ -7,10 +7,11 @@ import json
 
 class TestViews(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="m", password="t")
+        self.user = User.objects.create_superuser(username="m", password="t", email="mt@example.com")
         self.client.login(username="m", password="t")
         
     def tearDown(self):
+        self.client.logout()
         self.user.delete()
 
     #@patch.mock('cccenter.views.django.shortcuts.render')
