@@ -12,6 +12,13 @@ Contents:
    :maxdepth: 2
 
    cccenter/models
+   cccenter/views
+   cccenter/python/challenge
+   cccenter/python/cipher
+   cccenter/python/comment
+   cccenter/python/forms
+   cccenter/python/general
+   cccenter/python/notification
 
 Indices and tables
 ==================
