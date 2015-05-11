@@ -5,7 +5,7 @@
 from cccenter import models
 
 def get_comments(challenge_id):
-    '''Returns the comments associated with the given Challenge.'''
+    '''Returns the comments associated with the given Challenge.'''    
     if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
 
