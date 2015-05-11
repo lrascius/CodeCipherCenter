@@ -154,7 +154,7 @@ def challenge_page(request):
              "num_users":len(info['users']), "num_solved":len(info['solved_by']),
              "users": info['users'], "solved_by":info['solved_by'], "solved_by_user":solved_by_user}
 
-        if not request.user.is_anonymous:
+        if not request.user.is_anonymous():
             c["notifications"] = notify.get_notifications(request.user, False)
             c["unseen_notification"] = notify.unviewed_notifications(request.user)
 
@@ -239,7 +239,7 @@ def challengeList(request):
                "active":"challengelist"
               }
 
-    if not request.user.is_anonymous:
+    if not request.user.is_anonymous():
         context["notifications"] = notify.get_notifications(request.user, False)
         context["unseen_notification"] = notify.unviewed_notifications(request.user)
 
