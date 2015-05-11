@@ -9,7 +9,7 @@ from cccenter.models import Cipher
 
 def ceasar_shift_encode(text, shift):
     '''
-    Applies Caesar Shift Cipher to the given ciphertext.
+    Applies the Caesar Shift Cipher to the given ciphertext.
     
     :param text: the text to be encrypted
     :param shift: the Caesar Shift key
@@ -31,7 +31,7 @@ def ceasar_shift_encode(text, shift):
 
 def multiplicitive_cipher(text, mult):
     '''
-    Applies Multiplicitive Shift Cipher to a piece of text.
+    Applies the Multiplicitive Shift Cipher to a piece of text.
     
     :param text: the text to be encrypted
     :param mult: the Multiplicitive Cipher multiplier key
@@ -58,7 +58,7 @@ def multiplicitive_cipher(text, mult):
 
 def affine_cipher(text, a, b):
     '''
-    Applies Affine cipher on a piece of text.
+    Applies the Affine Cipher on a piece of text.
     
     :param text: the text to be encrypted
     :param a: the Affine Cipher multiplier key
@@ -116,9 +116,9 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
     :rtype: dict
     
     .. note:: The key is a string and is only recorded for future reference. The plaintext\
-    and ciphertext are used to print the challenge and check proposed solutions.\
-    \
-    If dt_created is left unassigned, the current date and time are used. This is the best default option.
+    and ciphertext are used to print the challenge and check proposed solutions.
+    
+    .. note:: If dt_created is left unassigned, the current date and time are used. This is the best default option.
     
     .. warning:: Although ciphertype and challenge_type are strings, they are used to pull the correct\
     Cipher object and challenge_type from the database and therefore must match a database entry exactly.
@@ -173,9 +173,9 @@ def check_solution(challenge_id, user_id, guessed_plaintext):
     :return: True if the proposed solution is correct, false if it is not
     :rtype: boolean
     
-    .. warning:: If the challenge_id or user_id is not valid, will throw an error.\
-    \
-    Does not check if the user is registered in the challenge before checking that\
+    .. warning:: If the challenge_id or user_id is not valid, will throw an error.
+    
+    .. warning:: Does not check if the user is registered in the challenge before checking that\
     the solution is correct.
     '''
     if isinstance(challenge_id, int) == False:
