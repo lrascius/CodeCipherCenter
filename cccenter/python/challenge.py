@@ -1,4 +1,7 @@
-'''Generates challenge lists'''
+#!cccenter/python/challenge.py
+'''
+Interfaces with the Challenge model.
+'''
 
 import cccenter.models as models
 from django.contrib.auth.models import User
@@ -8,7 +11,7 @@ def challenge_list():
     Returns a list of the challenges in the database.
     
     :return: All challenge objects in the database
-    :rtype: [Challenge]
+    :rtype: [models.Challenge]
     
     .. note:: Actually returns a queryset containing all challenges but can be treated as an arry.
     '''
@@ -79,7 +82,7 @@ def user_in_challenge(challenge_id, user):
     :param challenge_id: The challenge's associated object's id number
     :param user: The current user
     :type challenge_id: int
-    :type user: User
+    :type user: models.User
     :return: (User in the challenge, User solved the challenge)
     :rtype: (boolean, boolean)
     
@@ -144,11 +147,11 @@ def get_challenge_info(challenge_id):
     
     :param challenge_id: The challenge's associated object's id number
     :type challenge_id: int
-    :return: 'datetime_created': the date and time the challenge was created
-    :return: 'datetime_solved': the date and time the challenge was first solved
-    :return: 'challenge_type': the type of challenge (single, competitive, or collaborative)
-    :return: 'solved_by': who solved the challenge
-    :return: 'users': who is registered in the challenge
+    :return: 'datetime_created' (datetime): the date and time the challenge was created
+    :return: 'datetime_solved' (datetime): the date and time the challenge was first solved
+    :return: 'challenge_type' (str): the type of challenge (single, competitive, or collaborative)
+    :return: 'solved_by' ([models.User]): who solved the challenge
+    :return: 'users' ([models.User]): who is registered in the challenge
     :rtype: dict
     
     .. note:: the 'solved_by' and 'user' indices of the returned dictionary are actually\

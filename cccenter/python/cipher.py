@@ -1,5 +1,7 @@
 #!cccenter/python/cipher.py
-'''Handles primary references to ciphertext objects.'''
+'''
+Interfaces with the Cipher model.
+'''
 
 import cccenter.models as models
 from django.contrib.auth.models import User
@@ -106,13 +108,13 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
     :type ciphertype: str
     :type key: str
     :type challenge_type: str
-    :type users: [User]
+    :type users: [models.User]
     :type dt_created: datetime
     :type solved: boolean
     :type dt_solved: datetime
-    :type solved_by: [User]
-    :return: 'ciphertext': the ciphertext associated with the challenge
-    :return: 'challenge_id': the challenge's id
+    :type solved_by: [models.User]
+    :return: 'ciphertext' (str): the ciphertext associated with the challenge
+    :return: 'challenge_id' (int): the challenge's id
     :rtype: dict
     
     .. note:: The key is a string and is only recorded for future reference. The plaintext\
@@ -218,12 +220,14 @@ def create_ciphertext(ciphertype, plaintext):
     :param plaintext: the text to encrypt
     :type ciphertype: str
     :type plaintext: str
-    :return: 'ciphertext': the encrypted ciphertext (string)
-    :return: 'cipherkey': the cipher key (string)
+    :return: 'ciphertext' (str): the encrypted ciphertext (string)
+    :return: 'cipherkey' (str): the cipher key (string)
     :rtype: dict
     
     .. warning:: Although ciphertype is a string, it must match one of the Cipher objects in the database\
     or it will throw an error.
+    
+    .. note:: The cipherkey is stored for display purposes only, so it is always stored as a string.
     '''
     
     if ciphertype == "Caesar Shift":

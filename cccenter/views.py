@@ -1,5 +1,8 @@
 #!cccenter/views.py
-'''Holds the views for the cccenter app.'''
+'''
+Holds the views for the cccenter app.
+'''
+
 import json
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
