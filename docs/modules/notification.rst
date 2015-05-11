@@ -1,4 +1,4 @@
-Models
+Notification
 ============
 .. automodule:: cccenter.python.notification
     :members:

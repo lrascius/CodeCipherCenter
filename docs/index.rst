@@ -10,15 +10,15 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
-
-   cccenter/models
-   cccenter/views
-   cccenter/python/challenge
-   cccenter/python/cipher
-   cccenter/python/comment
-   cccenter/python/forms
-   cccenter/python/general
-   cccenter/python/notification
+   
+   modules/models.rst
+   modules/views.rst
+   modules/challenge.rst
+   modules/cipher.rst
+   modules/comment.rst
+   modules/forms.rst
+   modules/general.rst
+   modules/notification.rst
 
 Indices and tables
 ==================
