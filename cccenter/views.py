@@ -35,7 +35,7 @@ def index(request):
 
 
 def update_notifications(request):
-    '''Udates the notifications based on which has been viewed'''
+    '''Updates the notifications based on which has been viewed'''
     notify.viewed_notification(request.user, request.GET.get('notification_id'))
 
 def home(request):
@@ -45,7 +45,7 @@ def home(request):
                    "active":"home"})
 
 def getCipher(request):
-    '''Returns a ciphertext as JSON.'''
+    '''Returns a ciphertext as JSON data.'''
     cipher = {}
     text = general.generate_paragraph()
     cipher['text'] = text
@@ -54,9 +54,11 @@ def getCipher(request):
 
 @login_required
 def create_challenge(request):
-    '''Creates a new challenge
-       If a difficulty was selected we pick a random cipher based on the difficulty
-       Else we create a cipher based on what the user chose.'''
+    '''
+    Creates a new challenge
+    If a difficulty was selected we pick a random cipher based on the difficulty
+    Else we use the selected cipher.
+    '''
 
     if request.method == 'GET':
         return render(request, 'cccenter/create_challenge.html',
@@ -105,7 +107,11 @@ def create_challenge(request):
 
 @login_required
 def check_plaintext(request):
-    '''Checks if submitted plaintext is the correct answer.  Returns True or False.'''
+    '''
+    Checks if submitted plaintext is the correct answer.
+    If it is, update the challenge as solved by the user and return True.
+    Else return false.
+    '''
     if request.method == 'GET':
         return Http404()
 
@@ -118,7 +124,13 @@ def check_plaintext(request):
         return HttpResponse(json.dumps({'success':success}), content_type="application/json")
 
 def challenge_page(request):
-    '''Returns the challenge page associated with the given challenge_id.'''
+    '''
+    If requested with a GET request,
+    Returns the challenge page associated with the given challenge_id.
+    
+    If requested with a POST request,
+    Generates an invitation to the submitted user to join the challenge.
+    '''
     if request.method == 'POST':
         link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0])
         notify_message = str(request.user) + " has invited you to a challenge # "\
@@ -155,7 +167,7 @@ def challenge_page(request):
 
 @login_required
 def join_challenge(request):
-    '''Adds the current user to the returned challenge.'''
+    '''Adds the current user to the requested challenge.'''
     if request.method == 'GET':
         return Http404()
 
@@ -174,7 +186,7 @@ def login(request):
     return render_to_response('cccenter/login.html', c)
 
 def auth_view(request):
-    '''Authenticates user or returns error page is authentication fails.'''
+    '''Authenticates user or returns error page if authentication fails.'''
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
 
@@ -191,7 +203,12 @@ def auth_view(request):
                                             ))
 
 def challengeList(request):
-    '''Returns challenge list with collumns of id, date, difficulty, and challengetype'''
+    '''
+    Returns challenge list with collumns of id, date, difficulty, and challengetype.
+    
+    If the user is logged in, returns a list of his private challenges as well as all group challenges.
+    Else returns only a list of all group challenges.
+    '''
 
     if request.user.is_active:
         query = Q(users__in=[request.user]) | Q(challenge_type='collaborative')\
@@ -228,15 +245,18 @@ def loggedin(request):
 
 @login_required
 def logout(request):
-    '''Logs user out and returns challenge page.'''
+    '''Logs user out and redirects to the home page.'''
     auth.logout(request)
     #return render_to_response('cccenter/challenge_page.html', {"title":"Code and Cipher Center"})
     return HttpResponseRedirect('/')
 
 def register(request):
-    '''If called with a GET request, returns registration page.
-       If called with a POST request, verifies user registration
-       information. If valid, registers use. Else returns an error.'''
+    '''
+    If called with a GET request, returns registration page.
+    
+    If called with a POST request, verifies user registration information.
+    If valid, registers use. Else returns an error.
+    '''
     registered = False
 
     if request.method == 'POST':
@@ -261,8 +281,11 @@ def register(request):
 
 @login_required
 def profile(request):
-    '''Get the user information, and if the profile does not exist create one
-       Render the page with the user and user profile information'''
+    '''
+    Returns the current user's profile page.
+    
+    If the user doesn't have an associated UserProfile, creates one.
+    '''
     user = User.objects.get(username=request.user)
     try:
         userprofile = request.user.userprofile
@@ -295,7 +318,7 @@ def tutorial(request):
 
 @login_required
 def notifications(request):
-    ''' View that generates all the notifications for a user '''
+    '''Returns all notifications for a user.'''
     return render(request, 'cccenter/notifications.html',
                   {"notifications" : notify.get_notifications(request.user, False),
                    "unseen_notification" : notify.unviewed_notifications(request.user),
@@ -303,9 +326,11 @@ def notifications(request):
 @login_required
 def settings(request):
     '''Try getting the user profile, if it does not exists create one.
+    
        If called with a GET request, returns settings page.
-       If called with POST, create a settings, user, and password forms.
-       Update all the corresponding tables and return the profile page'''
+       
+       If called with POST, create settings, user, and password forms.
+       Update all the corresponding tables and return the profile page.'''
     try:
         profile = request.user.userprofile
     except UserProfile.DoesNotExist:
