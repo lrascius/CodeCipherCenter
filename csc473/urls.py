@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 
     url(r'^$', views.home, name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^$', views.index, name="cccenter"),
+    url(r'^$', views.home, name="cccenter"),
     url(r'^cipher/tutorials/$', views.tutorial, name="tutorial"),
     url(r'^register$', views.register, name="cccenter"),   
     url(r'^cccenter/', include('cccenter.urls')),

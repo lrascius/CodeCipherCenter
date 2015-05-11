@@ -27,19 +27,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Q
 
-def index(request):
-    '''Returns the homepage.'''
-
-    context = {"title":"Code and Cipher Center",
-               "active":"home"}
-
-    if not request.user.is_anonymous():
-        context["notifications"] = notify.get_notifications(request.user, False)
-        context["unseen_notification"] = notify.unviewed_notifications(request.user) 
-           
-    return render(request, 'cccenter/home_page.html', context)
-
-
 def update_notifications(request):
     '''Updates the notifications based on which has been viewed'''
     notify.viewed_notification(request.user, request.GET.get('notification_id'))
