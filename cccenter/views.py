@@ -29,9 +29,15 @@ from django.db.models import Q
 
 def index(request):
     '''Returns the homepage.'''
-    return render(request, 'cccenter/home_page.html',
-                  {"title":"Code and Cipher Center",
-                   "active":"home"})
+
+    context = {"title":"Code and Cipher Center",
+               "active":"home"}
+
+    if not request.user.is_anonymous():
+        context["notifications"] = notify.get_notifications(request.user, False)
+        context["unseen_notification"] = notify.unviewed_notifications(request.user) 
+           
+    return render(request, 'cccenter/home_page.html', context)
 
 
 def update_notifications(request):
@@ -40,9 +46,14 @@ def update_notifications(request):
 
 def home(request):
     '''Returns the home page.'''
-    return render(request, 'cccenter/home_page.html',
-                  {"title":"Code and Cipher Center",
-                   "active":"home"})
+    context = {"title":"Code and Cipher Center",
+               "active":"home"}
+
+    if not request.user.is_anonymous():
+        context["notifications"] = notify.get_notifications(request.user, False)
+        context["unseen_notification"] = notify.unviewed_notifications(request.user) 
+           
+    return render(request, 'cccenter/home_page.html', context)
 
 def getCipher(request):
     '''Returns a ciphertext as JSON data.'''
