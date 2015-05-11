@@ -4,8 +4,16 @@
 from cccenter.models import Notification
 
 def get_notifications(user, get_all=False):
-    '''If get_all is true, grabs all the user notifications sorted by date
-       Else, grabs the 5 most recent user notifications'''
+    '''
+    Gets notifications
+
+    :param user: current user 
+    :param get_all: get_all set to true will get all the notifications, get_all set to false returns \
+    5 most recent notifications
+    :type user: user object
+    :type get_all: boolean
+    :return: gets all the user notifications or the 5 most recent depending on get_all value
+    :rtype: notificatons object '''       
     if get_all == True:
         notifications = Notification.objects.filter(user=user).order_by('-datetime')
     else:
@@ -13,7 +21,13 @@ def get_notifications(user, get_all=False):
     return notifications
 
 def unviewed_notifications(user):
-    '''Checks if there is any unviewed notifications for a user'''
+    '''Checks if there is any unviewed notifications for a user
+
+    :param user: current user 
+    :type user: user object
+    :return: returns true if there is more than one unviewed notification else it return false \
+    meaning that the user has no unviewed notifications
+    :rtype: boolean ''' 
     notifications = Notification.objects.filter(user=user, viewed=False)
     if len(notifications) != 0:
         return True
@@ -21,7 +35,14 @@ def unviewed_notifications(user):
         return False
 
 def viewed_notification(user, notification_id):
-    '''Sets the notification as viewed when a user clicks on it'''
+    '''Sets a notification to viewed based on the user and notification_id
+
+    :param user: current user 
+    :type user: user object
+    :param notification_id: id of the notification 
+    :type notification_id: int  
+    :return: Returns if the notification was succesfully set to true, else false is returned 
+    :rtype: boolean ''' 
     notifications = Notification.objects.filter(user=user, viewed=False)
 
     for notification in notifications:
