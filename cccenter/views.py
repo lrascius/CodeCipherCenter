@@ -210,18 +210,24 @@ def challengeList(request):
     Else returns only a list of all group challenges.
     '''
 
+    c = []
+    
     if request.user.is_active:
         query = Q(users__in=[request.user]) | Q(challenge_type='collaborative')\
                 | Q(challenge_type='competitive')
         challenges_of_user = Challenge.objects.filter(query).distinct()
+        
+        in_challenge = Challenge.objects.filter(Q(users__in=[request.user]))
+
+        for challenge in in_challenge:
+            c.append(challenge.id)
+
     else:
         challenges_of_user = Challenge.objects.exclude(challenge_type='single')
 
-    c = []
     difficulty = []
     challenge_type = []
-    for challenge in challenges_of_user:
-        c.append(challenge.id)
+
     for chall in challenges_of_user:
         difficulty.append(Cipher.objects.get(ciphertype=chall.ciphertype).difficulty.capitalize())
         challenge_type.append(chall.challenge_type.capitalize())
