@@ -11,9 +11,10 @@ def generate_paragraph():
     '''
     Generates a random paragraph from the Gutenberg Project
     
-    :return: Returns two lower space sentences from a book in the Guttenberg Project \
-    with spaces and non-alphabetic characters removed.
-    :rtype: string '''  
+    :return: Text the Guttenberg Project with spaces and non-alphabetic characters removed\
+    and all characters lower case
+    :rtype: str
+    '''  
     #Get the text from Gutenberg Project, in this case its Moby Dick
     text = strip_headers(load_etext(2701)).strip()
     #text = "Jack and Jill ran up the hill to get a pail of water. " +

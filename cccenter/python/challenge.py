@@ -147,11 +147,11 @@ def get_challenge_info(challenge_id):
     
     :param challenge_id: The challenge's associated object's id number
     :type challenge_id: int
-    :return: 'datetime_created' (datetime): the date and time the challenge was created
-    :return: 'datetime_solved' (datetime): the date and time the challenge was first solved
-    :return: 'challenge_type' (str): the type of challenge (single, competitive, or collaborative)
-    :return: 'solved_by' ([models.User]): who solved the challenge
-    :return: 'users' ([models.User]): who is registered in the challenge
+    :return: 'datetime_created' (datetime): The date and time the challenge was created
+    :return: 'datetime_solved' (datetime): The date and time the challenge was first solved
+    :return: 'challenge_type' (str): The type of challenge (single, competitive, or collaborative)
+    :return: 'solved_by' ([models.User]): Who has solved the challenge
+    :return: 'users' ([models.User]): Who is registered in the challenge
     :rtype: dict
     
     .. note:: the 'solved_by' and 'user' indices of the returned dictionary are actually\

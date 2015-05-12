@@ -12,12 +12,12 @@ class RegistrationForm(UserCreationForm):
     Meta class for registration form is provided. It connects the form to the User model and gives \
     proper fields for the form. 
 
-    Fields used in the form
+    Fields used in the form:
 
-    :field username: Username of the new user (required)
-    :field first_name: First name of the new user
-    :field last_name: Last name of the new user
-    :field email: Email of the new user (required)
+    :field username: Username of the new user
+    :field first_name: (optional) First name of the new user
+    :field last_name: (optional) Last name of the new user
+    :field email: Email of the new user
     :field password1: Password of the new user (must match password2)  
     :field password2: Password of the new user (must match password1)             
     '''
@@ -34,7 +34,7 @@ class SettingsForm(forms.ModelForm):
     Meta class for user settings form is provided. It connects the form to the user settings page and \
     provides the proper fields for the form 
 
-    Fields used in the form
+    Fields used in the form:
 
     :field profile_image: Profile image of the user (default is provided)
     '''
