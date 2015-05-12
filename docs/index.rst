@@ -13,6 +13,7 @@ Things to know:
    
    installation_guide.rst
    developers_guide.rst
+   decisions_we_made.rst
 
 Contents:
 
