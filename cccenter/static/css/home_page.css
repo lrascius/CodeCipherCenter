@@ -1,3 +1,12 @@
 body{
+    background: url(/static/images/concrete_wall.png) repeat 0 0;
+}
 
+h1{
+    color: red;
+    text-shadow: 1px 1px 1px #ccc;
+}
+
+a{
+    display: block;
 }
