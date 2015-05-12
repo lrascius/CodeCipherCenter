@@ -1,3 +1,13 @@
+@font-face {
+    font-family: Marcelle;
+    src: url('/static/fonts/marcellfont.ttf');
+}
+
+h1 {
+    font-family: Marcelle;
+    font-size: 50px;
+}
+
 body {
 	padding-top: 60px; 
 	padding-bottom: 60px;
@@ -16,6 +26,15 @@ footer {
     margin-bottom: 0;
 }
 
+img {
+    width: 100%;
+    height: 100%;
+}
+
+table {
+    background-color: #F0F0F0;    
+}
+
 .cipherDifficulty {
     border: 2px outset #303030;
     background-color: #A0A0A0;
@@ -27,6 +46,16 @@ footer {
 .cipherDifficulty:hover {
     background-color: #808080;
 /*    color:#100000 ;*/
+}
+
+.navbar-brand {
+    font-family: Marcelle;
+    font-size: 25px;
+    color: #000000;   
+}
+
+.dropdown {
+    z-index: 100;
 }
 
 #cipherChoice {
@@ -43,18 +72,6 @@ footer {
 
 #joinButton {
 	width: 48%;
-
 }
 
-img {
-    width: 100%;
-    height: 100%;
-}
 
-.dropdown {
-    z-index: 100;
-}
-
-table {
-    background-color: #F0F0F0;    
-}

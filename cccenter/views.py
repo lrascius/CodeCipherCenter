@@ -234,7 +234,7 @@ def challengeList(request):
     context = {"in_challenge":c,
                "list":array,
                "title":"Code and Cipher Center",
-               "active":"challengelist"
+               "active":"challenge"
               }
 
     if not request.user.is_anonymous():
