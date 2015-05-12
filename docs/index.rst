@@ -6,6 +6,14 @@
 Welcome to Code and Cipher Center's documentation!
 ==================================================
 
+Things to know:
+
+.. toctree::
+   :maxdepth: 2
+   
+   installation_guide.rst
+   developers_guide.rst
+
 Contents:
 
 .. toctree::
