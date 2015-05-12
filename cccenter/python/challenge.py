@@ -77,15 +77,16 @@ def get_ciphertext(challenge_id):
 
 def user_in_challenge(challenge_id, user):
     '''
-    Determines if the user is registered in the challenge and if the user already solved the challenge.
-    
+    Determines if the user is registered in the challenge and if the user already\
+    solved the challenge.
+
     :param challenge_id: The challenge's associated object's id number
     :param user: The current user
     :type challenge_id: int
     :type user: models.User
     :return: (User in the challenge, User solved the challenge)
     :rtype: (boolean, boolean)
-    
+
     .. note:: The user parameter can be passed in easily from a view using request.user.
     '''
 
@@ -113,15 +114,16 @@ def user_in_challenge(challenge_id, user):
 
 def get_difficulty(challenge_id):
     '''
-    Returns the difficulty of the given challenge. If multiple ciphers have been applied, returns the hardest one.
-    
+    Returns the difficulty of the given challenge. If multiple ciphers have been applied,\
+    returns the hardest one.
+
     :param challenge_id: The challenge's associated object's id number
     :type challenge_id: int
     :return: The difficulty of the challenge
     :rtype: str
-    
+
     .. note:: Return values can include 'beginner', 'intermediate', and 'advanced'.
-    
+
     .. note:: Although this function supports multiple ciphers being applied to a single challenge,\
     the rest of the code, including the models, does not.
     '''

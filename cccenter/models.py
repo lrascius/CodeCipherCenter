@@ -43,11 +43,13 @@ class Challenge(models.Model):
     :field plaintext: (models.TextField) The challenge's plaintext
     :field ciphertype: (models.CharField) The name of the cipher used
     :field cipherkey: (models.TextField) The challenge's cipher key
-    :field users: (models.ManyToManyField) The users registered in the challenge (related_name="user_challenge_set")
+    :field users: (models.ManyToManyField) The users registered in the challenge\
+    (related_name="user_challenge_set")
     :field datetime_created: (models.DateTimeField) The date and time the challenge was created
     :field datetime_solved: (models.DateTimeField) The date and time the challenge was solved
     :field solved_by: (models.ManyToManyField) The users who have solved the challenge
-    :field challenge_type: (models.CharField) The type of challenge (single, collaborative, competitive)
+    :field challenge_type: (models.CharField) The type of challenge (single, collaborative,\
+    competitive)
     :field solved: (models.BooleanField) If the challenge has been solved
     :field cipher: (models.ManyToManyField) The cipher objects the challenge is related to
     '''

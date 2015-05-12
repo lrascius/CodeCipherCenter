@@ -7,7 +7,7 @@ def get_notifications(user, get_all=False):
     '''
     Gets notifications
 
-    :param user: current user 
+    :param user: current user
     :param get_all: If set to true will get all the notifications, if set to false returns \
     5 most recent notifications
     :type user: models.User
@@ -43,10 +43,10 @@ def viewed_notification(user, notification_id):
     '''
     Sets a notification to viewed based on the user and notification_id
 
-    :param user: Current user 
+    :param user: Current user
     :type user: models.User
     :param notification_id: id of the notification object
-    :type notification_id: int  
+    :type notification_id: int
     :return: Was the notification viewed parameter succesfully set to true
     :rtype: boolean
     '''

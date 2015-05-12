@@ -14,7 +14,8 @@ def get_comments(challenge_id):
     :return: All the comments associated with the challenge
     :rtype: [models.Comment]
 
-    .. note:: The return type is actually a query set, but can be treated as a list of Comment objects.
+    .. note:: The return type is actually a query set, but can be treated as\
+    a list of Comment objects.
     '''
     if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")

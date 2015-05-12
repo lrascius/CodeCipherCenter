@@ -41,7 +41,7 @@ def home(request):
 
     if not request.user.is_anonymous():
         context["notifications"] = notify.get_notifications(request.user, False)
-        context["unseen_notification"] = notify.unviewed_notifications(request.user) 
+        context["unseen_notification"] = notify.unviewed_notifications(request.user)
 
     return render(request, 'cccenter/home_page.html', context)
 
@@ -207,7 +207,8 @@ def challengeList(request):
     '''
     Returns challenge list with collumns of id, date, difficulty, and challengetype.
 
-    If the user is logged in, returns a list of his private challenges as well as all group challenges.
+    If the user is logged in, returns a list of his private challenges as well as all group\
+    challenges.
     Else returns only a list of all group challenges.
     '''
 

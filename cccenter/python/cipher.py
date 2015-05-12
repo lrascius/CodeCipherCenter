@@ -41,7 +41,7 @@ def multiplicitive_cipher(text, mult):
     :type mult: int
     :return: The encrypted text, all upper case
     :rtype: str
-    
+
     .. warning:: Cipher = (mult * position) mod 26 and is invalid for even multiples
     '''
     # List of 26 lowercase letters
@@ -71,8 +71,8 @@ def affine_cipher(text, a, b):
     :return: The encrypted text, all upper case
     :rtype: str
 
-    .. warning:: The affine cipher computes Cipher = (a*position + b) mod 26 and is invalid for even\
-    values of a and when a is congruent to 13 mod 26
+    .. warning:: The affine cipher computes Cipher = (a*position + b) mod 26 and is invalid for\
+    even values of a and when a is congruent to 13 mod 26
     '''
     # List of 26 lowercase letters
     if a % 2 == 0 or a % 13 == 0:
@@ -120,10 +120,12 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
     .. note:: The key is a string and is only recorded for future reference. The plaintext\
     and ciphertext are used to print the challenge and check proposed solutions.
 
-    .. note:: If dt_created is left unassigned, the current date and time are used. This is the best default option.
-    
-    .. warning:: Although ciphertype and challenge_type are strings, they are used to pull the correct\
-    Cipher object and challenge_type from the database and therefore must match a database entry exactly.
+    .. note:: If dt_created is left unassigned, the current date and time are used. This is the\
+    best default option.
+
+    .. warning:: Although ciphertype and challenge_type are strings, they are used to pull the\
+    correct Cipher object and challenge_type from the database and therefore must match a\
+    database entry exactly.
     '''
 
     if dt_created != None:

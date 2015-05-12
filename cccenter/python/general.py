@@ -2,7 +2,6 @@
 '''Grabs text from the Gutenberg Project to use as a plaintext.'''
 from gutenberg.acquire import load_etext
 from gutenberg.cleanup import strip_headers
-from cccenter.models import Notification
 import random
 import re
 
