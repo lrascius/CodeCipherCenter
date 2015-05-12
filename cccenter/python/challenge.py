@@ -9,10 +9,10 @@ from django.contrib.auth.models import User
 def challenge_list():
     '''
     Returns a list of the challenges in the database.
-    
+
     :return: All challenge objects in the database
     :rtype: [models.Challenge]
-    
+
     .. note:: Actually returns a queryset containing all challenges but can be treated as an arry.
     '''
     chList = models.Challenge.objects.all()
@@ -22,16 +22,16 @@ def challenge_list():
 def join_challenge(challenge_id, user_id):
     '''
     Adds the given user to the given challenge.
-    
+
     :param challenge_id: The challenge's associated object's id number
     :param user_id: The user's (user object's) id number
     :type challenge_id: int
     :type user_id: int
     :return: Returns True if the user is added successfully. Returns False otherwise.
     :rtype: boolean
-    
-    .. note:: Practically, this function will only return False when the challenge type is 'single',\
-    since users are note allowed to be added to a private challenge.
+
+    .. note:: Practically, this function will only return False when the challenge type is\
+    'single', since users are note allowed to be added to a private challenge.
     '''
     if isinstance(challenge_id, int) == False:
         raise TypeError("challenge_id is " + str(type(challenge_id)) + ", not int")
@@ -59,7 +59,7 @@ def join_challenge(challenge_id, user_id):
 def get_ciphertext(challenge_id):
     '''
     Returns the ciphertext associated with the given challenge.
-    
+
     :param challenge_id: The challenge's associated object's id number
     :type challenge_id: int
     :return: The ciphertext associated with the challenge
@@ -77,15 +77,16 @@ def get_ciphertext(challenge_id):
 
 def user_in_challenge(challenge_id, user):
     '''
-    Determines if the user is registered in the challenge and if the user already solved the challenge.
-    
+    Determines if the user is registered in the challenge and if the user already\
+    solved the challenge.
+
     :param challenge_id: The challenge's associated object's id number
     :param user: The current user
     :type challenge_id: int
     :type user: models.User
     :return: (User in the challenge, User solved the challenge)
     :rtype: (boolean, boolean)
-    
+
     .. note:: The user parameter can be passed in easily from a view using request.user.
     '''
 
@@ -113,15 +114,16 @@ def user_in_challenge(challenge_id, user):
 
 def get_difficulty(challenge_id):
     '''
-    Returns the difficulty of the given challenge. If multiple ciphers have been applied, returns the hardest one.
-    
+    Returns the difficulty of the given challenge. If multiple ciphers have been applied,\
+    returns the hardest one.
+
     :param challenge_id: The challenge's associated object's id number
     :type challenge_id: int
     :return: The difficulty of the challenge
     :rtype: str
-    
+
     .. note:: Return values can include 'beginner', 'intermediate', and 'advanced'.
-    
+
     .. note:: Although this function supports multiple ciphers being applied to a single challenge,\
     the rest of the code, including the models, does not.
     '''
@@ -144,7 +146,7 @@ def get_difficulty(challenge_id):
 def get_challenge_info(challenge_id):
     '''
     Returns information about the Challenge to display on the challenge page.
-    
+
     :param challenge_id: The challenge's associated object's id number
     :type challenge_id: int
     :return: 'datetime_created' (datetime): The date and time the challenge was created
@@ -153,7 +155,7 @@ def get_challenge_info(challenge_id):
     :return: 'solved_by' ([models.User]): Who has solved the challenge
     :return: 'users' ([models.User]): Who is registered in the challenge
     :rtype: dict
-    
+
     .. note:: the 'solved_by' and 'user' indices of the returned dictionary are actually\
     query sets, but can be treated as lists.
     '''

@@ -41,8 +41,8 @@ def home(request):
 
     if not request.user.is_anonymous():
         context["notifications"] = notify.get_notifications(request.user, False)
-        context["unseen_notification"] = notify.unviewed_notifications(request.user) 
-           
+        context["unseen_notification"] = notify.unviewed_notifications(request.user)
+
     return render(request, 'cccenter/home_page.html', context)
 
 def getCipher(request):
@@ -128,7 +128,7 @@ def challenge_page(request):
     '''
     If requested with a GET request,
     Returns the challenge page associated with the given challenge_id.
-    
+
     If requested with a POST request,
     Generates an invitation to the submitted user to join the challenge.
     '''
@@ -206,18 +206,19 @@ def auth_view(request):
 def challengeList(request):
     '''
     Returns challenge list with collumns of id, date, difficulty, and challengetype.
-    
-    If the user is logged in, returns a list of his private challenges as well as all group challenges.
+
+    If the user is logged in, returns a list of his private challenges as well as all group\
+    challenges.
     Else returns only a list of all group challenges.
     '''
 
     c = []
-    
+
     if request.user.is_active:
         query = Q(users__in=[request.user]) | Q(challenge_type='collaborative')\
                 | Q(challenge_type='competitive')
         challenges_of_user = Challenge.objects.filter(query).distinct()
-        
+
         in_challenge = Challenge.objects.filter(Q(users__in=[request.user]))
 
         for challenge in in_challenge:
@@ -260,7 +261,7 @@ def logout(request):
 def register(request):
     '''
     If called with a GET request, returns registration page.
-    
+
     If called with a POST request, verifies user registration information.
     If valid, registers use. Else returns an error.
     '''
@@ -290,7 +291,7 @@ def register(request):
 def profile(request):
     '''
     Returns the current user's profile page.
-    
+
     If the user doesn't have an associated UserProfile, creates one.
     '''
     user = User.objects.get(username=request.user)
@@ -333,9 +334,9 @@ def notifications(request):
 @login_required
 def settings(request):
     '''Try getting the user profile, if it does not exists create one.
-    
+
        If called with a GET request, returns settings page.
-       
+
        If called with POST, create settings, user, and password forms.
        Update all the corresponding tables and return the profile page.'''
     try:

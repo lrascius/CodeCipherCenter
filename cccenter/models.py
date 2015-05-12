@@ -9,7 +9,7 @@ from django.utils.encoding import smart_text
 class UserProfile(models.Model):
     '''
     A model for user profile objects.
-    
+
     :field user: (models.User) The associated User object
     :field profile_image: (models.ImageField) The image associated with the user
     '''
@@ -23,7 +23,7 @@ class UserProfile(models.Model):
 class Cipher(models.Model):
     '''
     A model for cipher objects
-    
+
     :field ciphertype: (models.CharField) The cipher's name
     :field difficulty: (models.CharField) The cipher's difficulty
     '''
@@ -38,16 +38,18 @@ class Cipher(models.Model):
 class Challenge(models.Model):
     '''
     A model for challenge objects.
-    
+
     :field ciphertext: (models.TextField) The challenge's ciphertext
     :field plaintext: (models.TextField) The challenge's plaintext
     :field ciphertype: (models.CharField) The name of the cipher used
     :field cipherkey: (models.TextField) The challenge's cipher key
-    :field users: (models.ManyToManyField) The users registered in the challenge (related_name="user_challenge_set")
+    :field users: (models.ManyToManyField) The users registered in the challenge\
+    (related_name="user_challenge_set")
     :field datetime_created: (models.DateTimeField) The date and time the challenge was created
     :field datetime_solved: (models.DateTimeField) The date and time the challenge was solved
     :field solved_by: (models.ManyToManyField) The users who have solved the challenge
-    :field challenge_type: (models.CharField) The type of challenge (single, collaborative, competitive)
+    :field challenge_type: (models.CharField) The type of challenge (single, collaborative,\
+    competitive)
     :field solved: (models.BooleanField) If the challenge has been solved
     :field cipher: (models.ManyToManyField) The cipher objects the challenge is related to
     '''
@@ -73,7 +75,7 @@ class Challenge(models.Model):
 class Comment(models.Model):
     '''
     A model for comments in the forums.
-    
+
     :field user: (models.ForeignKey) The user who posted the comment
     :field text: (models.TextField) The text in the comment
     :field datetime: (models.DateTimeField) The date and time the comment was posted
@@ -90,7 +92,7 @@ class Comment(models.Model):
 class Notification(models.Model):
     '''
     A model for push notifications.
-    
+
     :field user: (models.ForeignKey) The user who the notification is sent to
     :field notification: (models.CharField) The text in the notification
     :field link: (models.CharField) The link to what the notification is about
