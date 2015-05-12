@@ -1,5 +1,7 @@
 #!cccenter/python/cipher.py
-'''Handles primary references to ciphertext objects.'''
+'''
+Interfaces with the Cipher model.
+'''
 
 import cccenter.models as models
 from django.contrib.auth.models import User
@@ -10,13 +12,13 @@ from cccenter.models import Cipher
 def ceasar_shift_encode(text, shift):
     '''
     Applies the Caesar Shift Cipher to the given ciphertext.
-    
-    :param text: the text to be encrypted
-    :param shift: the Caesar Shift key
-    :type text: string
+
+    :param text: The text to be encrypted
+    :param shift: The Caesar Shift key
+    :type text: str
     :type shift: int
-    :return: the encrypted text, all upper case
-    :rtype: string
+    :return: The encrypted text, all upper case
+    :rtype: str
     '''
     # List of 26 lowercase letters
     alphabet = list(map(chr, range(97, 123)))
@@ -32,14 +34,14 @@ def ceasar_shift_encode(text, shift):
 def multiplicitive_cipher(text, mult):
     '''
     Applies the Multiplicitive Shift Cipher to a piece of text.
-    
-    :param text: the text to be encrypted
-    :param mult: the Multiplicitive Cipher multiplier key
-    :type text: string
+
+    :param text: The text to be encrypted
+    :param mult: The Multiplicitive Cipher multiplier key
+    :type text: str
     :type mult: int
-    :return: the encrypted text, all upper case
-    :rtype: string
-    
+    :return: The encrypted text, all upper case
+    :rtype: str
+
     .. warning:: Cipher = (mult * position) mod 26 and is invalid for even multiples
     '''
     # List of 26 lowercase letters
@@ -59,18 +61,18 @@ def multiplicitive_cipher(text, mult):
 def affine_cipher(text, a, b):
     '''
     Applies the Affine Cipher on a piece of text.
-    
-    :param text: the text to be encrypted
-    :param a: the Affine Cipher multiplier key
-    :param b: the Affine Cipher additive key
-    :type text: string
+
+    :param text: The text to be encrypted
+    :param a: The Affine Cipher multiplier key
+    :param b: The Affine Cipher additive key
+    :type text: str
     :type a: int
     :type b: int
-    :return: the encrypted text, all upper case
-    :rtype: string
-    
-    .. warning:: The affine cipher computes Cipher = (a*position + b) mod 26 and is invalid for even\
-    values of a and when a is congruent to 13 mod 26
+    :return: The encrypted text, all upper case
+    :rtype: str
+
+    .. warning:: The affine cipher computes Cipher = (a*position + b) mod 26 and is invalid for\
+    even values of a and when a is congruent to 13 mod 26
     '''
     # List of 26 lowercase letters
     if a % 2 == 0 or a % 13 == 0:
@@ -90,38 +92,40 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
                      users=None, dt_created=None, solved=False, dt_solved=None, solved_by=None):
     '''
     Creates a challenge object and puts it in the database.
-    
-    :param plaintext: the associated plaintext
-    :param ciphertext: the associate ciphertext
-    :param ciphertype: the cipher the challenge uses
-    :param key: the cipher's key
-    :param challenge_type: the type of challenge (single, collaborative, competitive)
-    :param users: (optional) the users registered in the challenge
-    :param dt_created: (optional) the date and time the challenge was created
-    :param solved: (optional) indicates if the challenge has been solved yet
-    :param dt_solved: (optional) the date and time the challenge was first solved
-    :param solved_by: (optional) the users who have already solved the challenge
-    :type plaintext: string
-    :type cipehrtext: string
-    :type ciphertype: string
-    :type key: string
-    :type challenge_type: string
-    :type users: [User]
+
+    :param plaintext: The associated plaintext
+    :param ciphertext: The associate ciphertext
+    :param ciphertype: The cipher the challenge uses
+    :param key: The cipher's key
+    :param challenge_type: The type of challenge (single, collaborative, competitive)
+    :param users: (optional) Users registered in the challenge
+    :param dt_created: (optional) The date and time the challenge was created
+    :param solved: (optional) Indicates if the challenge has been solved yet
+    :param dt_solved: (optional) The date and time the challenge was first solved
+    :param solved_by: (optional) Users who have already solved the challenge
+    :type plaintext: str
+    :type cipehrtext: str
+    :type ciphertype: str
+    :type key: str
+    :type challenge_type: str
+    :type users: [models.User]
     :type dt_created: datetime
     :type solved: boolean
     :type dt_solved: datetime
-    :type solved_by: [User]
-    :return: 'ciphertext': the ciphertext associated with the challenge
-    :return: 'challenge_id': the challenge's id
+    :type solved_by: [models.User]
+    :return: 'ciphertext' (str): The ciphertext associated with the challenge
+    :return: 'challenge_id' (int): The challenge's id
     :rtype: dict
-    
+
     .. note:: The key is a string and is only recorded for future reference. The plaintext\
     and ciphertext are used to print the challenge and check proposed solutions.
-    
-    .. note:: If dt_created is left unassigned, the current date and time are used. This is the best default option.
-    
-    .. warning:: Although ciphertype and challenge_type are strings, they are used to pull the correct\
-    Cipher object and challenge_type from the database and therefore must match a database entry exactly.
+
+    .. note:: If dt_created is left unassigned, the current date and time are used. This is the\
+    best default option.
+
+    .. warning:: Although ciphertype and challenge_type are strings, they are used to pull the\
+    correct Cipher object and challenge_type from the database and therefore must match a\
+    database entry exactly.
     '''
 
     if dt_created != None:
@@ -163,18 +167,18 @@ def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
 def check_solution(challenge_id, user_id, guessed_plaintext):
     '''
     Checks if the suggested solution is correct.
-    
-    :param challenge_id: the associated challenge's id
-    :param user_id: the current user's id
-    :param guessed_plaintext: the proposed solution to the challenge
+
+    :param challenge_id: The associated challenge's id
+    :param user_id: The current user's id
+    :param guessed_plaintext: The proposed solution to the challenge
     :type challenge_id: int
     :type user_id: int
-    :type guessed_plaintext: string
+    :type guessed_plaintext: str
     :return: True if the proposed solution is correct, false if it is not
     :rtype: boolean
-    
+
     .. warning:: If the challenge_id or user_id is not valid, will throw an error.
-    
+
     .. warning:: Does not check if the user is registered in the challenge before checking that\
     the solution is correct.
     '''
@@ -213,19 +217,21 @@ def check_solution(challenge_id, user_id, guessed_plaintext):
 def create_ciphertext(ciphertype, plaintext):
     '''
     Returns a ciphertext and key using the given ciphertype.
-    
-    :param ciphertype: the cipher to apply to the text
-    :param plaintext: the text to encrypt
-    :type ciphertype: string
-    :type plaintext: string
-    :return: 'ciphertext': the encrypted ciphertext (string)
-    :return: 'cipherkey': the cipher key (string)
+
+    :param ciphertype: The cipher to apply to the text
+    :param plaintext: The text to encrypt
+    :type ciphertype: str
+    :type plaintext: str
+    :return: 'ciphertext' (str): The encrypted ciphertext (string)
+    :return: 'cipherkey' (str): The cipher key (string)
     :rtype: dict
-    
-    .. warning:: Although ciphertype is a string, it must match one of the Cipher objects in the database\
-    or it will throw an error.
+
+    .. warning:: Although ciphertype is a string, it must match one of the Cipher objects in the\
+    database or it will throw an error.
+
+    .. note:: The cipherkey is stored for display purposes only, so it is always stored as a string.
     '''
-    
+
     if ciphertype == "Caesar Shift":
         cipherkey = randint(1, 25)
         ciphertext = ceasar_shift_encode(plaintext, cipherkey)
