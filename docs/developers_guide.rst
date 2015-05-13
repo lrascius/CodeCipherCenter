@@ -64,7 +64,7 @@ Test code falls into one of five categories:
 
    base_dir/cccenter/testing/html_validation/
 
-This folder is empty until validation tests are run.
+This folder is empty until the integration tests are run.
 
 Running the Test Code
 +++++++++++++++++++++
@@ -85,7 +85,14 @@ To run the HTML validation tests, enter:
    
 while in the base_dir.
 
--- Space reserved for acceptance tests
+To run the acceptance test, open Firefox, then open Selenium (make sure it's installed first, see installation guide).
+Once Selenium is open, click on File > Open... and navigate to
+
+.. code-block:: shell-session
+
+   base_dir/cccenter/testing/acceptance_tests/test_case.html
+   
+Once the tests are loaded, click on "Play entire test suite". The acceptance tests will then run.
 
 To find the pylint score for the website, run:
 

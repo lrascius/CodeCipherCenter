@@ -19,3 +19,11 @@ Decisions We Made
   
 - Push notifications over email: Use push notifications to alert users to invitations to
   join a challenge instead of emails.
+  
+- Use Whitenoise with Heroku to serve static files.
+
+- We chose not to switch to the Django Rest framework since it would require a lot of
+  refactoring and we didn't have the time.
+  
+- We chose a paper background and a title font that look pre-20th century since that's
+  when hand ciphers were in use.

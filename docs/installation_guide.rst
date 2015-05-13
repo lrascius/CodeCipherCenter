@@ -61,4 +61,7 @@ to install all of the necessary Python packages.  If necessary, run:
 
    python3 manage.py runserver
    
+9. To set up Selenium for acceptance testing, go to http://docs.seleniumhq.org/download/
+   and download Selenium IDE 2.9.0 for Firefox.
+   
 That's all!  You're ready to go.
