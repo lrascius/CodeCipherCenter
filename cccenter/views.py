@@ -123,7 +123,7 @@ def check_plaintext(request):
         success = cf.check_solution(challenge_id, user_id, guessed_plaintext)
 
         if(success == True):
-          notify.solved_cipher_notification(request.user, challenge_id)
+          notify.solved_cipher_notification(request.user.username, challenge_id)
 
         return HttpResponse(json.dumps({'success':success}), content_type="application/json")
 
@@ -136,13 +136,16 @@ def challenge_page(request):
     Generates an invitation to the submitted user to join the challenge.
     '''
     if request.method == 'POST':
-        link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0])
-        notify_message = str(request.user) + " has invited you to a challenge # "\
-                         + str(request.GET.getlist('challenge_id')[0])
-        user = User.objects.get(username=request.POST.getlist('username')[0])
-        notification = Notification(user=user, notification=notify_message,
-                                    link=link, datetime=timezone.now())
-        notification.save()
+        print str(request.user.username) 
+        print str(request.POST.getlist('username')[0])
+        if(str(request.user.username) != str(request.POST.getlist('username')[0])):
+          link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0])
+          notify_message = str(request.user) + " has invited you to a challenge # "\
+                           + str(request.GET.getlist('challenge_id')[0])
+          user = User.objects.get(username=request.POST.getlist('username')[0])
+          notification = Notification(user=user, notification=notify_message,
+                                      link=link, datetime=timezone.now())
+          notification.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     elif request.method == 'GET':
@@ -241,7 +244,7 @@ def challengeList(request):
     context = {"in_challenge":c,
                "list":array,
                "title":"Code and Cipher Center",
-               "active":"challenge"
+               "active":"challengelist"
               }
 
     if not request.user.is_anonymous():
