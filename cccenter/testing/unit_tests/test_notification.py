@@ -52,3 +52,15 @@ class TestNotification(TestCase):
         self.assertTrue(res)
         self.assertTrue(mock_notification.viewed)
         self.assertTrue(mock_notification.save.called)
+
+    @mock.patch('cccenter.python.notification.Notification')  
+    def test_solved_cipher_notification(self, mock_notification):
+        mock_notification.objects.filter.return_value = [mock_notification]
+        mock_notification.username = 'user'
+        mock_notification.challenge_id = 1
+        
+        res = solved_cipher_notification('user', 1)
+        
+        self.assertTrue(res)
+        self.assertTrue(mock_notification.viewed == False)
+        self.assertTrue(mock_notification.save.called)
