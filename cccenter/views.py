@@ -121,6 +121,9 @@ def check_plaintext(request):
         user_id = request.user.id
         guessed_plaintext = request.POST.get("guessed_plaintext", "")
         success = cf.check_solution(challenge_id, user_id, guessed_plaintext)
+        
+        if(success == True):
+          notify.solved_cipher_notification(request.user, challenge_id)
 
         return HttpResponse(json.dumps({'success':success}), content_type="application/json")
 
