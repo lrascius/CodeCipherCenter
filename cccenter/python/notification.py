@@ -1,7 +1,7 @@
 #!cccenter/python/notification.py
 '''Contains functions primarily focused on the notification model.'''
 
-from cccenter.models import Notification
+from cccenter.models import Notification, Challenge
 from django.utils import timezone
 
 def get_notifications(user, get_all=False):
@@ -62,8 +62,19 @@ def viewed_notification(user, notification_id):
     return False
 
 def solved_cipher_notification(username, challenge_id):
+    '''
+    Notifies the users when a challenge has been solved for the first time, all users \
+    of that challenge will receive a notification telling them the user who has solved \
+    the challenge and a link to that page
+
+    :param user: username
+    :type user: string
+    :param challenge_id: id of the challenge 
+    :type challenge_id: int
+    '''
 
     solved_by = Challenge.objects.filter(pk=int(challenge_id))[0].solved_by.all()
+
     if(len (solved_by) == 1):
         users_in_challenge = Challenge.objects.filter(pk=int(challenge_id))[0].users.all()
         for user in users_in_challenge:
