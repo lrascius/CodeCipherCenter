@@ -2,6 +2,7 @@
 '''Contains functions primarily focused on the notification model.'''
 
 from cccenter.models import Notification
+from django.utils import timezone
 
 def get_notifications(user, get_all=False):
     '''
@@ -60,3 +61,19 @@ def viewed_notification(user, notification_id):
 
     return False
 
+def solved_cipher_notification(username, challenge_id):
+
+    solved_by = Challenge.objects.filter(pk=int(challenge_id))[0].solved_by.all()
+    if(len (solved_by) == 1):
+        users_in_challenge = Challenge.objects.filter(pk=int(challenge_id))[0].users.all()
+        for user in users_in_challenge:
+            if(user.username == str(username)):
+                continue
+
+            link = "/cipher/challengepage/?challenge_id=" + str(challenge_id)
+            notify_message = str(username) + " has solved challenge # "\
+                             + str(challenge_id)
+
+            notification = Notification(user=user, notification=notify_message,
+                                        link=link, datetime=timezone.now())
+            notification.save()
