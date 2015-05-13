@@ -136,8 +136,6 @@ def challenge_page(request):
     Generates an invitation to the submitted user to join the challenge.
     '''
     if request.method == 'POST':
-        print str(request.user.username) 
-        print str(request.POST.getlist('username')[0])
         if(str(request.user.username) != str(request.POST.getlist('username')[0])):
           link = "/cipher/challengepage/?challenge_id=" + str(request.GET.getlist('challenge_id')[0])
           notify_message = str(request.user) + " has invited you to a challenge # "\
@@ -282,7 +280,7 @@ def register(request):
             user.save()
             registered = True
         else:
-            print(user_form.errors)
+            return Http404()
     else:
         user_form = RegistrationForm()
 
