@@ -1,4 +1,4 @@
 [MASTER]
 ignore=migrations, __pycache__, admin.py
-max-line-length=140
+max-line-length=110
 disable=bad-builtin, no-member, too-many-arguments, too-few-public-methods, duplicate-code, invalid-name, redefined-outer-name

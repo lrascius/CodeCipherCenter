@@ -30,3 +30,7 @@ Decisions We Made
   
 - We chose to display other user's usernames on the challenge page and in the forums to
   provide anonynimity.
+  
+- We left the test files out of the pylint score since many of the lines look unused to
+  pylint but they are necessary for unit test functionality, such as all lines and
+  functions involving mock.
