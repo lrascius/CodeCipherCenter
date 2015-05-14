@@ -14,3 +14,5 @@ class TestViews(TestCase):
         
         self.assertTrue(mock_shortcuts.GET.get.called)
         mock_notify.viewed_notification.assert_called_with('user', 'note')
+        
+    

@@ -3,7 +3,6 @@
 
 from cccenter.models import Notification, Challenge
 from django.utils import timezone
-from django.contrib.auth.models import User
 
 def get_notifications(user, get_all=False):
     '''
@@ -70,16 +69,16 @@ def solved_cipher_notification(username, challenge_id):
 
     :param user: username
     :type user: string
-    :param challenge_id: id of the challenge 
+    :param challenge_id: id of the challenge
     :type challenge_id: int
     '''
 
     solved_by = Challenge.objects.filter(pk=int(challenge_id))[0].solved_by.all()
 
-    if(len (solved_by) == 1):
+    if len(solved_by) == 1:
         users_in_challenge = Challenge.objects.filter(pk=int(challenge_id))[0].users.all()
         for user in users_in_challenge:
-            if(user.username == str(username)):
+            if user.username == str(username):
                 continue
 
             link = "/cipher/challengepage/?challenge_id=" + str(challenge_id)
