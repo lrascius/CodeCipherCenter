@@ -4,6 +4,7 @@ Holds the views for the cccenter app.
 '''
 
 import json
+from django import shortcuts
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
