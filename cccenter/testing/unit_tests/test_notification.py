@@ -48,19 +48,25 @@ class TestNotification(TestCase):
         mock_notification.id = 1
         
         res = viewed_notification('user', 1)
-        
-        self.assertTrue(res)
         self.assertTrue(mock_notification.viewed)
         self.assertTrue(mock_notification.save.called)
 
-    @mock.patch('cccenter.python.notification.Notification')  
-    def test_solved_cipher_notification(self, mock_notification):
-        mock_notification.objects.filter.return_value = [mock_notification]
-        mock_notification.username = 'user'
+    @mock.patch('cccenter.python.notification.User')
+    @mock.patch('cccenter.python.notification.timezone')
+    @mock.patch('cccenter.python.notification.Challenge')
+    @mock.patch('cccenter.python.notification.Notification')
+    def test_solved_cipher_notification(self, mock_notification, mock_challenge, mock_timezone, mock_user):
+        mock_challenge.objects.filter.return_value = [mock_notification]
+        mock_notification.users.all.return_value = [mock_user]
+        mock_notification.solved_by.all.return_value = [mock_user]
+        mock_notification.username = 'username'
         mock_notification.challenge_id = 1
+        mock_timezone.now.return_value = 'now'
+        mock_user.username = 'name'
+        mock_notification.return_value = mock_notification
         
-        res = solved_cipher_notification('user', 1)
+        solved_cipher_notification('username', 1)
         
-        self.assertTrue(res)
-        self.assertTrue(mock_notification.viewed == False)
+        mock_notification.assert_called_with(user=mock_user, notification='username has solved challenge # 1',
+                                             link='/cipher/challengepage/?challenge_id=1', datetime='now')
         self.assertTrue(mock_notification.save.called)

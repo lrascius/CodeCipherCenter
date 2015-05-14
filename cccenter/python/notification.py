@@ -3,6 +3,7 @@
 
 from cccenter.models import Notification, Challenge
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 def get_notifications(user, get_all=False):
     '''
