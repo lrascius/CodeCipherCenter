@@ -13,6 +13,7 @@ from django.template import RequestContext
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.core.mail import send_mail
 import cccenter.python.general as general
 import cccenter.python.notification as notify
 import cccenter.python.cipher as cf
@@ -36,8 +37,21 @@ def update_notifications(request):
 
 def home(request):
     '''Returns the home page.'''
+
     context = {"title":"Code and Cipher Center",
                "active":"home"}
+
+    if request.method == 'POST':
+      subject = request.POST.get('subject')
+      message = request.POST.get('message')
+      email = request.POST.get('email')
+      
+      if subject and message and email:
+        send_mail(subject, message, email, ['admin@cccenter.com'])
+        context['message'] = 'Thank you, your message has been sent.'
+
+      else:
+        context['message'] = 'Make sure all fields are entered'
 
     if not request.user.is_anonymous():
         context["notifications"] = notify.get_notifications(request.user, False)
