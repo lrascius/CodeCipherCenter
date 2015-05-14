@@ -1,6 +1,5 @@
 from django.test import TestCase
 from cccenter.python.challenge import *
-import cccenter.models as models
 import mock
 
 class TestChallenge(TestCase):
