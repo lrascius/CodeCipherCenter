@@ -15,4 +15,27 @@ class TestViews(TestCase):
         self.assertTrue(mock_shortcuts.GET.get.called)
         mock_notify.viewed_notification.assert_called_with('user', 'note')
         
-    
+    @mock.patch('cccenter.views.mail')
+    @mock.patch('cccenter.views.notify')
+    @mock.patch('cccenter.views.shortcuts')
+    def test_home_Pass1(self, mock_shortcuts, mock_notify, mock_mail):
+        mock_shortcuts.render.return_value = "home_page"
+        mock_shortcuts.POST.get('subject').return_value = 'subject'
+        mock_shortcuts.POST.get('message').return_value = 'message'
+        mock_shortcuts.POST.get('email').return_value = 'email'
+        mock_shortcuts.user.is_anonymous.return_value = False
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unread'
+        mock_shortcuts.method = 'POST'
+        
+        res = home(mock_shortcuts)
+        
+        context = {"message":"Thank you, your message has been sent.",
+                   "notifications":"notify",
+                   "unseen_notification":"unread",
+                   "title":"Code and Cipher Center",
+                   "active":"home"
+                  }
+                  
+        self.assertEqual(res, "home_page")
+        mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/home_page.html', context)

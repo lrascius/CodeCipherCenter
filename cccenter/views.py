@@ -12,7 +12,7 @@ from django.template import RequestContext
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.core.mail import send_mail
+from django.core import mail
 import cccenter.python.general as general
 import cccenter.python.notification as notify
 import cccenter.python.cipher as cf
@@ -46,8 +46,8 @@ def home(request):
         email = request.POST.get('email')
 
         if subject and message and email:
-            send_mail(subject, message, email, ['admin@cccenter.com'])
-            send_mail(subject, message, email, ['mkurtz00@citymail.cuny.edu'])
+            mail.send_mail(subject, message, email, ['admin@cccenter.com'])
+            mail.send_mail(subject, message, email, ['mkurtz00@citymail.cuny.edu'])
             context['message'] = 'Thank you, your message has been sent.'
 
         else:
