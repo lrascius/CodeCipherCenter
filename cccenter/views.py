@@ -46,8 +46,8 @@ def home(request):
         email = request.POST.get('email')
 
         if subject and message and email:
-            mail.send_mail(subject, message, email, ['admin@cccenter.com'])
             mail.send_mail(subject, message, email, ['mkurtz00@citymail.cuny.edu'])
+            mail.send_mail(subject, message, email, ['admin@cccenter.com'])
             context['message'] = 'Thank you, your message has been sent.'
 
         else:

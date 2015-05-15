@@ -32,11 +32,11 @@ class TestViews(TestCase):
                    "notifications":"notify",
                    "unseen_notification":"unread",
                    "title":"Code and Cipher Center",
-                   "active":"home"
-                  }
+                   "active":"home"}
                   
         self.assertEqual(res, "home_page")
         mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/home_page.html', context)
+        mock_mail.send_mail.assert_called_with('mail', 'mail', 'mail', ['admin@cccenter.com'])
         
     @mock.patch('cccenter.views.mail')
     @mock.patch('cccenter.views.notify')
@@ -55,8 +55,28 @@ class TestViews(TestCase):
                    "notifications":"notify",
                    "unseen_notification":"unread",
                    "title":"Code and Cipher Center",
-                   "active":"home"
-                  }
+                   "active":"home"}
+                  
+        self.assertEqual(res, "home_page")
+        mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/home_page.html', context)
+        
+    @mock.patch('cccenter.views.mail')
+    @mock.patch('cccenter.views.notify')
+    @mock.patch('cccenter.views.shortcuts')
+    def test_home_Pass3(self, mock_shortcuts, mock_notify, mock_mail):
+        mock_shortcuts.render.return_value = "home_page"
+        mock_shortcuts.POST.get.return_value = False
+        mock_shortcuts.user.is_anonymous.return_value = False
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unread'
+        mock_shortcuts.method = 'GET'
+        
+        res = home(mock_shortcuts)
+        
+        context = {"notifications":"notify",
+                   "unseen_notification":"unread",
+                   "title":"Code and Cipher Center",
+                   "active":"home"}
                   
         self.assertEqual(res, "home_page")
         mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/home_page.html', context)
