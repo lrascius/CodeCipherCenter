@@ -17,7 +17,7 @@ import cccenter.python.general as general
 import cccenter.python.notification as notify
 import cccenter.python.cipher as cf
 import cccenter.python.comment as comment
-from random import randint
+import random
 from cccenter.models import UserProfile
 from cccenter.models import Cipher
 from cccenter.models import Challenge
@@ -64,7 +64,7 @@ def getCipher(request):
     cipher = {}
     text = general.generate_paragraph()
     cipher['text'] = text
-    cipher['cipher'] = cf.ceasar_shift_encode(text, randint(2, 9))
+    cipher['cipher'] = cf.caesar_shift_encode(text, random.randint(2, 9))
     return HttpResponse(json.dumps(cipher['cipher']), content_type="application/json")
 
 @login_required

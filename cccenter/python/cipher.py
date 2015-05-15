@@ -9,7 +9,7 @@ from django.utils import timezone
 from random import randint
 from cccenter.models import Cipher
 
-def ceasar_shift_encode(text, shift):
+def caesar_shift_encode(text, shift):
     '''
     Applies the Caesar Shift Cipher to the given ciphertext.
 
@@ -234,7 +234,7 @@ def create_ciphertext(ciphertype, plaintext):
 
     if ciphertype == "Caesar Shift":
         cipherkey = randint(1, 25)
-        ciphertext = ceasar_shift_encode(plaintext, cipherkey)
+        ciphertext = caesar_shift_encode(plaintext, cipherkey)
         return {'ciphertext':ciphertext, 'cipherkey':cipherkey}
 
     if ciphertype == "Multiplicitive":

@@ -17,14 +17,14 @@ class TestCipherFunctions(TestCase):
         self.users = [self.user1, self.user2]
         self.challengetype = 'single'
         
-    def test_ceasar_shift_0(self):
-        self.assertTrue(ceasar_shift_encode(self.text, 0) == "SOMERANDOMTEXTWITHSOMEWEIRDCHARACTERS")
+    def test_caesar_shift_0(self):
+        self.assertTrue(caesar_shift_encode(self.text, 0) == "SOMERANDOMTEXTWITHSOMEWEIRDCHARACTERS")
         
-    def test_ceasar_shift_2(self):
-        self.assertTrue(ceasar_shift_encode(self.text, 2) == "UQOGTCPFQOVGZVYKVJUQOGYGKTFEJCTCEVGTU")
+    def test_caesar_shift_2(self):
+        self.assertTrue(caesar_shift_encode(self.text, 2) == "UQOGTCPFQOVGZVYKVJUQOGYGKTFEJCTCEVGTU")
         
-    def test_ceasar_shift_5(self):
-        self.assertTrue(ceasar_shift_encode(self.text, 5) == "XTRJWFSITRYJCYBNYMXTRJBJNWIHMFWFHYJWX")
+    def test_caesar_shift_5(self):
+        self.assertTrue(caesar_shift_encode(self.text, 5) == "XTRJWFSITRYJCYBNYMXTRJBJNWIHMFWFHYJWX")
         
     @mock.patch('cccenter.python.cipher.Cipher')
     @mock.patch('cccenter.python.cipher.timezone')
@@ -282,7 +282,7 @@ class TestCipherFunctions(TestCase):
 
     def test_create_ciphertext(self):
         ciphertext = create_ciphertext("Caesar Shift", self.text)      
-        self.assertTrue(ceasar_shift_encode(self.text, ciphertext['cipherkey']) == ciphertext['ciphertext'])
+        self.assertTrue(caesar_shift_encode(self.text, ciphertext['cipherkey']) == ciphertext['ciphertext'])
 
         ciphertext = create_ciphertext("Multiplicitive", self.text)      
         self.assertTrue(multiplicitive_cipher(self.text, ciphertext['cipherkey']) == ciphertext['ciphertext'])

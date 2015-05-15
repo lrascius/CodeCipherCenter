@@ -80,3 +80,23 @@ class TestViews(TestCase):
                   
         self.assertEqual(res, "home_page")
         mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/home_page.html', context)
+        
+    @mock.patch('cccenter.views.json')
+    @mock.patch('cccenter.views.random')
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.cf')
+    @mock.patch('cccenter.views.general')
+    @mock.patch('cccenter.views.HttpResponse')
+    def test_getCipher_Pass1(self, mock_response, mock_general, mock_cf, mock_shortcuts, mock_random, mock_json):
+        mock_general.generate_paragraph.return_value = 'text'
+        mock_cf.caesar_shift_encode.return_value = 'cipher'
+        mock_response.return_value = 'response'
+        mock_random.randint.return_value = 1
+        mock_json.dumps.return_value = 'json'
+        
+        res = getCipher(mock_shortcuts)
+        
+        self.assertEqual(res, 'response')
+        self.assertTrue(mock_general.generate_paragraph.called)
+        mock_cf.caesar_shift_encode.assert_called_with('text', 1)
+        mock_response.assert_called_with('json', content_type="application/json")
