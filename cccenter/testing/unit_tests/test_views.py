@@ -432,3 +432,41 @@ class TestViews(TestCase):
         mock_rc.assert_called_with(mock_shortcuts, {"alert":"Invalid username or password!",
                                                     "title":"Code and Cipher Center"})
         mock_shortcuts.render_to_response.assert_called_with('cccenter/login.html', 'rc')
+        
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.Q')
+    @mock.patch('cccenter.views.Challenge')
+    @mock.patch('cccenter.views.Cipher')
+    @mock.patch('cccenter.views.notify')
+    def test_challengeList_Pass1(self, mock_notify, mock_cipher, mock_challenge, mock_q, mock_shortcuts, mock_user):
+        mock_shortcuts.user = mock_user
+        mock_user.is_active = True
+        mock_q.return_value = False
+        mock_challenge.objects.filter.return_value = mock_challenge
+        mock_challenge.distinct.return_value = [mock_cipher]
+        mock_cipher.__iter__.return_value = mock_challenge
+        mock_challenge.id = 0
+        mock_challenge.objects.exclude.return_value = [mock_challenge]
+        mock_cipher.objects.get.return_value = mock_cipher
+        mock_cipher.difficulty = 'simple'
+        mock_challenge.challenge_type = 'single'
+        mock_shortcuts.user.is_anonymous.return_value = False
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unseen'
+        mock_shortcuts.render.return_value = True
+        mock_challenge.ciphertype = "cipher"
+        mock_cipher.ciphertype = "cipher"
+        
+        res = challengeList(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_q.assert_called_with(users__in=[mock_user])
+        mock_challenge.objects.filter.assert_called_with(False)
+        self.assertTrue(mock_challenge.distinct.called)
+        self.assertFalse(mock_challenge.objects.exclude.called)
+        mock_cipher.objects.get.assert_called_with(ciphertype='cipher')
+        self.assertTrue(mock_user.is_anonymous.called)
+        mock_notify.get_notifications.assert_called_with(mock_user, False)
+        mock_notify.unviewed_notifications.assert_called_with(mock_user)
+        self.assertTrue(mock_shortcuts.render.called)
