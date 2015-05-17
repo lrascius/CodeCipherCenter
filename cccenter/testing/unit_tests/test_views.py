@@ -115,3 +115,23 @@ class TestViews(TestCase):
                                                   "notifications" : 'notify',
                                                   "unseen_notification" : 'unseen'
                                                  })
+                                        
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.Cipher')
+    @mock.patch('cccenter.views.general')         
+    @mock.patch('cccenter.views.notify')
+    @mock.patch('cccenter.views.shortcuts')
+    def test_create_challenge_Pass2(self, mock_shortcuts, mock_notify, mock_general, mock_cipher, mock_user):
+        mock_shortcuts.method = "POST"
+        mock_shortcuts.POST.getlist.return_value = []
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unseen'
+        
+        res = create_challenge(mock_shortcuts)
+        
+        mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/create_challenge.html',
+                                                 {"title":"Code and Cipher Center", "active":"newchallenge",
+                                                  "bool":True, "error":"Challenge type is required",
+                                                  "notifications":'notify',
+                                                  "unseen_notification":'unseen'
+                                                 })
