@@ -9,12 +9,8 @@ Code and Cipher Center
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* For all setup and developer information, read index.html in base_dir/docs/_build/html where
+  base_dir is the base directory of the repository.
 
 ### Contribution guidelines ###
 
