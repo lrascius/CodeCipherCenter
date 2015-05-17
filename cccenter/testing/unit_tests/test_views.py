@@ -470,3 +470,37 @@ class TestViews(TestCase):
         mock_notify.get_notifications.assert_called_with(mock_user, False)
         mock_notify.unviewed_notifications.assert_called_with(mock_user)
         self.assertTrue(mock_shortcuts.render.called)
+        
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.Challenge')
+    @mock.patch('cccenter.views.Cipher')
+    @mock.patch('cccenter.views.notify')
+    def test_challengeList_Pass2(self, mock_notify, mock_cipher, mock_challenge, mock_shortcuts, mock_user):
+        mock_shortcuts.user = mock_user
+        mock_user.is_active = False
+        mock_challenge.objects.filter.return_value = mock_challenge
+        mock_challenge.distinct.return_value = [mock_cipher]
+        mock_cipher.__iter__.return_value = mock_challenge
+        mock_challenge.id = 0
+        mock_challenge.objects.exclude.return_value = [mock_challenge]
+        mock_cipher.objects.get.return_value = mock_cipher
+        mock_cipher.difficulty = 'simple'
+        mock_challenge.challenge_type = 'single'
+        mock_shortcuts.user.is_anonymous.return_value = True
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unseen'
+        mock_shortcuts.render.return_value = True
+        mock_challenge.ciphertype = "cipher"
+        mock_cipher.ciphertype = "cipher"
+        
+        res = challengeList(mock_shortcuts)
+        
+        self.assertTrue(res)
+        self.assertFalse(mock_challenge.distinct.called)
+        self.assertTrue(mock_challenge.objects.exclude.called)
+        mock_cipher.objects.get.assert_called_with(ciphertype='cipher')
+        self.assertTrue(mock_user.is_anonymous.called)
+        self.assertFalse(mock_notify.get_notifications.called)
+        self.assertFalse(mock_notify.unviewed_notifications.called)
+        self.assertTrue(mock_shortcuts.render.called)
