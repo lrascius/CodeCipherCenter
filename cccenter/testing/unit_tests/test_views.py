@@ -229,3 +229,13 @@ class TestViews(TestCase):
         self.assertTrue(res)
         mock_cf.create_challenge.assert_called_with('text', 'cipher', 'easy', 'key', 'single', [mock_user])
         mock_redirect.assert_called_with('/cipher/challengepage/?challenge_id=1')
+        
+    @mock.patch('cccenter.views.Http404')
+    @mock.patch('cccenter.views.shortcuts')
+    def test_check_plaintext_Pass1(self, mock_shortcuts, mock_404):
+        mock_shortcuts.method = "GET"
+        mock_404.return_value = mock_404
+        
+        res = check_plaintext(mock_shortcuts)
+        
+        self.assertEqual(res, mock_404)
