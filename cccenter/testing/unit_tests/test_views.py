@@ -37,6 +37,12 @@ def challenge_page_pass1_side_effect(inp):
         return ['name']
     elif inp == 'challenge_id':
         return ['0']
+        
+def auth_view_pass1_side_effect(inp, s):
+    if inp == 'username':
+        return 'name'
+    elif inp == 'password':
+        return 'pass'
 
 class TestViews(TestCase):
     
@@ -385,3 +391,20 @@ class TestViews(TestCase):
                                                              {"active":"login",
                                                               "title":"Code and Cipher Center",
                                                               "csrf":'hi'})
+                                                              
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.auth')
+    @mock.patch('cccenter.views.HttpResponseRedirect')
+    @mock.patch('cccenter.views.RequestContext')
+    def test_auth_view_Pass1(self, mock_rc, mock_redirect, mock_auth, mock_shortcuts, mock_user):
+        mock_shortcuts.POST.get.side_effect = auth_view_pass1_side_effect
+        mock_auth.authenticate.return_value = mock_user
+        mock_redirect.return_value = mock_redirect
+        
+        res = auth_view(mock_shortcuts)
+        
+        self.assertEqual(res, mock_redirect)
+        mock_auth.authenticate.assert_called_with(username='name', password='pass')
+        mock_auth.login.assert_called_with(mock_shortcuts, mock_user)
+        mock_redirect.assert_called_with('/accounts/loggedin')
