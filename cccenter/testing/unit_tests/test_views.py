@@ -513,3 +513,30 @@ class TestViews(TestCase):
         res = loggedin(mock_shortcuts)
         
         mock_redirect.assert_called_with('/')
+        
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.UserProfile')
+    @mock.patch('cccenter.views.Challenge')
+    @mock.patch('cccenter.views.Cipher')
+    @mock.patch('cccenter.views.notify')
+    def test_profile_Pass1(self, mock_notify, mock_cipher, mock_challenge, mock_userprofile, mock_user, mock_shortcuts):
+        mock_user.objects.get.return_value = mock_user
+        mock_user.userprofile = mock_userprofile
+        mock_challenge.objects.filter.return_value = [mock_challenge]
+        mock_cipher.objects.get.return_value = mock_cipher
+        mock_cipher.difficulty = 'simple'
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unseen'
+        mock_shortcuts.render.return_value = True
+        mock_challenge.ciphertype = 'cipher'
+        mock_cipher.difficulty = 'simple'
+        mock_shortcuts.user = mock_user
+        
+        res = profile(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_user.objects.get.assert_called_with(username=mock_user)
+        mock_challenge.objects.filter.assert_called_with(user=mock_user)
+        mock_cipher.objects.get.assert_called_with('cipher')
+        self.assertTrue(mock_shortcuts.render.called)
