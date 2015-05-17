@@ -504,3 +504,12 @@ class TestViews(TestCase):
         self.assertFalse(mock_notify.get_notifications.called)
         self.assertFalse(mock_notify.unviewed_notifications.called)
         self.assertTrue(mock_shortcuts.render.called)
+        
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.HttpResponseRedirect')
+    def test_loggedin_Pass1(self, mock_redirect, mock_shortcuts):
+        mock_redirect.return_value = mock_redirect
+        
+        res = loggedin(mock_shortcuts)
+        
+        mock_redirect.assert_called_with('/')
