@@ -49,6 +49,14 @@ def auth_view_pass2_side_effect(inp, s):
         return 'name'
     elif inp == 'password':
         return 'pass'
+        
+def settings_pass1_side_effect(inp, s):
+    if inp == 'first_name':
+        return 'first'
+    elif inp == 'last_name':
+        return 'last'
+    elif inp == 'email':
+        return 'email'
 
 class TestViews(TestCase):
     
@@ -570,3 +578,35 @@ class TestViews(TestCase):
                                                  {"notifications":'notify',
                                                   "unseen_notification":'unseen',
                                                   "all_notifications":'notify'})
+                                                  
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.UserProfile')
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.SettingsForm')
+    @mock.patch('cccenter.views.PasswordChangeForm')
+    @mock.patch('cccenter.views.auth')
+    @mock.patch('cccenter.views.HttpResponseRedirect')
+    def test_settings_Pass1(self, mock_redirect, mock_auth, mock_pcf, mock_sf, mock_user, mock_userprofile, mock_shortcuts):
+        mock_shortcuts.method = "POST"
+        mock_shortcuts.user = mock_user
+        mock_user.userprofile = mock_userprofile
+        mock_sf.return_value = mock_sf
+        mock_pcf.return_value = mock_pcf
+        mock_pcf.is_valid.return_value = True
+        mock_shortcuts.POST.get.side_effect = settings_pass1_side_effect
+        mock_sf.is_valid.return_value = True
+        mock_redirect.return_value = True
+        mock_shortcuts.render.return_value = False
+        mock_pcf.user = 'puser'
+        
+        res = settings(mock_shortcuts)
+        
+        self.assertTrue(res)
+        self.assertTrue(mock_sf.called)
+        self.assertTrue(mock_pcf.called)
+        self.assertTrue(mock_pcf.save.called)
+        mock_auth.update_session_auth_hash.assert_called_with(mock_shortcuts, 'puser')
+        self.assertTrue(mock_user.save.called)
+        self.assertTrue(mock_sf.is_valid.called)
+        self.assertTrue(mock_sf.save.called)
+        mock_redirect.assert_called_with('/profile/')

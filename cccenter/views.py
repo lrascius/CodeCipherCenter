@@ -27,6 +27,7 @@ from cccenter.python.forms import RegistrationForm
 from cccenter.python.forms import SettingsForm
 from django.contrib.auth.models import User
 import cccenter.python.challenge as challenge
+from django.contrib import auth
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Q
@@ -374,7 +375,7 @@ def settings(request):
 
         if password_form.is_valid():
             password_form.save()
-            update_session_auth_hash(request, password_form.user)
+            auth.update_session_auth_hash(request, password_form.user)
 
         user = request.user
         user.first_name = request.POST.get('first_name', '')
