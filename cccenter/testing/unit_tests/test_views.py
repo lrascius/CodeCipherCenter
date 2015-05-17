@@ -537,6 +537,17 @@ class TestViews(TestCase):
         
         self.assertTrue(res)
         mock_user.objects.get.assert_called_with(username=mock_user)
-        mock_challenge.objects.filter.assert_called_with(user=mock_user)
-        mock_cipher.objects.get.assert_called_with('cipher')
+        mock_challenge.objects.filter.assert_called_with(users=mock_user)
+        mock_cipher.objects.get.assert_called_with(ciphertype='cipher')
         self.assertTrue(mock_shortcuts.render.called)
+        
+    @mock.patch('cccenter.views.shortcuts')
+    def test_tutorial_Pass1(self, mock_shortcuts):
+        mock_shortcuts.render.return_value = True
+        
+        res = tutorial(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/tutorials.html',
+                                                 {"title":"Code and Cipher Center",
+                                                  "active":"tutorial"})
