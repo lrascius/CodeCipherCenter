@@ -14,12 +14,10 @@ Code and Cipher Center
 
 ### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+* Contact repo owner.
 
 ### Who do I talk to? ###
 
-* Marc Kurtz
+* Marc Kurtz (repo owner)
 * Lukas Rascius
 * Andrew Williams
