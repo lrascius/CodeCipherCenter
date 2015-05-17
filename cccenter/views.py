@@ -10,7 +10,6 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.template import RequestContext
 from django.core import context_processors
-from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core import mail
@@ -27,8 +26,6 @@ from cccenter.python.forms import RegistrationForm
 from cccenter.python.forms import SettingsForm
 from django.contrib.auth.models import User
 import cccenter.python.challenge as challenge
-from django.contrib import auth
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Q
 
