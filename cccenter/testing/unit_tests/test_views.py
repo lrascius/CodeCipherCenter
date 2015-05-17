@@ -347,12 +347,26 @@ class TestViews(TestCase):
             
     @mock.patch('cccenter.views.shortcuts')
     @mock.patch('cccenter.views.Http404')
-    @mock.patch('cccenter.views.challenge')
-    @mock.patch('cccenter.views.HttpResponseRedirect')
-    def test_join_challenge_Pass1(self, mock_redirect, mock_challenge, mock_404, mock_shortcuts):
+    def test_join_challenge_Pass1(self, mock_404, mock_shortcuts):
         mock_shortcuts.method = "GET"
         mock_404.return_value = mock_404
         
         res = join_challenge(mock_shortcuts)
         
         self.assertEqual(res, mock_404)
+        
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.Http404')
+    @mock.patch('cccenter.views.challenge')
+    @mock.patch('cccenter.views.HttpResponseRedirect')
+    def test_join_challenge_Pass2(self, mock_redirect, mock_challenge, mock_404, mock_shortcuts):
+        mock_shortcuts.method = "POST"
+        mock_shortcuts.POST.get.return_value = '0'
+        mock_redirect.return_value = mock_redirect
+        mock_shortcuts.user.id = 1
+        
+        res = join_challenge(mock_shortcuts)
+        
+        self.assertEqual(res, mock_redirect)
+        mock_challenge.join_challenge.assert_called_with(challenge_id=0, user_id=1)
+        mock_redirect.assert_called_with('/cipher/challengepage/?challenge_id=0')
