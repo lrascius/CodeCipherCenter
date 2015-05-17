@@ -370,3 +370,18 @@ class TestViews(TestCase):
         self.assertEqual(res, mock_redirect)
         mock_challenge.join_challenge.assert_called_with(challenge_id=0, user_id=1)
         mock_redirect.assert_called_with('/cipher/challengepage/?challenge_id=0')
+        
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.context_processors')
+    def test_login_Pass1(self, mock_cp, mock_shortcuts):
+        mock_cp.csrf.return_value = {"csrf":'hi'}
+        mock_shortcuts.render_to_response.return_value = True
+        
+        res = login(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_cp.csrf.assert_called_with(mock_shortcuts)
+        mock_shortcuts.render_to_response.assert_called_with('cccenter/login.html',
+                                                             {"active":"login",
+                                                              "title":"Code and Cipher Center",
+                                                              "csrf":'hi'})

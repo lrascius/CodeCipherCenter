@@ -203,7 +203,7 @@ def login(request):
     '''Returns login page.'''
     c = {"active":"login",
          "title":"Code and Cipher Center"}
-    c.update(csrf(request))
+    c.update(context_processors.csrf(request))
     return shortcuts.render_to_response('cccenter/login.html', c)
 
 def auth_view(request):
