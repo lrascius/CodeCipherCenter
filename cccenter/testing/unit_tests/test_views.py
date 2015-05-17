@@ -610,3 +610,26 @@ class TestViews(TestCase):
         self.assertTrue(mock_sf.is_valid.called)
         self.assertTrue(mock_sf.save.called)
         mock_redirect.assert_called_with('/profile/')
+        
+    @mock.patch('cccenter.views.notify')
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.UserProfile')
+    @mock.patch('cccenter.views.User')
+    def test_settings_Pass2(self, mock_user, mock_userprofile, mock_shortcuts, mock_notify):
+        mock_shortcuts.method = "GET"
+        mock_shortcuts.user = mock_user
+        mock_user.userprofile = mock_userprofile
+        mock_shortcuts.render.return_value = True
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unseen'
+        
+        res = settings(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_notify.get_notifications.assert_called_with(mock_user, False)
+        mock_notify.unviewed_notifications.assert_called_with(mock_user)
+        mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/settings.html',
+                                                 {"title":"Code and Cipher Center",
+                                                  "notifications":'notify',
+                                                  "unseen_notification":'unseen'
+                                                 })
