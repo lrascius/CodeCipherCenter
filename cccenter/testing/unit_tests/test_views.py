@@ -4,11 +4,19 @@ import mock
 
 def create_challenge_pass3_side_effect(group):
     if group == 'challengetype':
-        return [1]
+        return ['single']
     elif group == 'radiogroup':
         return []
     elif group == 'cipher':
         return []
+        
+def create_challenge_pass4_side_effect(group):
+    if group == 'challengetype':
+        return ['single']
+    elif group == 'radiogroup':
+        return []
+    elif group == 'cipher':
+        return ['easy']
 
 class TestViews(TestCase):
     
@@ -115,28 +123,29 @@ class TestViews(TestCase):
         mock_shortcuts.method = "GET"
         mock_notify.get_notifications.return_value = 'notify'
         mock_notify.unviewed_notifications.return_value = 'unseen'
+        mock_shortcuts.render.return_value = True
         
         res = create_challenge(mock_shortcuts)
         
+        self.assertTrue(res)
         mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/create_challenge.html',
                                                  {"title":"Code and Cipher Center", "active":"newchallenge",
                                                   "notifications" : 'notify',
                                                   "unseen_notification" : 'unseen'
                                                  })
                                         
-    @mock.patch('cccenter.views.User')
-    @mock.patch('cccenter.views.Cipher')
-    @mock.patch('cccenter.views.general')         
     @mock.patch('cccenter.views.notify')
     @mock.patch('cccenter.views.shortcuts')
-    def test_create_challenge_Pass2(self, mock_shortcuts, mock_notify, mock_general, mock_cipher, mock_user):
+    def test_create_challenge_Pass2(self, mock_shortcuts, mock_notify):
         mock_shortcuts.method = "POST"
         mock_shortcuts.POST.getlist.return_value = []
         mock_notify.get_notifications.return_value = 'notify'
         mock_notify.unviewed_notifications.return_value = 'unseen'
+        mock_shortcuts.render.return_value = True
         
         res = create_challenge(mock_shortcuts)
         
+        self.assertTrue(res)
         mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/create_challenge.html',
                                                  {"title":"Code and Cipher Center", "active":"newchallenge",
                                                   "bool":True, "error":"Challenge type is required",
@@ -144,22 +153,47 @@ class TestViews(TestCase):
                                                   "unseen_notification":'unseen'
                                                  })
     
-    @mock.patch('cccenter.views.User')
-    @mock.patch('cccenter.views.Cipher')
-    @mock.patch('cccenter.views.general')         
     @mock.patch('cccenter.views.notify')
     @mock.patch('cccenter.views.shortcuts')
-    def test_create_challenge_Pass3(self, mock_shortcuts, mock_notify, mock_general, mock_cipher, mock_user):
+    def test_create_challenge_Pass3(self, mock_shortcuts, mock_notify):
         mock_shortcuts.method = "POST"
         mock_shortcuts.POST.getlist.side_effect = create_challenge_pass3_side_effect
         mock_notify.get_notifications.return_value = 'notify'
         mock_notify.unviewed_notifications.return_value = 'unseen'
+        mock_shortcuts.render.return_value = True
         
         res = create_challenge(mock_shortcuts)
         
+        self.assertTrue(res)
         mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/create_challenge.html',
                                                  {"title":"Code and Cipher Center", "active":"newchallenge",
                                                   "bool":True, "error":"Select by difficulty or list of ciphers",
                                                   "notifications":'notify',
                                                   "unseen_notification":'unseen'
                                                  })
+                                                 
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.random')
+    @mock.patch('cccenter.views.HttpResponseRedirect')
+    @mock.patch('cccenter.views.cf')
+    @mock.patch('cccenter.views.general')         
+    @mock.patch('cccenter.views.notify')
+    @mock.patch('cccenter.views.shortcuts')
+    def test_create_challenge_Pass4(self, mock_shortcuts, mock_notify, mock_general, mock_cipher, mock_redirect, mock_random, mock_user):
+        mock_shortcuts.method = "POST"
+        mock_shortcuts.POST.getlist.side_effect = create_challenge_pass4_side_effect
+        mock_general.generate_paragraph.return_value = 'text'
+        mock_cipher.objects.all.return_value = mock_cipher
+        mock_cipher.filter.return_value = mock_cipher
+        mock_cipher.ciphertype = 'easy'
+        mock_random.randint.return_value = 0
+        mock_cipher.create_ciphertext.return_value = {"ciphertext":'cipher', "cipherkey":'key'}
+        mock_user.objects.get.return_value = mock_user
+        mock_cipher.create_challenge.return_value = {'challenge_id':1}
+        mock_redirect.return_value = True
+        
+        res = create_challenge(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_cipher.create_challenge.assert_called_with('text', 'cipher', 'easy', 'key', 'single', [mock_user])
+        mock_redirect.assert_called_with('/cipher/challengepage/?challenge_id=1')

@@ -105,7 +105,7 @@ def create_challenge(request):
         cipher['plaintext'] = general.generate_paragraph()
         if len(request.POST.getlist('radiogroup')) != 0:
             difficulty_ciphers = [i.ciphertype for i in Cipher.objects.all().filter(difficulty=request.POST.getlist('radiogroup')[0])]
-            cipher['ciphertype'] = difficulty_ciphers[randint(0, len(difficulty_ciphers)-1)]
+            cipher['ciphertype'] = difficulty_ciphers[random.randint(0, len(difficulty_ciphers)-1)]
         else:
             cipher['ciphertype'] = request.POST.getlist('cipher')[0]
         ciphertext = cf.create_ciphertext(cipher['ciphertype'], cipher['plaintext'])
@@ -119,8 +119,7 @@ def create_challenge(request):
                                  cipher['key'], cipher['challenge_type'], cipher['users'])
 
         #return HttpResponse(json.dumps(cd), content_type="application/json")
-        return HttpResponseRedirect('/cipher/challengepage/?challenge_id='
-                                    +str(cd['challenge_id']))#, {'challenge_id':cd['challenge_id']})
+        return HttpResponseRedirect('/cipher/challengepage/?challenge_id=' + str(cd['challenge_id']))
 
 @login_required
 def check_plaintext(request):
