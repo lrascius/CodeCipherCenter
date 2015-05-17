@@ -44,6 +44,12 @@ def auth_view_pass1_side_effect(inp, s):
     elif inp == 'password':
         return 'pass'
 
+def auth_view_pass2_side_effect(inp, s):
+    if inp == 'username':
+        return 'name'
+    elif inp == 'password':
+        return 'pass'
+
 class TestViews(TestCase):
     
     @mock.patch('cccenter.views.notify')
@@ -408,3 +414,21 @@ class TestViews(TestCase):
         mock_auth.authenticate.assert_called_with(username='name', password='pass')
         mock_auth.login.assert_called_with(mock_shortcuts, mock_user)
         mock_redirect.assert_called_with('/accounts/loggedin')
+        
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.auth')
+    @mock.patch('cccenter.views.RequestContext')
+    def test_auth_view_Pass2(self, mock_rc, mock_auth, mock_shortcuts, mock_user):
+        mock_shortcuts.POST.get.side_effect = auth_view_pass2_side_effect
+        mock_auth.authenticate.return_value = None
+        mock_rc.return_value = 'rc'
+        mock_shortcuts.render_to_response.return_value = True
+        
+        res = auth_view(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_auth.authenticate.assert_called_with(username='name', password='pass')
+        mock_rc.assert_called_with(mock_shortcuts, {"alert":"Invalid username or password!",
+                                                    "title":"Code and Cipher Center"})
+        mock_shortcuts.render_to_response.assert_called_with('cccenter/login.html', 'rc')

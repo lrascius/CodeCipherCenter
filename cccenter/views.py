@@ -219,7 +219,7 @@ def auth_view(request):
     return shortcuts.render_to_response('cccenter/login.html',
                                         RequestContext(request,
                                                        {"alert":"Invalid username or password!",
-                                                        "title":"Code and Cipher Center",
+                                                        "title":"Code and Cipher Center"
                                                        }
                                                       ))
 
