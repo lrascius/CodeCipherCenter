@@ -344,3 +344,15 @@ class TestViews(TestCase):
                                                   "users":['user1', 'user2'], "solved_by":['user1'], "solved_by_user":False,
                                                   "csrf":'hi', "notifications":'notify', "comments":"comment",
                                                   "unseen_notification":"unseen"})
+            
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.Http404')
+    @mock.patch('cccenter.views.challenge')
+    @mock.patch('cccenter.views.HttpResponseRedirect')
+    def test_join_challenge_Pass1(self, mock_redirect, mock_challenge, mock_404, mock_shortcuts):
+        mock_shortcuts.method = "GET"
+        mock_404.return_value = mock_404
+        
+        res = join_challenge(mock_shortcuts)
+        
+        self.assertEqual(res, mock_404)
