@@ -70,11 +70,19 @@ This folder is empty until the integration tests are run.
 Running the Test Code
 +++++++++++++++++++++
 
-To run the unit and integration tests, enter:
+To run the unit tests, enter:
 
 .. code-block:: console
 
-   python3 manage.py test
+   ./unit_tests
+   
+while in the base_dir.
+
+To run the integration tests, enter:
+
+.. code-block:: console
+
+   ./integration_tests
    
 while in the base_dir.
 
