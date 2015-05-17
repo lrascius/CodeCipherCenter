@@ -25,6 +25,12 @@ def create_challenge_pass5_side_effect(group):
         return []
     elif group == 'cipher':
         return ['easy']
+        
+def check_plaintext_pass2_side_effect(inp, p):
+    if inp == 'challenge_id':
+        return '0'
+    elif  inp == 'guessed_plaintext':
+        return 'text'
 
 class TestViews(TestCase):
     
@@ -239,3 +245,27 @@ class TestViews(TestCase):
         res = check_plaintext(mock_shortcuts)
         
         self.assertEqual(res, mock_404)
+        
+    @mock.patch('cccenter.views.Http404')
+    @mock.patch('cccenter.views.HttpResponse')
+    @mock.patch('cccenter.views.json')
+    @mock.patch('cccenter.views.cf')
+    @mock.patch('cccenter.views.notify')
+    @mock.patch('cccenter.views.shortcuts')
+    def test_check_plaintext_Pass2(self, mock_shortcuts, mock_notify, mock_cf, mock_json, mock_response, mock_404):
+        mock_shortcuts.method = "POST"
+        mock_shortcuts.POST.get.side_effect = check_plaintext_pass2_side_effect
+        mock_shortcuts.user.id = 1
+        mock_shortcuts.user.username = 'name'
+        mock_cf.check_solution.return_value = True
+        mock_notify.solved_cipher_notification.return_value = 'note'
+        mock_json.dumps.return_value = 'json'
+        mock_response.return_value = mock_response
+        
+        res = check_plaintext(mock_shortcuts)
+        
+        self.assertEqual(res, mock_response)
+        mock_cf.check_solution.assert_called_with(0, 1, 'text')
+        mock_notify.solved_cipher_notification('name', '0')
+        mock_json.dumps.assert_called_with({'success':True})
+        mock_response.assert_called_with('json', content_type="application/json")
