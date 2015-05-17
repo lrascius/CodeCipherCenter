@@ -291,6 +291,7 @@ class TestViews(TestCase):
         mock_redirect.return_value = mock_redirect
         mock_shortcuts.META.get.return_value = 'hi'
         mock_user.username = 'name1'
+        mock_shortcuts.GET.getlist.return_value = [0]
         
         res = challenge_page(mock_shortcuts)
         
@@ -300,3 +301,46 @@ class TestViews(TestCase):
                                              link="/cipher/challengepage/?challenge_id=0", datetime='now')
         self.assertTrue(mock_notification.save.called)
         mock_redirect.assert_called_with('hi')
+        
+    @mock.patch('cccenter.views.context_processors')
+    @mock.patch('cccenter.views.notify')
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.challenge')
+    @mock.patch('cccenter.views.comment')
+    def test_challenge_page_Pass2(self, mock_comment, mock_challenge, mock_shortcuts, mock_user, mock_notify, mock_cp):
+        mock_shortcuts.method = "GET"
+        mock_shortcuts.GET.get.return_value = '0'
+        mock_challenge.get_ciphertext.return_value = 'cipher'
+        mock_challenge.user_in_challenge.return_value = (True, False)
+        mock_challenge.get_challenge_info.return_value = {"challenge_type":"collaborative", "solved":True,
+                                                          "users":['user1', 'user2'], "solved_by":['user1']}
+        mock_challenge.get_difficulty.return_value = 'difficult'
+        mock_shortcuts.user = mock_user
+        mock_user.is_anonymous.return_value = False
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unseen'
+        mock_comment.get_comments.return_value = 'comment'
+        mock_cp.csrf.return_value = {'csrf':'hi'}
+        mock_shortcuts.render.return_value = True
+        
+        res = challenge_page(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_challenge.get_ciphertext.assert_called_with(0)
+        mock_challenge.user_in_challenge.assert_called_with(0, mock_user)
+        mock_challenge.get_challenge_info.assert_called_with(0)
+        mock_challenge.get_difficulty.assert_called_with(0)
+        self.assertTrue(mock_user.is_anonymous.called)
+        mock_notify.get_notifications.assert_called_with(mock_user, False)
+        mock_notify.unviewed_notifications.assert_called_with(mock_user)
+        mock_comment.get_comments.assert_called_with(0)
+        mock_cp.csrf.assert_called_with(mock_shortcuts)
+        mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/challenge_page.html',
+                                                 {"title":"Code and Cipher Center", "challenge_id":0,
+                                                  "ciphertext":'cipher', "user_in_challenge":True, "difficulty":'difficult',
+                                                  "challenge_type":'collaborative', "solved":True,
+                                                  "num_users":2, "num_solved":1,
+                                                  "users":['user1', 'user2'], "solved_by":['user1'], "solved_by_user":False,
+                                                  "csrf":'hi', "notifications":'notify', "comments":"comment",
+                                                  "unseen_notification":"unseen"})

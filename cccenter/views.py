@@ -9,6 +9,7 @@ from django.http import HttpResponse, Http404
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.template import RequestContext
+from django.core import context_processors
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -152,9 +153,9 @@ def challenge_page(request):
     '''
     if request.method == 'POST':
         if str(request.user.username) != str(request.POST.getlist('username')[0]):
-            link = "/cipher/challengepage/?challenge_id="+str(request.POST.getlist('challenge_id')[0])
+            link = "/cipher/challengepage/?challenge_id="+str(request.GET.getlist('challenge_id')[0])
             notify_message = str(request.user.username) + " has invited you to a challenge # "\
-                             + str(request.POST.getlist('challenge_id')[0])
+                             + str(request.GET.getlist('challenge_id')[0])
             user = User.objects.get(username=request.POST.getlist('username')[0])
             notification = Notification(user=user, notification=notify_message,
                                         link=link, datetime=timezone.now())
@@ -182,7 +183,7 @@ def challenge_page(request):
             cmts = comment.get_comments(challenge_id)
             c['comments'] = cmts
 
-        c.update(csrf(request))
+        c.update(context_processors.csrf(request))
         return shortcuts.render(request, 'cccenter/challenge_page.html', c)
 
 @login_required
