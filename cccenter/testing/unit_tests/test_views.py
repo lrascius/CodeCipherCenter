@@ -31,6 +31,12 @@ def check_plaintext_pass2_side_effect(inp, p):
         return '0'
     elif  inp == 'guessed_plaintext':
         return 'text'
+        
+def challenge_page_pass1_side_effect(inp):
+    if inp == 'username':
+        return ['name']
+    elif inp == 'challenge_id':
+        return ['0']
 
 class TestViews(TestCase):
     
@@ -269,3 +275,28 @@ class TestViews(TestCase):
         mock_notify.solved_cipher_notification('name', '0')
         mock_json.dumps.assert_called_with({'success':True})
         mock_response.assert_called_with('json', content_type="application/json")
+        
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.Notification')
+    @mock.patch('cccenter.views.timezone')
+    @mock.patch('cccenter.views.HttpResponseRedirect')
+    def test_challenge_page_Pass1(self, mock_redirect, mock_timezone, mock_notification, mock_user, mock_shortcuts):
+        mock_shortcuts.method = 'POST'
+        mock_shortcuts.POST.getlist = challenge_page_pass1_side_effect
+        mock_shortcuts.user = mock_user
+        mock_user.objects.get.return_value = mock_user
+        mock_timezone.now.return_value = 'now'
+        mock_notification.return_value = mock_notification
+        mock_redirect.return_value = mock_redirect
+        mock_shortcuts.META.get.return_value = 'hi'
+        mock_user.username = 'name1'
+        
+        res = challenge_page(mock_shortcuts)
+        
+        self.assertEqual(res, mock_redirect)
+        mock_user.objects.get.assert_called_with(username='name')
+        mock_notification.assert_called_with(user=mock_user, notification="name1 has invited you to a challenge # 0",
+                                             link="/cipher/challengepage/?challenge_id=0", datetime='now')
+        self.assertTrue(mock_notification.save.called)
+        mock_redirect.assert_called_with('hi')

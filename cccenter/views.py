@@ -152,9 +152,9 @@ def challenge_page(request):
     '''
     if request.method == 'POST':
         if str(request.user.username) != str(request.POST.getlist('username')[0]):
-            link = "/cipher/challengepage/?challenge_id="+str(request.GET.getlist('challenge_id')[0])
-            notify_message = str(request.user) + " has invited you to a challenge # "\
-                             + str(request.GET.getlist('challenge_id')[0])
+            link = "/cipher/challengepage/?challenge_id="+str(request.POST.getlist('challenge_id')[0])
+            notify_message = str(request.user.username) + " has invited you to a challenge # "\
+                             + str(request.POST.getlist('challenge_id')[0])
             user = User.objects.get(username=request.POST.getlist('username')[0])
             notification = Notification(user=user, notification=notify_message,
                                         link=link, datetime=timezone.now())
