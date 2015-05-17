@@ -70,7 +70,9 @@ def getCipher(request):
 @login_required
 def create_challenge(request):
     '''
-    Creates a new challenge
+    A page used to create a new challenge.
+    If called with a GET request, returns the page. If called with a POST request,
+    creates the challenge.
     If a difficulty was selected we pick a random cipher based on the difficulty
     Else we use the selected cipher.
     '''

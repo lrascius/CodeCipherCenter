@@ -100,3 +100,18 @@ class TestViews(TestCase):
         self.assertTrue(mock_general.generate_paragraph.called)
         mock_cf.caesar_shift_encode.assert_called_with('text', 1)
         mock_response.assert_called_with('json', content_type="application/json")
+        
+    @mock.patch('cccenter.views.notify')
+    @mock.patch('cccenter.views.shortcuts')
+    def test_create_challenge_Pass1(self, mock_shortcuts, mock_notify):
+        mock_shortcuts.method = "GET"
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unseen'
+        
+        res = create_challenge(mock_shortcuts)
+        
+        mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/create_challenge.html',
+                                                 {"title":"Code and Cipher Center", "active":"newchallenge",
+                                                  "notifications" : 'notify',
+                                                  "unseen_notification" : 'unseen'
+                                                 })
