@@ -551,3 +551,22 @@ class TestViews(TestCase):
         mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/tutorials.html',
                                                  {"title":"Code and Cipher Center",
                                                   "active":"tutorial"})
+                                                  
+    @mock.patch('cccenter.views.shortcuts')
+    @mock.patch('cccenter.views.User')
+    @mock.patch('cccenter.views.notify')
+    def test_notifications_Pass1(self, mock_notify, mock_user, mock_shortcuts):
+        mock_notify.get_notifications.return_value = 'notify'
+        mock_notify.unviewed_notifications.return_value = 'unseen'
+        mock_shortcuts.render.return_value = True
+        mock_shortcuts.user = mock_user
+        
+        res = notifications(mock_shortcuts)
+        
+        self.assertTrue(res)
+        mock_notify.get_notifications.assert_called_with(mock_user, True)
+        mock_notify.unviewed_notifications(mock_user)
+        mock_shortcuts.render.assert_called_with(mock_shortcuts, 'cccenter/notifications.html',
+                                                 {"notifications":'notify',
+                                                  "unseen_notification":'unseen',
+                                                  "all_notifications":'notify'})
