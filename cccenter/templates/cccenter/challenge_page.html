@@ -5,8 +5,8 @@
 {% endblock %}
 {% block body %}
 <div class="container">
-    <h1 style="width:100%; text-align:center">Challenge {{challenge_id}}</h1>
-	<div id="challenge-content" align="center" class="col-md-9">
+    <h1 class="full-width align-center">Challenge {{challenge_id}}</h1>
+	<div id="challenge-content" class="col-md-9 align-center">
 		<textarea id="ciphertextDisplay" readonly rows='10' cols='50'>{{ciphertext}}</textarea>
 		<br>
 		{% if user.is_active and user_in_challenge %}

@@ -105,8 +105,8 @@ class TestViews(TestCase):
         resp = self.client.post('/cipher/joinchallenge/', {'challenge_id':int(self.challenge_id)})
         self.assertEqual(resp.status_code, 302)
         
-        with open('cccenter/testing/html_validation/joinchallenge1.html', 'w') as outfile:
-            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
+        #with open('cccenter/testing/html_validation/joinchallenge1.html', 'w') as outfile:
+        #    outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
     def test_joinChallenge_2(self):
         resp = self.client.get('/cipher/joinchallenge/', {'challenge_id':'1'})
