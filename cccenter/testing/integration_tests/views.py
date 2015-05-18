@@ -3,16 +3,30 @@ import cccenter.views as views
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.test.client import Client
+from django.utils import timezone
+from cccenter.models import *
 import json
 
 class TestViews(TestCase):
     def setUp(self):
+        self.tn = timezone.now()
         self.user = User.objects.create_superuser(username="m", password="t", email="mt@example.com")
         self.client.login(username="m", password="t")
+        self.cipher = Cipher.objects.create(ciphertype='Caesar Shift Cipher', difficulty='advanced')
+        self.challenge = Challenge.objects.create(plaintext='plaintext', ciphertext='ciphertext', ciphertype='Caesar Shift Cipher',
+                                                  cipherkey='key', challenge_type='single', datetime_created=self.tn)
+        self.challenge.cipher.add(self.cipher)
+        self.challenge.users.add(self.user)
+        self.challenge.solved = True
+        self.challenge.solved_by.add(self.user)
+        self.challenge.save()
+        self.challenge_id = self.challenge.id
         
     def tearDown(self):
         self.client.logout()
+        self.challenge.delete()
         self.user.delete()
+        self.cipher.delete()
 
     #@patch.mock('cccenter.views.django.shortcuts.render')
     #@patch.mock('cccenter.views.request')
@@ -32,13 +46,15 @@ class TestViews(TestCase):
         with open('cccenter/testing/html_validation/register1.html', 'w') as outfile:
             outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
+    def test_register_2(self):
         # empty post request to test response to incorrect post
         resp = self.client.post('/accounts/register/')
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 404)
         
-        with open('cccenter/testing/html_validation/register2.html', 'w') as outfile:
-            outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
+        #with open('cccenter/testing/html_validation/register2.html', 'w') as outfile:
+        #    outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
+    def test_register_3(self):
         # test correct response
         resp = self.client.post('/accounts/register/', {'username':'mk', 'first_name':'m', 'last_name':'k', 'email':'mk@example.com', 
                                               'password1':'a', 'password2':'a'})
@@ -79,19 +95,20 @@ class TestViews(TestCase):
             outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
     def test_challengePage(self):
-        resp = self.client.get('/cipher/challengepage/', {'challenge_id':'30'})
+        resp = self.client.get('/cipher/challengepage/', {'challenge_id':int(self.challenge_id)})
         self.assertEqual(resp.status_code, 200)
         
         with open('cccenter/testing/html_validation/challengepage1.html', 'w') as outfile:
             outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
     def test_joinChallenge(self):
-        resp = self.client.post('/cipher/joinchallenge/', {'challenge_id':'30'})
-        self.assertEqual(resp.status_code, 200)
+        resp = self.client.post('/cipher/joinchallenge/', {'challenge_id':int(self.challenge_id)})
+        self.assertEqual(resp.status_code, 302)
         
         with open('cccenter/testing/html_validation/joinchallenge1.html', 'w') as outfile:
             outfile.write(str(resp.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
         
+    def test_joinChallenge_2(self):
         resp = self.client.get('/cipher/joinchallenge/', {'challenge_id':'1'})
         self.assertEqual(resp.status_code, 404)
         
@@ -99,11 +116,24 @@ class TestViews(TestCase):
         #response = self.client.get('/cipher/checkplaintext/', follow=True)
         #self.assertRedirects(response, '/accounts/login/')
 
-        resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':'30', 'user_id':2, 'guessed_plaintext':'def'})
+        resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':int(self.challenge_id), 'user_id':2, 'guessed_plaintext':'a'})
         self.assertEqual(resp.status_code, 200)
         
         data = json.loads(resp.content.decode('utf-8'))
-        self.assertEqual(type(data), bool)
+        self.assertEqual(type(data), dict)
+        self.assertFalse(data['success'])
+        
+    def test_checkPlaintext_2(self):
+        #response = self.client.get('/cipher/checkplaintext/', follow=True)
+        #self.assertRedirects(response, '/accounts/login/')
+
+        resp = self.client.post('/cipher/checkplaintext/', {'challenge_id':int(self.challenge_id), 'user_id':2,
+                                                            'guessed_plaintext':self.challenge.plaintext})
+        self.assertEqual(resp.status_code, 200)
+        
+        data = json.loads(resp.content.decode('utf-8'))
+        self.assertEqual(type(data), dict)
+        self.assertTrue(data['success'])
 
     def test_login(self):
         response = self.client.get('/accounts/login/')
@@ -171,3 +201,5 @@ class TestViews(TestCase):
         with open('cccenter/testing/html_validation/settings1.html', 'w') as outfile:
             outfile.write(str(response.content)[2:-1].replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'"))
 
+if __name__ == "__main__":
+    unittest.run()

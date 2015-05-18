@@ -1,13 +1,11 @@
 from django.test import TestCase
 from cccenter.python.cipher import *
-from django.utils import timezone
-from cccenter.models import *
 import mock
 
 class TestCipherFunctions(TestCase):
     def setUp(self):
         self.text = "Some random TEXT #@#&*(With sOme weIrd,  #$#    characters    "
-        self.tn = timezone.now()
+        self.tn = 'now'
         self.plaintext = "abc"
         self.ciphertext = "DEF"
         self.ciphertype = "Caesar Shift Cipher"
