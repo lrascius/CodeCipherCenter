@@ -9,8 +9,9 @@ Code and Cipher Center
 
 ### How do I get set up? ###
 
-* For all setup and developer information, read index.html in base_dir/docs/_build/html where
-  base_dir is the base directory of the repository.
+* For all setup and developer information, go to base_dir/docs/ and run 'make html',
+  where base_dir is the base directory of the repository.
+* Read index.html in base_dir/docs/_build/html/.
 
 ### Contribution guidelines ###
 
