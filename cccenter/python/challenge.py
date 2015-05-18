@@ -5,6 +5,84 @@ Interfaces with the Challenge model.
 
 import cccenter.models as models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from cccenter.models import Cipher
+
+def create_challenge(plaintext, ciphertext, ciphertype, key, challenge_type,
+                     users=None, dt_created=None, solved=False, dt_solved=None, solved_by=None):
+    '''
+    Creates a challenge object and puts it in the database.
+
+    :param plaintext: The associated plaintext
+    :param ciphertext: The associate ciphertext
+    :param ciphertype: The cipher the challenge uses
+    :param key: The cipher's key
+    :param challenge_type: The type of challenge (single, collaborative, competitive)
+    :param users: (optional) Users registered in the challenge
+    :param dt_created: (optional) The date and time the challenge was created
+    :param solved: (optional) Indicates if the challenge has been solved yet
+    :param dt_solved: (optional) The date and time the challenge was first solved
+    :param solved_by: (optional) Users who have already solved the challenge
+    :type plaintext: str
+    :type cipehrtext: str
+    :type ciphertype: str
+    :type key: str
+    :type challenge_type: str
+    :type users: [models.User]
+    :type dt_created: datetime
+    :type solved: boolean
+    :type dt_solved: datetime
+    :type solved_by: [models.User]
+    :return: 'ciphertext' (str): The ciphertext associated with the challenge
+    :return: 'challenge_id' (int): The challenge's id
+    :rtype: dict
+
+    .. note:: The key is a string and is only recorded for future reference. The plaintext\
+    and ciphertext are used to print the challenge and check proposed solutions.
+
+    .. note:: If dt_created is left unassigned, the current date and time are used. This is the\
+    best default option.
+
+    .. warning:: Although ciphertype and challenge_type are strings, they are used to pull the\
+    correct Cipher object and challenge_type from the database and therefore must match a\
+    database entry exactly.
+    '''
+
+    if dt_created != None:
+        dt_created = dt_created
+    else:
+        dt_created = timezone.now()
+
+    challenge = models.Challenge.objects.create(plaintext=plaintext, ciphertext=ciphertext,
+                                                ciphertype=ciphertype, cipherkey=key,
+                                                challenge_type=challenge_type,
+                                                datetime_created=dt_created)
+
+    cipher = Cipher.objects.get(ciphertype=ciphertype)
+    challenge.cipher.add(cipher)
+
+    if users != None:
+        for user in users:
+            challenge.users.add(user)
+
+    if solved != None:
+        if solved is True:
+            challenge.solved = True
+
+            if dt_solved is not None:
+                challenge.datetime_solved = dt_solved
+            else:
+                raise ValueError("Null value passed for datetime solved when solved is True")
+
+            if solved_by is not None:
+                for suser in solved_by:
+                    challenge.solved_by.add(suser)
+            else:
+                raise ValueError("Null value passed for solved_by solved when solved is True")
+
+    challenge.save()
+
+    return {'ciphertext':challenge.ciphertext, 'challenge_id':challenge.id}
 
 def challenge_list():
     '''
