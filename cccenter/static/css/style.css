@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+#example_paginate > ul > li.paginate_button.active > a {
+    z-index: -1;
+}
+
 h1 {
     font-family: Marcelle;
     font-size: 50px;
