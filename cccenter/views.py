@@ -273,14 +273,14 @@ def loggedin(request):
 
 def usercomment(request):
     '''Redirects to home page.'''
-    print "here"
-    print request.user
-    print request.POST.get('comment', '')
-    print request.GET.get('challenge_id', '')
-    # comment = Comment.objects.create(forum_id=27,user=request.user, text=request.POST.get('comment', ''),
-    #                                         datetime=timezone.now())
+    if request.method == 'POST':
+        challenge_id = int(request.GET.getlist('challenge_id')[0])
 
-    return HttpResponseRedirect('/cipher/challengepage/?challenge_id=27')
+        comment = Comment.objects.create(forum_id=challenge_id,
+                                         user=request.user, 
+                                         text=request.POST.get('comment', ''),
+                                         datetime=timezone.now())
+    return HttpResponseRedirect('/cipher/challengepage/?challenge_id='+str(challenge_id))
 
 @login_required
 def logout(request):
