@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Developer’s Guide &mdash; Code and Cipher Center 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Code and Cipher Center 1.0 documentation" href="index.html" />
+    <link rel="next" title="Decisions We Made" href="decisions_we_made.html" />
+    <link rel="prev" title="Installation Guide" href="installation_guide.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="decisions_we_made.html" title="Decisions We Made"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation_guide.html" title="Installation Guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Code and Cipher Center 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="developer-s-guide">
+<h1>Developer&#8217;s Guide<a class="headerlink" href="#developer-s-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="source-code-directories">
+<h2>Source Code Directories<a class="headerlink" href="#source-code-directories" title="Permalink to this headline">¶</a></h2>
+<p>All runtime code, unless otherwise required by Django, is stored in a specific folder:</p>
+<ul class="simple">
+<li>Python code is stored in</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/python/</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>HTML template code is stored in</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/templates/cccenter/</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Javascript code is stored in</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/static/cccenter/</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>CSS code is stored in</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/static/css/</span>
+</pre></div>
+</div>
+<p>Image files available as static assets are stored in</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/static/images/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-code">
+<h2>Test Code<a class="headerlink" href="#test-code" title="Permalink to this headline">¶</a></h2>
+<p>Test code falls into one of five categories:</p>
+<ul class="simple">
+<li>Unit tests stored in</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/testing/unit_tests/</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Integration tests stored in</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/testing/integration_tests/</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Acceptance tests stored in</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/testing/acceptance_tests/</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>HTML verification files stored in</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/testing/html_validation/</span>
+</pre></div>
+</div>
+<p>This folder is empty until the integration tests are run.</p>
+</div>
+<div class="section" id="running-the-test-code">
+<h2>Running the Test Code<a class="headerlink" href="#running-the-test-code" title="Permalink to this headline">¶</a></h2>
+<p>To run the unit tests, enter:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">./unit_tests</span>
+</pre></div>
+</div>
+<p>while in the base_dir.</p>
+<p>To run the integration tests, enter:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">./integration_tests</span>
+</pre></div>
+</div>
+<p>while in the base_dir.</p>
+<p>To run the HTML validation tests, enter:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">./validate</span>
+</pre></div>
+</div>
+<p>while in the base_dir.</p>
+<p>To run the acceptance test, open Firefox, then open Selenium (make sure it&#8217;s installed first, see installation guide).
+Once Selenium is open, click on File &gt; Open... and navigate to</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">base_dir/cccenter/testing/acceptance_tests/test_case.html</span>
+</pre></div>
+</div>
+<p>Once the tests are loaded, click on &#8220;Play entire test suite&#8221;. The acceptance tests will then run.</p>
+<p>To find the pylint score for the website, run:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">pylint cccenter/</span>
+</pre></div>
+</div>
+<p>while in the base_dir. The file pylintrc contains the settings that govern the generated report.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Developer&#8217;s Guide</a><ul>
+<li><a class="reference internal" href="#source-code-directories">Source Code Directories</a></li>
+<li><a class="reference internal" href="#test-code">Test Code</a></li>
+<li><a class="reference internal" href="#running-the-test-code">Running the Test Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation_guide.html"
+                        title="previous chapter">Installation Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="decisions_we_made.html"
+                        title="next chapter">Decisions We Made</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/developers_guide.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Marc Kurtz, Lukas Rascius, Andrew Williams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="_sources/developers_guide.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

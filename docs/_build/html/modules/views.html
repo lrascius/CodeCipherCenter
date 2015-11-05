@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Views &mdash; Code and Cipher Center 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Code and Cipher Center 1.0 documentation" href="../index.html" />
+    <link rel="next" title="Challenge" href="challenge.html" />
+    <link rel="prev" title="Models" href="models.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="challenge.html" title="Challenge"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Models"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Code and Cipher Center 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cccenter.views">
+<span id="views"></span><h1>Views<a class="headerlink" href="#module-cccenter.views" title="Permalink to this headline">¶</a></h1>
+<p>Holds the views for the cccenter app.</p>
+<dl class="function">
+<dt id="cccenter.views.auth_view">
+<code class="descclassname">cccenter.views.</code><code class="descname">auth_view</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.auth_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authenticates user or returns error page if authentication fails.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.challengeList">
+<code class="descclassname">cccenter.views.</code><code class="descname">challengeList</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.challengeList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns challenge list with collumns of id, date, difficulty, and challengetype.</p>
+<p>If the user is logged in, returns a list of his private challenges as well as all group    challenges.
+Else returns only a list of all group challenges.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.challenge_page">
+<code class="descclassname">cccenter.views.</code><code class="descname">challenge_page</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.challenge_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>If requested with a GET request,
+Returns the challenge page associated with the given challenge_id.</p>
+<p>If requested with a POST request,
+Generates an invitation to the submitted user to join the challenge.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.check_plaintext">
+<code class="descclassname">cccenter.views.</code><code class="descname">check_plaintext</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.check_plaintext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if submitted plaintext is the correct answer.
+If it is, update the challenge as solved by the user and return True.
+Else return false.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.create_challenge">
+<code class="descclassname">cccenter.views.</code><code class="descname">create_challenge</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.create_challenge" title="Permalink to this definition">¶</a></dt>
+<dd><p>A page used to create a new challenge.
+If called with a GET request, returns the page. If called with a POST request,
+creates the challenge.
+If a difficulty was selected we pick a random cipher based on the difficulty
+Else we use the selected cipher.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.getCipher">
+<code class="descclassname">cccenter.views.</code><code class="descname">getCipher</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.getCipher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ciphertext as JSON data.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.home">
+<code class="descclassname">cccenter.views.</code><code class="descname">home</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the home page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.join_challenge">
+<code class="descclassname">cccenter.views.</code><code class="descname">join_challenge</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.join_challenge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the current user to the requested challenge.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.loggedin">
+<code class="descclassname">cccenter.views.</code><code class="descname">loggedin</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.loggedin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redirects to home page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.login">
+<code class="descclassname">cccenter.views.</code><code class="descname">login</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns login page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.logout">
+<code class="descclassname">cccenter.views.</code><code class="descname">logout</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.logout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs user out and redirects to the home page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.notifications">
+<code class="descclassname">cccenter.views.</code><code class="descname">notifications</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.notifications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all notifications for a user.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.profile">
+<code class="descclassname">cccenter.views.</code><code class="descname">profile</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current user&#8217;s profile page.</p>
+<p>If the user doesn&#8217;t have an associated UserProfile, creates one.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.register">
+<code class="descclassname">cccenter.views.</code><code class="descname">register</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>If called with a GET request, returns registration page.</p>
+<p>If called with a POST request, verifies user registration information.
+If valid, registers use. Else returns an error.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.settings">
+<code class="descclassname">cccenter.views.</code><code class="descname">settings</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try getting the user profile, if it does not exists create one.</p>
+<p>If called with a GET request, returns settings page.</p>
+<p>If called with POST, create settings, user, and password forms.
+Update all the corresponding tables and return the profile page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.tutorial">
+<code class="descclassname">cccenter.views.</code><code class="descname">tutorial</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.tutorial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the tutorial page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.update_notifications">
+<code class="descclassname">cccenter.views.</code><code class="descname">update_notifications</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.update_notifications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the notifications based on which has been viewed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.views.usercomment">
+<code class="descclassname">cccenter.views.</code><code class="descname">usercomment</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.usercomment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a comment by updating the database
+Returns user to the challenge page</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="previous chapter">Models</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="challenge.html"
+                        title="next chapter">Challenge</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/views.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Marc Kurtz, Lukas Rascius, Andrew Williams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="../_sources/modules/views.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

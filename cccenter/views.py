@@ -269,7 +269,7 @@ def challengeList(request):
 
 def loggedin(request):
     '''Redirects to home page.'''
-    return HttpResponseRedirect('/cccenter/challenge_page')
+    return HttpResponseRedirect('/')
 
 def usercomment(request):
     '''Adds a comment by updating the database

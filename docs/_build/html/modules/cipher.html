@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cipher &mdash; Code and Cipher Center 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Code and Cipher Center 1.0 documentation" href="../index.html" />
+    <link rel="next" title="Comment" href="comment.html" />
+    <link rel="prev" title="Challenge" href="challenge.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="comment.html" title="Comment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="challenge.html" title="Challenge"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Code and Cipher Center 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cccenter.python.cipher">
+<span id="cipher"></span><h1>Cipher<a class="headerlink" href="#module-cccenter.python.cipher" title="Permalink to this headline">¶</a></h1>
+<p>Interfaces with the Cipher model.</p>
+<dl class="function">
+<dt id="cccenter.python.cipher.affine_cipher">
+<code class="descclassname">cccenter.python.cipher.</code><code class="descname">affine_cipher</code><span class="sig-paren">(</span><em>text</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.cipher.affine_cipher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the Affine Cipher on a piece of text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> (<em>str</em>) &#8211; The text to be encrypted</li>
+<li><strong>a</strong> (<em>int</em>) &#8211; The Affine Cipher multiplier key</li>
+<li><strong>b</strong> (<em>int</em>) &#8211; The Affine Cipher additive key</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The encrypted text, all upper case</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The affine cipher computes Cipher = (a*position + b) mod 26 and is invalid for    even values of a and when a is congruent to 13 mod 26</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.cipher.caesar_shift_encode">
+<code class="descclassname">cccenter.python.cipher.</code><code class="descname">caesar_shift_encode</code><span class="sig-paren">(</span><em>text</em>, <em>shift</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.cipher.caesar_shift_encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the Caesar Shift Cipher to the given ciphertext.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> (<em>str</em>) &#8211; The text to be encrypted</li>
+<li><strong>shift</strong> (<em>int</em>) &#8211; The Caesar Shift key</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The encrypted text, all upper case</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.cipher.check_solution">
+<code class="descclassname">cccenter.python.cipher.</code><code class="descname">check_solution</code><span class="sig-paren">(</span><em>challenge_id</em>, <em>user_id</em>, <em>guessed_plaintext</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.cipher.check_solution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the suggested solution is correct.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>challenge_id</strong> (<em>int</em>) &#8211; The associated challenge&#8217;s id</li>
+<li><strong>user_id</strong> (<em>int</em>) &#8211; The current user&#8217;s id</li>
+<li><strong>guessed_plaintext</strong> (<em>str</em>) &#8211; The proposed solution to the challenge</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the proposed solution is correct, false if it is not</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If the challenge_id or user_id is not valid, will throw an error.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Does not check if the user is registered in the challenge before checking that    the solution is correct.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.cipher.create_ciphertext">
+<code class="descclassname">cccenter.python.cipher.</code><code class="descname">create_ciphertext</code><span class="sig-paren">(</span><em>ciphertype</em>, <em>plaintext</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.cipher.create_ciphertext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ciphertext and key using the given ciphertype.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ciphertype</strong> (<em>str</em>) &#8211; The cipher to apply to the text</li>
+<li><strong>plaintext</strong> (<em>str</em>) &#8211; The text to encrypt</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">&#8216;ciphertext&#8217; (str): The encrypted ciphertext (string)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">&#8216;cipherkey&#8217; (str): The cipher key (string)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Although ciphertype is a string, it must match one of the Cipher objects in the    database or it will throw an error.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The cipherkey is stored for display purposes only, so it is always stored as a string.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.cipher.multiplicitive_cipher">
+<code class="descclassname">cccenter.python.cipher.</code><code class="descname">multiplicitive_cipher</code><span class="sig-paren">(</span><em>text</em>, <em>mult</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.cipher.multiplicitive_cipher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the Multiplicitive Shift Cipher to a piece of text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> (<em>str</em>) &#8211; The text to be encrypted</li>
+<li><strong>mult</strong> (<em>int</em>) &#8211; The Multiplicitive Cipher multiplier key</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The encrypted text, all upper case</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Cipher = (mult * position) mod 26 and is invalid for even multiples</p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="challenge.html"
+                        title="previous chapter">Challenge</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="comment.html"
+                        title="next chapter">Comment</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/cipher.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Marc Kurtz, Lukas Rascius, Andrew Williams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="../_sources/modules/cipher.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

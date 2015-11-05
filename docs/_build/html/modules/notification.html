@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Notification &mdash; Code and Cipher Center 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Code and Cipher Center 1.0 documentation" href="../index.html" />
+    <link rel="prev" title="General" href="general.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="general.html" title="General"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Code and Cipher Center 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cccenter.python.notification">
+<span id="notification"></span><h1>Notification<a class="headerlink" href="#module-cccenter.python.notification" title="Permalink to this headline">¶</a></h1>
+<p>Contains functions primarily focused on the notification model.</p>
+<dl class="function">
+<dt id="cccenter.python.notification.get_notifications">
+<code class="descclassname">cccenter.python.notification.</code><code class="descname">get_notifications</code><span class="sig-paren">(</span><em>user</em>, <em>get_all=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.notification.get_notifications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets notifications</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user</strong> (<em>models.User</em>) &#8211; current user</li>
+<li><strong>get_all</strong> (<em>boolean</em>) &#8211; If set to true will get all the notifications, if set to false returns     5 most recent notifications</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">All the user&#8217;s notifications or the 5 most recent</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">[models.User]</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The return type is actually a query set, but can be treated as a list of User objects.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.notification.solved_cipher_notification">
+<code class="descclassname">cccenter.python.notification.</code><code class="descname">solved_cipher_notification</code><span class="sig-paren">(</span><em>username</em>, <em>challenge_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.notification.solved_cipher_notification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notifies the users when a challenge has been solved for the first time, all users     of that challenge will receive a notification telling them the user who has solved     the challenge and a link to that page</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user</strong> (<em>string</em>) &#8211; username</li>
+<li><strong>challenge_id</strong> (<em>int</em>) &#8211; id of the challenge</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.notification.unviewed_notifications">
+<code class="descclassname">cccenter.python.notification.</code><code class="descname">unviewed_notifications</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.notification.unviewed_notifications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if there is any unviewed notifications for a user</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user</strong> (<em>models.User</em>) &#8211; Current user</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if there is more than one unviewed notification, else False     meaning that the user has no unviewed notifications</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.notification.viewed_notification">
+<code class="descclassname">cccenter.python.notification.</code><code class="descname">viewed_notification</code><span class="sig-paren">(</span><em>user</em>, <em>notification_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.notification.viewed_notification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a notification to viewed based on the user and notification_id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user</strong> (<em>models.User</em>) &#8211; Current user</li>
+<li><strong>notification_id</strong> (<em>int</em>) &#8211; id of the notification object</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Was the notification viewed parameter succesfully set to true</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="general.html"
+                        title="previous chapter">General</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/notification.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Marc Kurtz, Lukas Rascius, Andrew Williams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="../_sources/modules/notification.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

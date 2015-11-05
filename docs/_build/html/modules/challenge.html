@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Challenge &mdash; Code and Cipher Center 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Code and Cipher Center 1.0 documentation" href="../index.html" />
+    <link rel="next" title="Cipher" href="cipher.html" />
+    <link rel="prev" title="Views" href="views.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cipher.html" title="Cipher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="views.html" title="Views"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Code and Cipher Center 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cccenter.python.challenge">
+<span id="challenge"></span><h1>Challenge<a class="headerlink" href="#module-cccenter.python.challenge" title="Permalink to this headline">¶</a></h1>
+<p>Interfaces with the Challenge model.</p>
+<dl class="function">
+<dt id="cccenter.python.challenge.challenge_list">
+<code class="descclassname">cccenter.python.challenge.</code><code class="descname">challenge_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.challenge.challenge_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of the challenges in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">All challenge objects in the database</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">[models.Challenge]</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Actually returns a queryset containing all challenges but can be treated as an arry.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.challenge.create_challenge">
+<code class="descclassname">cccenter.python.challenge.</code><code class="descname">create_challenge</code><span class="sig-paren">(</span><em>plaintext</em>, <em>ciphertext</em>, <em>ciphertype</em>, <em>key</em>, <em>challenge_type</em>, <em>users=None</em>, <em>dt_created=None</em>, <em>solved=False</em>, <em>dt_solved=None</em>, <em>solved_by=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.challenge.create_challenge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a challenge object and puts it in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>plaintext</strong> (<em>str</em>) &#8211; The associated plaintext</li>
+<li><strong>ciphertext</strong> &#8211; The associate ciphertext</li>
+<li><strong>ciphertype</strong> (<em>str</em>) &#8211; The cipher the challenge uses</li>
+<li><strong>key</strong> (<em>str</em>) &#8211; The cipher&#8217;s key</li>
+<li><strong>challenge_type</strong> (<em>str</em>) &#8211; The type of challenge (single, collaborative, competitive)</li>
+<li><strong>users</strong> (<em>[models.User]</em>) &#8211; (optional) Users registered in the challenge</li>
+<li><strong>dt_created</strong> (<em>datetime</em>) &#8211; (optional) The date and time the challenge was created</li>
+<li><strong>solved</strong> (<em>boolean</em>) &#8211; (optional) Indicates if the challenge has been solved yet</li>
+<li><strong>dt_solved</strong> (<em>datetime</em>) &#8211; (optional) The date and time the challenge was first solved</li>
+<li><strong>solved_by</strong> (<em>[models.User]</em>) &#8211; (optional) Users who have already solved the challenge</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">&#8216;ciphertext&#8217; (str): The ciphertext associated with the challenge</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">&#8216;challenge_id&#8217; (int): The challenge&#8217;s id</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The key is a string and is only recorded for future reference. The plaintext    and ciphertext are used to print the challenge and check proposed solutions.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If dt_created is left unassigned, the current date and time are used. This is the    best default option.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Although ciphertype and challenge_type are strings, they are used to pull the    correct Cipher object and challenge_type from the database and therefore must match a    database entry exactly.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.challenge.get_challenge_info">
+<code class="descclassname">cccenter.python.challenge.</code><code class="descname">get_challenge_info</code><span class="sig-paren">(</span><em>challenge_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.challenge.get_challenge_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns information about the Challenge to display on the challenge page.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>challenge_id</strong> (<em>int</em>) &#8211; The challenge&#8217;s associated object&#8217;s id number</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8216;datetime_created&#8217; (datetime): The date and time the challenge was created</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;datetime_solved&#8217; (datetime): The date and time the challenge was first solved</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8216;challenge_type&#8217; (str): The type of challenge (single, competitive, or collaborative)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;solved_by&#8217; ([models.User]): Who has solved the challenge</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8216;users&#8217; ([models.User]): Who is registered in the challenge</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the &#8216;solved_by&#8217; and &#8216;user&#8217; indices of the returned dictionary are actually    query sets, but can be treated as lists.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.challenge.get_ciphertext">
+<code class="descclassname">cccenter.python.challenge.</code><code class="descname">get_ciphertext</code><span class="sig-paren">(</span><em>challenge_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.challenge.get_ciphertext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the ciphertext associated with the given challenge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>challenge_id</strong> (<em>int</em>) &#8211; The challenge&#8217;s associated object&#8217;s id number</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The ciphertext associated with the challenge</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.challenge.get_difficulty">
+<code class="descclassname">cccenter.python.challenge.</code><code class="descname">get_difficulty</code><span class="sig-paren">(</span><em>challenge_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.challenge.get_difficulty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the difficulty of the given challenge. If multiple ciphers have been applied,    returns the hardest one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>challenge_id</strong> (<em>int</em>) &#8211; The challenge&#8217;s associated object&#8217;s id number</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The difficulty of the challenge</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Return values can include &#8216;beginner&#8217;, &#8216;intermediate&#8217;, and &#8216;advanced&#8217;.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Although this function supports multiple ciphers being applied to a single challenge,    the rest of the code, including the models, does not.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.challenge.join_challenge">
+<code class="descclassname">cccenter.python.challenge.</code><code class="descname">join_challenge</code><span class="sig-paren">(</span><em>challenge_id</em>, <em>user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.challenge.join_challenge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the given user to the given challenge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>challenge_id</strong> (<em>int</em>) &#8211; The challenge&#8217;s associated object&#8217;s id number</li>
+<li><strong>user_id</strong> (<em>int</em>) &#8211; The user&#8217;s (user object&#8217;s) id number</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns True if the user is added successfully. Returns False otherwise.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Practically, this function will only return False when the challenge type is    &#8216;single&#8217;, since users are note allowed to be added to a private challenge.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cccenter.python.challenge.user_in_challenge">
+<code class="descclassname">cccenter.python.challenge.</code><code class="descname">user_in_challenge</code><span class="sig-paren">(</span><em>challenge_id</em>, <em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.python.challenge.user_in_challenge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the user is registered in the challenge and if the user already    solved the challenge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>challenge_id</strong> (<em>int</em>) &#8211; The challenge&#8217;s associated object&#8217;s id number</li>
+<li><strong>user</strong> (<em>models.User</em>) &#8211; The current user</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">(User in the challenge, User solved the challenge)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(boolean, boolean)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The user parameter can be passed in easily from a view using request.user.</p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="views.html"
+                        title="previous chapter">Views</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cipher.html"
+                        title="next chapter">Cipher</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/challenge.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Marc Kurtz, Lukas Rascius, Andrew Williams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="../_sources/modules/challenge.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

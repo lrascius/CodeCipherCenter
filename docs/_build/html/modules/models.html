@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Models &mdash; Code and Cipher Center 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Code and Cipher Center 1.0 documentation" href="../index.html" />
+    <link rel="next" title="Views" href="views.html" />
+    <link rel="prev" title="Decisions We Made" href="../decisions_we_made.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="views.html" title="Views"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../decisions_we_made.html" title="Decisions We Made"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Code and Cipher Center 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cccenter.models">
+<span id="models"></span><h1>Models<a class="headerlink" href="#module-cccenter.models" title="Permalink to this headline">¶</a></h1>
+<p>This file contains the Django models for the cccenter app.</p>
+<dl class="class">
+<dt id="cccenter.models.Challenge">
+<em class="property">class </em><code class="descclassname">cccenter.models.</code><code class="descname">Challenge</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Challenge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model for challenge objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Field ciphertext:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">(models.TextField) The challenge&#8217;s ciphertext</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Field plaintext:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">(models.TextField) The challenge&#8217;s plaintext</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Field ciphertype:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">(models.CharField) The name of the cipher used</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Field cipherkey:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">(models.TextField) The challenge&#8217;s cipher key</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Field users:</th><td class="field-body">(models.ManyToManyField) The users registered in the challenge    (related_name=&#8221;user_challenge_set&#8221;)</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Field datetime_created:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">(models.DateTimeField) The date and time the challenge was created</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Field datetime_solved:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">(models.DateTimeField) The date and time the challenge was solved</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Field solved_by:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">(models.ManyToManyField) The users who have solved the challenge</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Field challenge_type:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">(models.CharField) The type of challenge (single, collaborative,    competitive)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Field solved:</th><td class="field-body">(models.BooleanField) If the challenge has been solved</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Field cipher:</th><td class="field-body">(models.ManyToManyField) The cipher objects the challenge is related to</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="cccenter.models.Challenge.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Challenge.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra model-wide validation after clean() has been
+called on every field by self.clean_fields. Any ValidationError raised
+by this method will not be associated with a particular field; it will
+have a special-case association with the field defined by NON_FIELD_ERRORS.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Challenge.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Challenge.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleans all fields and raises a ValidationError containing a dict
+of all validation errors if any occur.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Challenge.full_clean">
+<code class="descname">full_clean</code><span class="sig-paren">(</span><em>exclude=None</em>, <em>validate_unique=True</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Challenge.full_clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls clean_fields, clean, and validate_unique, on the model,
+and raises a <code class="docutils literal"><span class="pre">ValidationError</span></code> for any errors that occurred.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Challenge.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Challenge.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The &#8216;force_insert&#8217; and &#8216;force_update&#8217; parameters can be used to insist
+that the &#8220;save&#8221; must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Challenge.save_base">
+<code class="descname">save_base</code><span class="sig-paren">(</span><em>raw=False</em>, <em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Challenge.save_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the parts of saving which should be done only once per save,
+yet need to be done in raw saves, too. This includes some sanity
+checks and signal sending.</p>
+<p>The &#8216;raw&#8217; argument is telling save_base not to save any parent
+models and not to do any changes to the values before save. This
+is used by fixture loading.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Challenge.serializable_value">
+<code class="descname">serializable_value</code><span class="sig-paren">(</span><em>field_name</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Challenge.serializable_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the field name for this instance. If the field is
+a foreign key, returns the id value, instead of the object. If there&#8217;s
+no Field object with this name on the model, the model attribute&#8217;s
+value is returned directly.</p>
+<p>Used to serialize a field&#8217;s value (in the serializer, or form output,
+for example). Normally, you would just access the attribute directly
+and not use this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Challenge.validate_unique">
+<code class="descname">validate_unique</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Challenge.validate_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks unique constraints on the model and raises <code class="docutils literal"><span class="pre">ValidationError</span></code>
+if any failed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cccenter.models.Cipher">
+<em class="property">class </em><code class="descclassname">cccenter.models.</code><code class="descname">Cipher</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Cipher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model for cipher objects</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Field ciphertype:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">(models.CharField) The cipher&#8217;s name</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Field difficulty:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">(models.CharField) The cipher&#8217;s difficulty</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="cccenter.models.Cipher.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Cipher.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra model-wide validation after clean() has been
+called on every field by self.clean_fields. Any ValidationError raised
+by this method will not be associated with a particular field; it will
+have a special-case association with the field defined by NON_FIELD_ERRORS.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Cipher.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Cipher.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleans all fields and raises a ValidationError containing a dict
+of all validation errors if any occur.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Cipher.full_clean">
+<code class="descname">full_clean</code><span class="sig-paren">(</span><em>exclude=None</em>, <em>validate_unique=True</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Cipher.full_clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls clean_fields, clean, and validate_unique, on the model,
+and raises a <code class="docutils literal"><span class="pre">ValidationError</span></code> for any errors that occurred.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Cipher.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Cipher.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The &#8216;force_insert&#8217; and &#8216;force_update&#8217; parameters can be used to insist
+that the &#8220;save&#8221; must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Cipher.save_base">
+<code class="descname">save_base</code><span class="sig-paren">(</span><em>raw=False</em>, <em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Cipher.save_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the parts of saving which should be done only once per save,
+yet need to be done in raw saves, too. This includes some sanity
+checks and signal sending.</p>
+<p>The &#8216;raw&#8217; argument is telling save_base not to save any parent
+models and not to do any changes to the values before save. This
+is used by fixture loading.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Cipher.serializable_value">
+<code class="descname">serializable_value</code><span class="sig-paren">(</span><em>field_name</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Cipher.serializable_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the field name for this instance. If the field is
+a foreign key, returns the id value, instead of the object. If there&#8217;s
+no Field object with this name on the model, the model attribute&#8217;s
+value is returned directly.</p>
+<p>Used to serialize a field&#8217;s value (in the serializer, or form output,
+for example). Normally, you would just access the attribute directly
+and not use this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Cipher.validate_unique">
+<code class="descname">validate_unique</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Cipher.validate_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks unique constraints on the model and raises <code class="docutils literal"><span class="pre">ValidationError</span></code>
+if any failed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cccenter.models.Comment">
+<em class="property">class </em><code class="descclassname">cccenter.models.</code><code class="descname">Comment</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model for comments in the forums.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Field user:</th><td class="field-body">(models.ForeignKey) The user who posted the comment</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Field text:</th><td class="field-body">(models.TextField) The text in the comment</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Field datetime:</th><td class="field-body">(models.DateTimeField) The date and time the comment was posted</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Field forum:</th><td class="field-body">(models.ForeignKey) The forum the comment belongs to (linked to a challenge)</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="cccenter.models.Comment.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Comment.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra model-wide validation after clean() has been
+called on every field by self.clean_fields. Any ValidationError raised
+by this method will not be associated with a particular field; it will
+have a special-case association with the field defined by NON_FIELD_ERRORS.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Comment.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Comment.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleans all fields and raises a ValidationError containing a dict
+of all validation errors if any occur.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Comment.full_clean">
+<code class="descname">full_clean</code><span class="sig-paren">(</span><em>exclude=None</em>, <em>validate_unique=True</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Comment.full_clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls clean_fields, clean, and validate_unique, on the model,
+and raises a <code class="docutils literal"><span class="pre">ValidationError</span></code> for any errors that occurred.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Comment.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Comment.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The &#8216;force_insert&#8217; and &#8216;force_update&#8217; parameters can be used to insist
+that the &#8220;save&#8221; must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Comment.save_base">
+<code class="descname">save_base</code><span class="sig-paren">(</span><em>raw=False</em>, <em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Comment.save_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the parts of saving which should be done only once per save,
+yet need to be done in raw saves, too. This includes some sanity
+checks and signal sending.</p>
+<p>The &#8216;raw&#8217; argument is telling save_base not to save any parent
+models and not to do any changes to the values before save. This
+is used by fixture loading.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Comment.serializable_value">
+<code class="descname">serializable_value</code><span class="sig-paren">(</span><em>field_name</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Comment.serializable_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the field name for this instance. If the field is
+a foreign key, returns the id value, instead of the object. If there&#8217;s
+no Field object with this name on the model, the model attribute&#8217;s
+value is returned directly.</p>
+<p>Used to serialize a field&#8217;s value (in the serializer, or form output,
+for example). Normally, you would just access the attribute directly
+and not use this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Comment.validate_unique">
+<code class="descname">validate_unique</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Comment.validate_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks unique constraints on the model and raises <code class="docutils literal"><span class="pre">ValidationError</span></code>
+if any failed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cccenter.models.Notification">
+<em class="property">class </em><code class="descclassname">cccenter.models.</code><code class="descname">Notification</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Notification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model for push notifications.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Field user:</th><td class="field-body">(models.ForeignKey) The user who the notification is sent to</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Field notification:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">(models.CharField) The text in the notification</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Field link:</th><td class="field-body">(models.CharField) The link to what the notification is about</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Field viewed:</th><td class="field-body">(models.BooleanField) Whether or not the notification has been viewed</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Field datetime:</th><td class="field-body">(models.DateTimeField) When the notification was created</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="cccenter.models.Notification.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Notification.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra model-wide validation after clean() has been
+called on every field by self.clean_fields. Any ValidationError raised
+by this method will not be associated with a particular field; it will
+have a special-case association with the field defined by NON_FIELD_ERRORS.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Notification.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Notification.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleans all fields and raises a ValidationError containing a dict
+of all validation errors if any occur.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Notification.full_clean">
+<code class="descname">full_clean</code><span class="sig-paren">(</span><em>exclude=None</em>, <em>validate_unique=True</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Notification.full_clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls clean_fields, clean, and validate_unique, on the model,
+and raises a <code class="docutils literal"><span class="pre">ValidationError</span></code> for any errors that occurred.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Notification.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Notification.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The &#8216;force_insert&#8217; and &#8216;force_update&#8217; parameters can be used to insist
+that the &#8220;save&#8221; must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Notification.save_base">
+<code class="descname">save_base</code><span class="sig-paren">(</span><em>raw=False</em>, <em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Notification.save_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the parts of saving which should be done only once per save,
+yet need to be done in raw saves, too. This includes some sanity
+checks and signal sending.</p>
+<p>The &#8216;raw&#8217; argument is telling save_base not to save any parent
+models and not to do any changes to the values before save. This
+is used by fixture loading.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Notification.serializable_value">
+<code class="descname">serializable_value</code><span class="sig-paren">(</span><em>field_name</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Notification.serializable_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the field name for this instance. If the field is
+a foreign key, returns the id value, instead of the object. If there&#8217;s
+no Field object with this name on the model, the model attribute&#8217;s
+value is returned directly.</p>
+<p>Used to serialize a field&#8217;s value (in the serializer, or form output,
+for example). Normally, you would just access the attribute directly
+and not use this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.Notification.validate_unique">
+<code class="descname">validate_unique</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.Notification.validate_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks unique constraints on the model and raises <code class="docutils literal"><span class="pre">ValidationError</span></code>
+if any failed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cccenter.models.UserProfile">
+<em class="property">class </em><code class="descclassname">cccenter.models.</code><code class="descname">UserProfile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.UserProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model for user profile objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Field user:</th><td class="field-body">(models.User) The associated User object</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Field profile_image:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">(models.ImageField) The image associated with the user</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="cccenter.models.UserProfile.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.UserProfile.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra model-wide validation after clean() has been
+called on every field by self.clean_fields. Any ValidationError raised
+by this method will not be associated with a particular field; it will
+have a special-case association with the field defined by NON_FIELD_ERRORS.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.UserProfile.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.UserProfile.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleans all fields and raises a ValidationError containing a dict
+of all validation errors if any occur.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.UserProfile.full_clean">
+<code class="descname">full_clean</code><span class="sig-paren">(</span><em>exclude=None</em>, <em>validate_unique=True</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.UserProfile.full_clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls clean_fields, clean, and validate_unique, on the model,
+and raises a <code class="docutils literal"><span class="pre">ValidationError</span></code> for any errors that occurred.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.UserProfile.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.UserProfile.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The &#8216;force_insert&#8217; and &#8216;force_update&#8217; parameters can be used to insist
+that the &#8220;save&#8221; must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.UserProfile.save_base">
+<code class="descname">save_base</code><span class="sig-paren">(</span><em>raw=False</em>, <em>force_insert=False</em>, <em>force_update=False</em>, <em>using=None</em>, <em>update_fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.UserProfile.save_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the parts of saving which should be done only once per save,
+yet need to be done in raw saves, too. This includes some sanity
+checks and signal sending.</p>
+<p>The &#8216;raw&#8217; argument is telling save_base not to save any parent
+models and not to do any changes to the values before save. This
+is used by fixture loading.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.UserProfile.serializable_value">
+<code class="descname">serializable_value</code><span class="sig-paren">(</span><em>field_name</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.UserProfile.serializable_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the field name for this instance. If the field is
+a foreign key, returns the id value, instead of the object. If there&#8217;s
+no Field object with this name on the model, the model attribute&#8217;s
+value is returned directly.</p>
+<p>Used to serialize a field&#8217;s value (in the serializer, or form output,
+for example). Normally, you would just access the attribute directly
+and not use this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cccenter.models.UserProfile.validate_unique">
+<code class="descname">validate_unique</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.models.UserProfile.validate_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks unique constraints on the model and raises <code class="docutils literal"><span class="pre">ValidationError</span></code>
+if any failed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../decisions_we_made.html"
+                        title="previous chapter">Decisions We Made</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="views.html"
+                        title="next chapter">Views</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/models.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Marc Kurtz, Lukas Rascius, Andrew Williams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="../_sources/modules/models.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>
