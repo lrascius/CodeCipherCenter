@@ -272,7 +272,9 @@ def loggedin(request):
     return HttpResponseRedirect('/cccenter/challenge_page')
 
 def usercomment(request):
-    '''Redirects to home page.'''
+    '''Adds a comment by updating the database
+       Returns user to the challenge page
+    '''
     if request.method == 'POST':
         challenge_id = int(request.GET.getlist('challenge_id')[0])
 
