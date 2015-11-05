@@ -23,6 +23,7 @@ from cccenter.models import UserProfile
 from cccenter.models import Cipher
 from cccenter.models import Challenge
 from cccenter.models import Notification
+from cccenter.models import Comment
 from cccenter.python.forms import RegistrationForm
 from cccenter.python.forms import SettingsForm
 from django.contrib.auth.models import User
@@ -275,6 +276,9 @@ def usercomment(request):
     print "here"
     print request.user
     print request.POST.get('comment', '')
+    print request.GET.get('challenge_id', '')
+    # comment = Comment.objects.create(forum_id=27,user=request.user, text=request.POST.get('comment', ''),
+    #                                         datetime=timezone.now())
 
     return HttpResponseRedirect('/cipher/challengepage/?challenge_id=27')
 
