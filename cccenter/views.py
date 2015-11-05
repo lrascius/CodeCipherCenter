@@ -17,6 +17,7 @@ import cccenter.python.general as general
 import cccenter.python.notification as notify
 import cccenter.python.cipher as cf
 import cccenter.python.comment as comment
+import cccenter.python.challenge as challenge
 import random
 from cccenter.models import UserProfile
 from cccenter.models import Cipher
@@ -114,7 +115,7 @@ def create_challenge(request):
         cipher['challenge_type'] = request.POST.getlist('challengetype')[0]
         cipher['users'] = [User.objects.get(pk=request.user.id)]
 
-        cd = cf.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],
+        cd = challenge.create_challenge(cipher['plaintext'], cipher['ciphertext'], cipher['ciphertype'],
                                  cipher['key'], cipher['challenge_type'], cipher['users'])
 
         #return HttpResponse(json.dumps(cd), content_type="application/json")
@@ -267,7 +268,15 @@ def challengeList(request):
 
 def loggedin(request):
     '''Redirects to home page.'''
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/cccenter/challenge_page')
+
+def usercomment(request):
+    '''Redirects to home page.'''
+    print "here"
+    print request.user
+    print request.POST.get('comment', '')
+
+    return HttpResponseRedirect('/cipher/challengepage/?challenge_id=27')
 
 @login_required
 def logout(request):

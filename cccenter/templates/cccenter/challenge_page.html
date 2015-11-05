@@ -36,6 +36,12 @@
             <br>
 	        {% endfor %}
 	    </div>
+	    <form action="/cipher/comment/" method="post" role="form"> {% csrf_token %}
+		    <div class="input-group">
+	    		<textarea class="form-control custom-control" rows="3" style="resize:none" name="comment"></textarea>     
+	    		<input class="btn btn-success" type="submit" value="Comment"> 
+			</div>
+		</form>
 	    {% endif %}
 	</div>
 	<div id="challenge-info" class="col-md-3">

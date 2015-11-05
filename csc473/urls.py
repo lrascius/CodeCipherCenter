@@ -33,6 +33,7 @@ urlpatterns = patterns('',
     url(r'^cipher/challengelist/$', views.challengeList, name="cccenter.views.challengelist"),
     url(r'^cipher/challengepage/$', views.challenge_page),
     url(r'^cipher/joinchallenge/$', views.join_challenge),
+    url(r'^cipher/comment/$', views.usercomment),
 
     # Profile page url
     url(r'^profile/$', 'cccenter.views.profile'),
