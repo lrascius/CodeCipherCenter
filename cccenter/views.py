@@ -406,4 +406,58 @@ def settings(request):
                              "unseen_notification" : notify.unviewed_notifications(request.user)
                             }
                            )
+@login_required
+def statistics(request):
+    user = User.objects.get(username=request.user)
+    try:
+        userprofile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        userprofile = UserProfile(user=request.user)
+
+    # difficulty = []
+
+    # challenges_user_in = Challenge.objects.filter(users=request.user)
+    # for challenge in challenges_user_in:
+    #     cipher = Cipher.objects.get(ciphertype=challenge.ciphertype)
+    #     difficulty.append(cipher.difficulty.capitalize())
+
+    points = dict()
+    users = User.objects.all()
+    challenges = Challenge.objects.all()
+    num_challenges = len(challenges)
+    num_competative_challenges = len(Challenge.objects.filter(challenge_type="competitive"))
+    num_users = len(users)
+
+    for user in users:
+        user_solved = Challenge.objects.filter(solved_by=user,challenge_type="competitive")
+        user_points = 0
+        for challenge_solved in user_solved:
+            # difficulty = Cipher.objects.all()
+            cipher_difficulty = Cipher.objects.get(ciphertype=challenge_solved.ciphertype).difficulty
+            # print cipher_difficulty
+            if cipher_difficulty == "beginner":
+                user_points += 1
+            if cipher_difficulty == "intermediate":
+                user_points += 5
+            if cipher_difficulty == "advanced":
+                user_points += 15
+        points[user] = user_points
+    
+    print points
+
+    # array = zip(challenges_user_in, difficulty)
+    # print array
+
+    return shortcuts.render(request,
+                            'cccenter/statistics.html',
+                            {'user':user,
+                             'userprofile':userprofile,
+                             'num_challenges':num_challenges,
+                             'num_competative_challenges':num_competative_challenges,
+                             'num_users':num_users,
+                             'points':points,
+                             "notifications" : notify.get_notifications(request.user, False),
+                             "unseen_notification" : notify.unviewed_notifications(request.user)
+                            }
+                           )
 
