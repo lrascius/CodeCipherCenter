@@ -47,7 +47,7 @@ def home(request):
         email = request.POST.get('email')
 
         if subject and message and email:
-            mail.send_mail(subject, message, email, ['mkurtz00@citymail.cuny.edu'])
+            mail.send_mail(subject, message, email, ['lrasciu00@citymail.cuny.edu'])
             mail.send_mail(subject, message, email, ['admin@cccenter.com'])
             context['message'] = 'Thank you, your message has been sent.'
 
@@ -82,7 +82,7 @@ def create_challenge(request):
         return shortcuts.render(request, 'cccenter/create_challenge.html',
                                 {"title":"Code and Cipher Center", "active":"newchallenge",
                                  "notifications" : notify.get_notifications(request.user, False),
-                                 "unseen_notification" : notify.unviewed_notifications(request.user)
+                                 "unseen_notification" : notify.unviewed_notifications(request.user)                                 
                                 })
 
     elif request.method == 'POST':

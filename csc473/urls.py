@@ -41,5 +41,7 @@ urlpatterns = patterns('',
     url(r'^settings/$', 'cccenter.views.settings'),
     # Notifications page url
     url(r'^notifications/$', 'cccenter.views.notifications'),    
+    # Statistics page url
+    url(r'^statistics/$', 'cccenter.views.statistics'),   
 )
 

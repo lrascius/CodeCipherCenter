@@ -43,7 +43,9 @@
 						<option value="" disabled selected> -- select a type -- </option>
 						<option value="single">Single</option>
 						<option value="collaborative">Collaborative</option>
+						{% if user.is_superuser %}
 						<option value="competitive">Competitive</option>
+						{% endif %}
 					</select>
 		        </div>	
 		    </div>        
