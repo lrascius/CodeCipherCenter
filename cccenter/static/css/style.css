@@ -33,6 +33,7 @@ footer {
 	height: 40px;
     margin: 20px auto;
     margin-bottom: 0;
+    z-index: 10;
 }
 
 img {
@@ -56,6 +57,15 @@ table {
     background-color: #808080;
 /*    color:#100000 ;*/
 }
+
+.navbar {
+    font: 100 12px 'Helvetica', serif, sans-serif;
+    background-color: white;
+}
+
+/*.navbar li{
+    text-transform: uppercase;
+}*/
 
 .navbar-brand {
     font-family: Marcelle;
@@ -81,6 +91,10 @@ table {
 
 #joinButton {
 	width: 48%;
+}
+
+#myCarousel h3, p {
+    color: black;
 }
 
 .align-center {

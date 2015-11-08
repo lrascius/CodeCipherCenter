@@ -408,18 +408,18 @@ def settings(request):
                            )
 @login_required
 def statistics(request):
+    '''Try getting the user profile, if it does not exists create one.
+       Goes through each user and query's each copetitive challenge they have
+       solved.
+       Append 1 point for a solving a beginner challenge
+       Append 5 point for a solving a beginner challenge
+       Append 15 point for a solving a beginner challenge
+    '''
     user = User.objects.get(username=request.user)
     try:
         userprofile = request.user.userprofile
     except UserProfile.DoesNotExist:
         userprofile = UserProfile(user=request.user)
-
-    # difficulty = []
-
-    # challenges_user_in = Challenge.objects.filter(users=request.user)
-    # for challenge in challenges_user_in:
-    #     cipher = Cipher.objects.get(ciphertype=challenge.ciphertype)
-    #     difficulty.append(cipher.difficulty.capitalize())
 
     points = []
     users = User.objects.all()
@@ -432,9 +432,7 @@ def statistics(request):
         user_solved = Challenge.objects.filter(solved_by=user,challenge_type="competitive")
         user_points = 0
         for challenge_solved in user_solved:
-            # difficulty = Cipher.objects.all()
             cipher_difficulty = Cipher.objects.get(ciphertype=challenge_solved.ciphertype).difficulty
-            # print cipher_difficulty
             if cipher_difficulty == "beginner":
                 user_points += 1
             if cipher_difficulty == "intermediate":
