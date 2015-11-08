@@ -421,7 +421,7 @@ def statistics(request):
     #     cipher = Cipher.objects.get(ciphertype=challenge.ciphertype)
     #     difficulty.append(cipher.difficulty.capitalize())
 
-    points = dict()
+    points = []
     users = User.objects.all()
     challenges = Challenge.objects.all()
     num_challenges = len(challenges)
@@ -441,11 +441,9 @@ def statistics(request):
                 user_points += 5
             if cipher_difficulty == "advanced":
                 user_points += 15
-        points[user] = user_points
+        points.append(user_points)
     
-    print points
-
-    # array = zip(challenges_user_in, difficulty)
+    array = zip(users, points)
     # print array
 
     return shortcuts.render(request,
@@ -455,7 +453,7 @@ def statistics(request):
                              'num_challenges':num_challenges,
                              'num_competative_challenges':num_competative_challenges,
                              'num_users':num_users,
-                             'points':points,
+                             'points':array,
                              "notifications" : notify.get_notifications(request.user, False),
                              "unseen_notification" : notify.unviewed_notifications(request.user)
                             }
