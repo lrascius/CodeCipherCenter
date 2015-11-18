@@ -167,6 +167,17 @@ Update all the corresponding tables and return the profile page.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="cccenter.views.statistics">
+<code class="descclassname">cccenter.views.</code><code class="descname">statistics</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try getting the user profile, if it does not exists create one.
+Goes through each user and query&#8217;s each copetitive challenge they have
+solved.
+Append 1 point for a solving a beginner challenge
+Append 5 point for a solving a intermediate challenge
+Append 15 point for a solving a advanced challenge</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="cccenter.views.tutorial">
 <code class="descclassname">cccenter.views.</code><code class="descname">tutorial</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#cccenter.views.tutorial" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the tutorial page.</p>

@@ -51,7 +51,8 @@ $(document).ready(function() {
                 <th>Date</th>
                 <th>Challenge Type</th>                
                 <th>Difficulty</th>
-                <th>Join</th>                
+                <th>Page</th>
+                <th>Status</th>                  
             </tr>
             </thead>
             <tfoot>
@@ -60,7 +61,8 @@ $(document).ready(function() {
                 <th>Date</th>
                 <th>Challenge Type</th>                
                 <th>Difficulty</th>
-                <th>Join</th>                
+                <th>Page</th>  
+                <th>Status</th>                
             </tr>
             </tfoot> 
             <tbody>
@@ -69,9 +71,16 @@ $(document).ready(function() {
                 <td> {{challenge.id}} </td>
                 <td> {{challenge.datetime_created}} </td>
                 <td> {{challenge.challenge_type}}</td>
-                <td> {{difficulty}}</td>
+                <td> {{difficulty.0}}</td>
                 <td style="text-align:center"> <a href="/cipher/challengepage/?challenge_id={{challenge.id}}" 
-                    class="btn btn-primary" role="button">Go to Page</a></td> 
+                    class="btn btn-primary" role="button">Go to Page</a></td>
+                <form action="/profile/?challenge_id={{challenge.id}}" method="post" role="form"> {% csrf_token %}
+                {% if difficulty.1 == True %}
+                <td style="text-align:center"> <a class="btn btn-success" role="button">Solved</a></td>
+                {% else %}
+                <td style="text-align:center"><input class="btn btn-danger" type="submit" value="Leave"></td>
+                {% endif %}
+                </form>
             </tr>
             {% endfor %}
             </tbody>

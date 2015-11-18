@@ -328,6 +328,10 @@ def profile(request):
 
     If the user doesn't have an associated UserProfile, creates one.
     '''
+    if request.method == 'POST':
+        challenge_id = int(request.GET.getlist('challenge_id')[0])
+        Challenge.objects.get(id=challenge_id).users.remove(request.user)
+
     user = User.objects.get(username=request.user)
     try:
         userprofile = request.user.userprofile
@@ -336,16 +340,25 @@ def profile(request):
 
     difficulty = []
 
+    challenges_solved = Challenge.objects.filter(solved_by=request.user)
+    solved = []
+    for i in challenges_solved:
+        solved.append(i.id)
+
     challenges_user_in = Challenge.objects.filter(users=request.user)
     for challenge in challenges_user_in:
         cipher = Cipher.objects.get(ciphertype=challenge.ciphertype)
-        difficulty.append(cipher.difficulty.capitalize())
+        if(challenge.id in solved):
+            difficulty.append((cipher.difficulty.capitalize(), True))
+        else:
+            difficulty.append((cipher.difficulty.capitalize(), False))
 
     array = zip(challenges_user_in, difficulty)
 
     return shortcuts.render(request,
                             'cccenter/profile.html',
                             {'user':user,
+                             'solved':solved,
                              'userprofile':userprofile,
                              'challenges_user_in':array,
                              "title":"Code and Cipher Center",
@@ -412,8 +425,8 @@ def statistics(request):
        Goes through each user and query's each copetitive challenge they have
        solved.
        Append 1 point for a solving a beginner challenge
-       Append 5 point for a solving a beginner challenge
-       Append 15 point for a solving a beginner challenge
+       Append 5 point for a solving a intermediate challenge
+       Append 15 point for a solving a advanced challenge
     '''
     user = User.objects.get(username=request.user)
     try:

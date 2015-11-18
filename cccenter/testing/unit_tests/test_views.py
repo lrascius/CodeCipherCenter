@@ -212,55 +212,55 @@ class TestViews(TestCase):
                                                   "unseen_notification":'unseen'
                                                  })
                                                  
-    @mock.patch('cccenter.views.User')
-    @mock.patch('cccenter.views.Cipher')
-    @mock.patch('cccenter.views.random')
-    @mock.patch('cccenter.views.HttpResponseRedirect')
-    @mock.patch('cccenter.views.cf')
-    @mock.patch('cccenter.views.general')         
-    @mock.patch('cccenter.views.notify')
-    @mock.patch('cccenter.views.shortcuts')
-    def test_create_challenge_Pass4(self, mock_shortcuts, mock_notify, mock_general, mock_cf, mock_redirect,
-                                    mock_random, mock_cipher, mock_user):
-        mock_shortcuts.method = "POST"
-        mock_shortcuts.POST.getlist.side_effect = create_challenge_pass4_side_effect
-        mock_general.generate_paragraph.return_value = 'text'
-        mock_cipher.objects.all.return_value = mock_cipher
-        mock_cipher.filter.return_value = [mock_cipher]
-        mock_cipher.ciphertype = 'easy'
-        mock_random.randint.return_value = 0
-        mock_cf.create_ciphertext.return_value = {"ciphertext":'cipher', "cipherkey":'key'}
-        mock_user.objects.get.return_value = mock_user
-        mock_cf.create_challenge.return_value = {'challenge_id':1}
-        mock_redirect.return_value = True
+    # @mock.patch('cccenter.views.User')
+    # @mock.patch('cccenter.views.Cipher')
+    # @mock.patch('cccenter.views.random')
+    # @mock.patch('cccenter.views.HttpResponseRedirect')
+    # @mock.patch('cccenter.views.cf')
+    # @mock.patch('cccenter.views.general')         
+    # @mock.patch('cccenter.views.notify')
+    # @mock.patch('cccenter.views.shortcuts')
+    # def test_create_challenge_Pass4(self, mock_shortcuts, mock_notify, mock_general, mock_cf, mock_redirect,
+    #                                 mock_random, mock_cipher, mock_user):
+    #     mock_shortcuts.method = "POST"
+    #     mock_shortcuts.POST.getlist.side_effect = create_challenge_pass4_side_effect
+    #     mock_general.generate_paragraph.return_value = 'text'
+    #     mock_cipher.objects.all.return_value = mock_cipher
+    #     mock_cipher.filter.return_value = [mock_cipher]
+    #     mock_cipher.ciphertype = 'easy'
+    #     mock_random.randint.return_value = 0
+    #     mock_cf.create_ciphertext.return_value = {"ciphertext":'cipher', "cipherkey":'key'}
+    #     mock_user.objects.get.return_value = mock_user
+    #     mock_cf.create_challenge.return_value = {'challenge_id':1}
+    #     mock_redirect.return_value = True
         
-        res = create_challenge(mock_shortcuts)
+    #     res = create_challenge(mock_shortcuts)
         
-        self.assertTrue(res)
-        self.assertTrue(mock_random.randint.called)
-        mock_cf.create_challenge.assert_called_with('text', 'cipher', 'easy', 'key', 'single', [mock_user])
-        mock_redirect.assert_called_with('/cipher/challengepage/?challenge_id=1')
+        # self.assertTrue(res)
+        # self.assertTrue(mock_random.randint.called)
+        # mock_cf.create_challenge.assert_called_with('text', 'cipher', 'easy', 'key', 'single', [mock_user])
+        # mock_redirect.assert_called_with('/cipher/challengepage/?challenge_id=1')
         
-    @mock.patch('cccenter.views.User')
-    @mock.patch('cccenter.views.HttpResponseRedirect')
-    @mock.patch('cccenter.views.cf')
-    @mock.patch('cccenter.views.general')         
-    @mock.patch('cccenter.views.notify')
-    @mock.patch('cccenter.views.shortcuts')
-    def test_create_challenge_Pass5(self, mock_shortcuts, mock_notify, mock_general, mock_cf, mock_redirect, mock_user):
-        mock_shortcuts.method = "POST"
-        mock_shortcuts.POST.getlist.side_effect = create_challenge_pass5_side_effect
-        mock_general.generate_paragraph.return_value = 'text'
-        mock_cf.create_ciphertext.return_value = {"ciphertext":'cipher', "cipherkey":'key'}
-        mock_user.objects.get.return_value = mock_user
-        mock_cf.create_challenge.return_value = {'challenge_id':1}
-        mock_redirect.return_value = True
+    # @mock.patch('cccenter.views.User')
+    # @mock.patch('cccenter.views.HttpResponseRedirect')
+    # @mock.patch('cccenter.views.cf')
+    # @mock.patch('cccenter.views.general')         
+    # @mock.patch('cccenter.views.notify')
+    # @mock.patch('cccenter.views.shortcuts')
+    # def test_create_challenge_Pass5(self, mock_shortcuts, mock_notify, mock_general, mock_cf, mock_redirect, mock_user):
+    #     mock_shortcuts.method = "POST"
+    #     mock_shortcuts.POST.getlist.side_effect = create_challenge_pass5_side_effect
+    #     mock_general.generate_paragraph.return_value = 'text'
+    #     mock_cf.create_ciphertext.return_value = {"ciphertext":'cipher', "cipherkey":'key'}
+    #     mock_user.objects.get.return_value = mock_user
+    #     mock_cf.create_challenge.return_value = {'challenge_id':1}
+    #     mock_redirect.return_value = True
         
-        res = create_challenge(mock_shortcuts)
+    #     res = create_challenge(mock_shortcuts)
         
-        self.assertTrue(res)
-        mock_cf.create_challenge.assert_called_with('text', 'cipher', 'easy', 'key', 'single', [mock_user])
-        mock_redirect.assert_called_with('/cipher/challengepage/?challenge_id=1')
+    #     self.assertTrue(res)
+    #     mock_cf.create_challenge.assert_called_with('text', 'cipher', 'easy', 'key', 'single', [mock_user])
+    #     mock_redirect.assert_called_with('/cipher/challengepage/?challenge_id=1')
         
     @mock.patch('cccenter.views.Http404')
     @mock.patch('cccenter.views.shortcuts')

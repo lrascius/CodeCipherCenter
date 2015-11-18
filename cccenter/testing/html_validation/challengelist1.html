@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+	    <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+	    
+<link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/static/css/challenge_list.css" />
+
+		<title>Code and Cipher Center</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+	    
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/cccenter">Code and Cipher Center</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class=""><a href="/">Home</a></li>
+        <li class=""><a href="/cipher/createchallenge">New Challenge</a></li>
+        <li class=" active "><a href="/cipher/challengelist">Challenge List</a></li>
+      </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            
+                <span class="glyphicon glyphicon-bell" aria-hidden="true" id="notifications"></span>
+            
+            </a>
+            
+            <ul class="dropdown-menu" role="menu">
+            
+            <li>
+              <div class="text-center link-block">
+                <a href="/notifications">
+                    <strong>See All Notifications</strong>
+                </a>
+              </div>
+            </li>
+           </ul>             
+          </li>        
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Account <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="/profile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile </a></li>
+              <li><a href="/statistics"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Statistics </a></li>
+              <li><a href="/settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings </a></li>
+              <li class="divider"></li>
+              <li><a href="/accounts/logout"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sign Out</a></li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+	    
+<div class="container">
+    <h1 class="align-center">Challenge List</h1>
+    <div>
+        <table id="example" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Challenge Type</th>                
+                <th>Difficulty</th>
+                <th>Join</th>                
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Challenge Type</th>                
+                <th>Difficulty</th>
+                <th>Join</th>                
+            </tr>
+            </tfoot> 
+            <tbody>
+            
+            <tr>  
+                <td> 1 </td>
+                <td> Nov. 10, 2015, 11:18 a.m. </td>
+                <td> Single</td>
+                <td> Advanced</td>
+                
+                <td class="align-center"> <a href="/cipher/challengepage/?challenge_id=1" 
+                    class="btn btn-primary" role="button">Go to Page</a></td> 
+                
+            </tr>
+            
+            </tbody>
+        </table>
+    </div>          
+</div>      
+
+	    <footer>
+	<div class="container">
+		<h6>Code and Cipher Center Copyright &copy; 2015</h6>
+	</div><!-- end container -->
+</footer>
+
+	    <script type="application/javascript" src= "https://code.jquery.com/jquery-2.1.3.js"></script>
+	    <script src="/static/cccenter/jquery.cookie.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script src="/static/cccenter/notifications.js"></script>
+		
+<script type='application/javascript' src= 'https://cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js'></script>
+<script type='application/javascript' src= 'https://cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.js'></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example').dataTable({
+        "aaSorting": [0,'dec']
+    });
+        } );        
+</script>
+
+	</body>
+</html>
